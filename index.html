@@ -199,8 +199,23 @@ button{cursor:pointer;font-family:inherit}
 .lr{background:#F3F4F6;color:#374151}
 .lyt{background:rgba(220,38,38,.1);color:#DC2626}
 
-.res-cta{text-align:center;margin-top:64px;padding-top:48px;border-top:1px solid #E5E7EB}
+.res-cta{text-align:center;margin-top:48px;padding-top:40px;border-top:1px solid #E5E7EB}
 .res-cta p{color:#9CA3AF;font-size:14px;margin-bottom:20px}
+
+/* Add-more panel */
+.add-more-panel{background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:28px 32px;margin-top:56px;box-shadow:0 2px 12px rgba(17,24,39,.06)}
+.amp-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:16px;flex-wrap:wrap}
+.amp-ttl{font-size:18px;font-weight:700;color:#111827;letter-spacing:-.01em;margin-bottom:5px}
+.amp-sub{font-size:13px;color:#6B7280}
+.amp-badge{background:#111827;color:#FCD34D;font-size:13px;font-weight:700;padding:5px 14px;border-radius:40px;white-space:nowrap;flex-shrink:0;letter-spacing:.04em}
+.amp-row{display:flex;gap:10px;max-width:640px}
+.amp-inp{flex:1;min-width:0}
+.btn-amp{background:#D97706;color:#fff;border:none;border-radius:10px;padding:13px 24px;font-size:14px;font-weight:700;font-family:inherit;letter-spacing:.02em;cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn-amp:hover{background:#B45309;box-shadow:0 4px 14px rgba(180,83,9,.25)}
+.btn-amp:disabled{background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;box-shadow:none}
+.amp-max{font-size:13px;color:#6B7280;margin-top:14px;padding:10px 14px;background:#F9FAFB;border-radius:8px;border:1px solid #E5E7EB}
+
+@media(max-width:720px){.amp-row{flex-direction:column}.btn-amp{width:100%;text-align:center}.add-more-panel{padding:22px 20px}}
 
 /* ── FOOTER ── */
 #ftr{background:#111827;padding:56px 0 36px}
@@ -477,6 +492,32 @@ button{cursor:pointer;font-family:inherit}
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
     </div>
+
+    <!-- Add another component to existing comparison -->
+    <div id="add-more-panel" class="add-more-panel hidden">
+      <div class="amp-top">
+        <div>
+          <h3 class="amp-ttl">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:6px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Add Another Component
+          </h3>
+          <p class="amp-sub" id="amp-sub">Add more components to this comparison</p>
+        </div>
+        <span class="amp-badge" id="amp-badge">2 / 6</span>
+      </div>
+      <div class="amp-row">
+        <input type="text" id="amp-inp" class="inp amp-inp"
+          placeholder='e.g. "Rotel RA-1572MKII" or "Cambridge CXA81"'
+          autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="btn-amp" id="btn-amp" type="button" onclick="addToResults()">
+          Add &amp; Compare →
+        </button>
+      </div>
+      <p class="amp-max hidden" id="amp-max">
+        Maximum of 6 components reached. Start a new comparison to compare different components.
+      </p>
+    </div>
+
     <div id="res-cta" class="res-cta hidden">
       <p>Ready to compare something else?</p>
       <button class="btn-cmp" onclick="reset()" type="button">Start New Comparison</button>
@@ -670,7 +711,11 @@ async function runComparison(){
     document.getElementById('ad-mid').classList.remove('hidden');
     document.getElementById('ad-bot').classList.remove('hidden');
   }
+  refreshAddMore();
   document.getElementById('res-cta').classList.remove('hidden');
+  // bind Enter key on add-more input
+  const ampInp=document.getElementById('amp-inp');
+  if(ampInp) ampInp.onkeydown=e=>{if(e.key==='Enter')addToResults()};
 }
 
 async function fetchComp(name,category){
@@ -757,6 +802,79 @@ function renderCards(){
   }).join('');
 }
 
+// ── Add component to existing results ──
+async function addToResults(){
+  if(st.running)return;
+  const inp=document.getElementById('amp-inp');
+  if(!inp)return;
+  const v=inp.value.trim();
+  if(!v||st.items.length>=6)return;
+
+  // Add to state as loading
+  const newItem={id:st.uid++,name:v,status:'loading',data:null,err:null};
+  st.items.push(newItem);
+  inp.value='';
+  st.running=true;
+  refreshAddMore();
+
+  // Re-render table immediately showing the new loading column
+  renderTable();
+  renderCards();
+
+  // Scroll to top of table so user sees the new column loading
+  const tbl=document.getElementById('tbl-zone');
+  if(tbl)tbl.scrollIntoView({behavior:'smooth',block:'start'});
+
+  // Fetch the new component
+  const idx=st.items.length-1;
+  try{
+    const data=await fetchComp(st.items[idx].name,st.catLbl);
+    st.items[idx]={...st.items[idx],status:'done',data};
+  }catch(e){
+    st.items[idx]={...st.items[idx],status:'error',err:e.message||'Could not retrieve data.'};
+    const z=document.getElementById('errs');
+    z.innerHTML+=`<div class="err-box"><strong>${h(st.items[idx].name)}</strong> — ${h(st.items[idx].err)}</div>`;
+  }
+
+  st.running=false;
+  renderTable();
+  renderCards();
+  refreshAddMore();
+}
+
+// ── Refresh add-more panel state ──
+function refreshAddMore(){
+  const n=st.items.length;
+  const remaining=6-n;
+  const panel=document.getElementById('add-more-panel');
+  const inp=document.getElementById('amp-inp');
+  const btn=document.getElementById('btn-amp');
+  const sub=document.getElementById('amp-sub');
+  const badge=document.getElementById('amp-badge');
+  const maxMsg=document.getElementById('amp-max');
+  if(!panel)return;
+
+  panel.classList.remove('hidden');
+  badge.textContent=`${n} / 6`;
+
+  if(remaining>0){
+    inp.classList.remove('hidden');
+    btn.classList.remove('hidden');
+    maxMsg.classList.add('hidden');
+    inp.disabled=st.running;
+    btn.disabled=st.running;
+    btn.textContent=st.running?'Fetching…':'Add & Compare →';
+    sub.textContent=remaining===1
+      ?'1 more component can be added to this comparison'
+      :`Up to ${remaining} more component${remaining>1?'s':''} can be added`;
+  }else{
+    inp.classList.add('hidden');
+    btn.classList.add('hidden');
+    maxMsg.classList.remove('hidden');
+    sub.textContent='Maximum reached';
+  }
+}
+
 // ── Reset ──
 function reset(){
   st={cat:null,catLbl:'',items:[],running:false,uid:1};
@@ -766,6 +884,8 @@ function reset(){
   document.getElementById('cards-grid').innerHTML='';
   document.getElementById('errs').innerHTML='';
   document.getElementById('chips').innerHTML='';
+  document.getElementById('add-more-panel').classList.add('hidden');
+  document.getElementById('res-cta').classList.add('hidden');
   const inp=document.getElementById('comp-inp');
   if(inp){inp.value='';inp.disabled=false;}
   document.getElementById('btn-add').disabled=false;
