@@ -717,11 +717,12 @@ function renderCards(){
   document.getElementById('cards-zone').classList.remove('hidden');
   document.getElementById('cards-grid').innerHTML=done.map(it=>{
     const d=it.data;
-    const mfg=d.manufacturerUrl?`<a href="${su(d.manufacturerUrl)}" target="_blank" rel="noopener" class="lnk"><span class="lic lm">M</span>Manufacturer Website ↗</a>`:'';
-    const revs=(d.reviewLinks||[]).map(r=>`<a href="${su(r.url)}" target="_blank" rel="noopener" class="lnk"><span class="lic lr">R</span>${h(r.outlet)} Review ↗</a>`).join('');
-    const yt=(d.youtubeSearches||[]).slice(0,2).map(q=>`<a href="https://www.youtube.com/results?search_query=${encodeURIComponent(q)}" target="_blank" rel="noopener" class="lnk"><span class="lic lyt">▶</span>YouTube: ${h(q)} ↗</a>`).join('');
+    const mfgBase=d.manufacturerUrl?su(d.manufacturerUrl).replace(/^(https?:\/\/[^\/]+).*/,'$1'):'';
+    const mfg=mfgBase?`<a href="${mfgBase}" target="_blank" rel="noopener" class="lnk"><span class="lic lm">M</span>Manufacturer Website ↗</a>`:'';
+    const ytQuery=encodeURIComponent(`${d.brand} ${d.model}`);
+    const yt=`<a href="https://www.youtube.com/results?search_query=${ytQuery}" target="_blank" rel="noopener" class="lnk"><span class="lic lyt">▶</span>YouTube Videos ↗</a>`;
     const cons=(d.considerations||[]).length?`<div><p class="list-l">Considerations</p><ul class="con-ul">${d.considerations.map(c=>`<li>${h(c)}</li>`).join('')}</ul></div>`:'';
-    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${revs}${yt}</div></div></article>`;
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div></div></article>`;
   }).join('');
 }
 
