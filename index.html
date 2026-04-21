@@ -46,8 +46,11 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── TOP AD ── */
 #ad-top{background:#fff;border-bottom:1px solid #E5E7EB;padding:4px 0}
-.ad-box{min-height:90px;background:#F9FAFB;border:1px dashed #D1D5DB;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:8px 0;overflow:hidden}
-.ad-box ins{display:block;width:100%}
+.ad-box{min-height:100px;background:#FAFAFA;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:10px 0;overflow:hidden;position:relative}
+.ad-box ins{display:block;width:100%;position:relative;z-index:1}
+.ad-label{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;pointer-events:none;z-index:0}
+.ad-label span{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#D1D5DB}
+.ad-label small{font-size:10px;color:#E5E7EB}
 
 /* ── HERO ── */
 .hero{display:flex;min-height:520px;background:#111827}
@@ -311,9 +314,10 @@ button{cursor:pointer;font-family:inherit}
 </header>
 
 <!-- Top ad (shown during results) -->
-<div id="ad-top" class="hidden">
+<div id="ad-top" class="hidden" style="background:#fff;border-bottom:1px solid #E5E7EB;padding:6px 0">
   <div class="container">
     <div class="ad-box">
+      <div class="ad-label"><span>Advertisement</span></div>
       <ins class="adsbygoogle" style="display:block"
         data-ad-client="ca-pub-8677522350792212"
         data-ad-slot="REPLACE_TOP_SLOT_ID"
@@ -350,6 +354,20 @@ button{cursor:pointer;font-family:inherit}
         <div class="stat"><div class="stat-n"><b>6</b></div><div class="stat-l">Components Per Session</div></div>
         <div class="stat"><div class="stat-n"><b>12+</b></div><div class="stat-l">Specs Per Component</div></div>
         <div class="stat"><div class="stat-n"><b>AI</b></div><div class="stat-l">Powered by Claude</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home page ad — always visible -->
+  <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:6px 0">
+    <div class="container">
+      <div class="ad-box">
+        <div class="ad-label"><span>Advertisement</span></div>
+        <ins class="adsbygoogle" style="display:block"
+          data-ad-client="ca-pub-8677522350792212"
+          data-ad-slot="REPLACE_HOME_SLOT_ID"
+          data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
     </div>
   </div>
@@ -469,8 +487,9 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div id="errs"></div>
     <div id="tbl-zone"></div>
-    <div id="ad-mid" class="hidden">
+    <div id="ad-mid">
       <div class="ad-box" style="margin:16px 0">
+        <div class="ad-label"><span>Advertisement</span></div>
         <ins class="adsbygoogle" style="display:block"
           data-ad-client="ca-pub-8677522350792212"
           data-ad-slot="REPLACE_MID_SLOT_ID"
@@ -483,8 +502,9 @@ button{cursor:pointer;font-family:inherit}
       <p class="cards-sub">Editorial summaries, strengths, considerations, and curated resource links.</p>
       <div class="cards-grid" id="cards-grid"></div>
     </div>
-    <div id="ad-bot" class="hidden">
+    <div id="ad-bot">
       <div class="ad-box" style="margin:16px 0">
+        <div class="ad-label"><span>Advertisement</span></div>
         <ins class="adsbygoogle" style="display:block"
           data-ad-client="ca-pub-8677522350792212"
           data-ad-slot="REPLACE_BOT_SLOT_ID"
@@ -706,11 +726,6 @@ async function runComparison(){
   }
   st.running=false;
   document.getElementById('loading').style.display='none';
-  const done=st.items.filter(i=>i.data).length;
-  if(done>0){
-    document.getElementById('ad-mid').classList.remove('hidden');
-    document.getElementById('ad-bot').classList.remove('hidden');
-  }
   refreshAddMore();
   document.getElementById('res-cta').classList.remove('hidden');
   // bind Enter key on add-more input
