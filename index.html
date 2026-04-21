@@ -149,7 +149,6 @@ button{cursor:pointer;font-family:inherit}
 .th-c{min-width:185px}
 .th-brand{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FCD34D;margin-bottom:4px}
 .th-model{font-size:19px;font-weight:700;color:#F9FAFB;line-height:1.12}
-.th-price{font-size:16px;font-weight:600;color:#FCD34D;margin-top:5px}
 .th-year{font-size:11px;color:rgba(255,255,255,.3);margin-top:3px}
 .spec-tbl td{padding:12px 22px;border-bottom:1px solid #F3F4F6;font-size:13px;vertical-align:top;color:#374151;background:#fff}
 .spec-tbl tbody tr:nth-child(even) td{background:#F9FAFB}
@@ -177,7 +176,6 @@ button{cursor:pointer;font-family:inherit}
 .ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706}
 .ccard-brand{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FCD34D;margin-bottom:5px}
 .ccard-model{font-size:26px;font-weight:800;color:#F9FAFB;line-height:1.06;letter-spacing:-.02em}
-.ccard-price{font-size:18px;font-weight:600;color:#FCD34D;margin-top:7px}
 .ccard-body{padding:22px 26px;display:flex;flex-direction:column;gap:16px;flex:1}
 .ccard-sum{font-size:14px;color:#374151;line-height:1.75;border-left:3px solid #D97706;padding-left:13px}
 .list-l{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#9CA3AF;margin-bottom:8px}
@@ -687,7 +685,7 @@ function renderTable(){
   const minW=Math.max(540,165+st.items.length*190);
   const cols=st.items.map(it=>{
     if(it.status==='loading')return`<th class="th-c"><div class="load-v">Loading ${h(it.name)}…</div></th>`;
-    if(it.data)return`<th class="th-c"><div class="th-brand">${h(it.data.brand)}</div><div class="th-model">${h(it.data.model)}</div><div class="th-price">${h(it.data.msrpUSD)}</div><div class="th-year">${h(it.data.yearIntroduced)}</div></th>`;
+    if(it.data)return`<th class="th-c"><div class="th-brand">${h(it.data.brand)}</div><div class="th-model">${h(it.data.model)}</div><div class="th-year">${h(it.data.yearIntroduced)}</div></th>`;
     return`<th class="th-c"><div style="color:#6B7280">${h(it.name)}</div></th>`;
   }).join('');
   const dimRow=st.items.map(it=>{
@@ -723,7 +721,7 @@ function renderCards(){
     const revs=(d.reviewLinks||[]).map(r=>`<a href="${su(r.url)}" target="_blank" rel="noopener" class="lnk"><span class="lic lr">R</span>${h(r.outlet)} Review ↗</a>`).join('');
     const yt=(d.youtubeSearches||[]).slice(0,2).map(q=>`<a href="https://www.youtube.com/results?search_query=${encodeURIComponent(q)}" target="_blank" rel="noopener" class="lnk"><span class="lic lyt">▶</span>YouTube: ${h(q)} ↗</a>`).join('');
     const cons=(d.considerations||[]).length?`<div><p class="list-l">Considerations</p><ul class="con-ul">${d.considerations.map(c=>`<li>${h(c)}</li>`).join('')}</ul></div>`:'';
-    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div><div class="ccard-price">${h(d.msrpUSD)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${revs}${yt}</div></div></article>`;
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${revs}${yt}</div></div></article>`;
   }).join('');
 }
 
