@@ -1,17 +1,15 @@
 /**
  * AudioScope — Netlify Function: compare.js
  *
- * Secure proxy for Anthropic API calls.
- * ANTHROPIC_API_KEY is stored as a Netlify environment variable.
+ * Two-step process:
+ *   1. Fetch full component specs from Claude
+ *   2. Validate / correct the manufacturer URL with a dedicated second call
  *
- * Set in Netlify dashboard:
- *   Site configuration → Environment variables → Add variable
- *   Key: ANTHROPIC_API_KEY   Value: sk-ant-xxxxxxxx
+ * ANTHROPIC_API_KEY must be set in Netlify environment variables.
  */
 
 const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 const MODEL        = 'claude-sonnet-4-20250514';
-const MAX_TOKENS   = 1200;
 
 const CORS = {
   'Content-Type':                 'application/json',
@@ -25,18 +23,16 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers: CORS, body: '' };
   }
-
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    console.error('ANTHROPIC_API_KEY environment variable is not set');
     return {
       statusCode: 500,
       headers: CORS,
-      body: JSON.stringify({ error: 'Server configuration error: API key not set. See README for setup instructions.' }),
+      body: JSON.stringify({ error: 'Server configuration error: API key not set.' }),
     };
   }
 
@@ -46,36 +42,26 @@ exports.handler = async (event) => {
   } catch (_) {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Invalid JSON in request body' }) };
   }
-
   if (!name || !category) {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Missing required fields: name and category' }) };
   }
 
   try {
-    const anthropicRes = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type':      'application/json',
-        'x-api-key':         apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model:      MODEL,
-        max_tokens: MAX_TOKENS,
-        messages:   [{ role: 'user', content: buildPrompt(name, category) }],
-      }),
-    });
+    // ── STEP 1: Fetch full component data ────────────────────────
+    const parsed = await callClaude(buildSpecPrompt(name, category), 1200, apiKey);
 
-    if (!anthropicRes.ok) {
-      const errBody = await anthropicRes.text();
-      console.error('Anthropic API error ' + anthropicRes.status + ':', errBody);
-      throw new Error('Anthropic API returned status ' + anthropicRes.status);
+    // ── STEP 2: Validate / correct manufacturer URL ───────────────
+    // Run in parallel with a short timeout so it never blocks the response
+    try {
+      const verifiedUrl = await callClaudeText(buildUrlPrompt(parsed.brand, parsed.model, name), 200, apiKey);
+      const clean = verifiedUrl.trim().replace(/['"<>\s]/g, '');
+      if (clean.startsWith('http://') || clean.startsWith('https://')) {
+        parsed.manufacturerUrl = clean;
+      }
+    } catch (urlErr) {
+      // URL validation failed — keep whatever the first call returned
+      console.warn('URL validation step failed, using original:', urlErr.message);
     }
-
-    const apiData = await anthropicRes.json();
-    const rawText = (apiData.content || []).map(function(b) { return b.text || ''; }).join('');
-
-    const parsed = extractJSON(rawText);
 
     return {
       statusCode: 200,
@@ -93,62 +79,89 @@ exports.handler = async (event) => {
   }
 };
 
-/**
- * Robustly extract a JSON object from the AI response.
- * Handles markdown fences, preamble text, and trailing content.
- */
+/* ─── Call Claude → parse JSON response ─────────────────────── */
+async function callClaude(prompt, maxTokens, apiKey) {
+  const res = await fetch(API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type':      'application/json',
+      'x-api-key':         apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model:      MODEL,
+      max_tokens: maxTokens,
+      messages:   [{ role: 'user', content: prompt }],
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error('Anthropic API error ' + res.status + ': ' + body.slice(0, 120));
+  }
+  const data    = await res.json();
+  const rawText = (data.content || []).map(function(b) { return b.text || ''; }).join('');
+  return extractJSON(rawText);
+}
+
+/* ─── Call Claude → return plain text response ──────────────── */
+async function callClaudeText(prompt, maxTokens, apiKey) {
+  const res = await fetch(API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type':      'application/json',
+      'x-api-key':         apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model:      MODEL,
+      max_tokens: maxTokens,
+      messages:   [{ role: 'user', content: prompt }],
+    }),
+  });
+  if (!res.ok) throw new Error('URL validation API error ' + res.status);
+  const data = await res.json();
+  return (data.content || []).map(function(b) { return b.text || ''; }).join('').trim();
+}
+
+/* ─── Extract JSON robustly from AI response ─────────────────── */
 function extractJSON(text) {
   if (!text) throw new Error('Empty response from AI');
-
-  // Strip markdown code fences
   var cleaned = text
     .replace(/^```(?:json)?\s*/m, '')
     .replace(/\s*```\s*$/m, '')
     .trim();
-
-  // Find the outermost JSON object by brace matching
   var start = cleaned.indexOf('{');
-  if (start === -1) throw new Error('No JSON object found in AI response');
-
-  var depth = 0;
-  var end   = -1;
+  if (start === -1) throw new Error('No JSON object in AI response');
+  var depth = 0, end = -1;
   for (var i = start; i < cleaned.length; i++) {
-    if      (cleaned[i] === '{') { depth++; }
+    if      (cleaned[i] === '{') depth++;
     else if (cleaned[i] === '}') { depth--; if (depth === 0) { end = i; break; } }
   }
-
-  if (end === -1) throw new Error('Malformed JSON: unmatched braces in AI response');
-
+  if (end === -1) throw new Error('Malformed JSON: unmatched braces');
   var jsonStr = cleaned.slice(start, end + 1);
-
   try {
     return JSON.parse(jsonStr);
   } catch (e) {
-    // Fix common AI mistakes: trailing commas before } or ]
-    var fixed = jsonStr
-      .replace(/,(\s*[}\]])/g, '$1');
-    return JSON.parse(fixed);
+    return JSON.parse(jsonStr.replace(/,(\s*[}\]])/g, '$1'));
   }
 }
 
-function buildPrompt(name, category) {
-  var encodedName = encodeURIComponent(name);
-
-  return 'You are a hi-fi audio equipment expert with access to manufacturer specifications, published reviews, and audio databases. Return accurate technical data for the component listed below.\n\n' +
+/* ─── Prompt 1: Full component specification ─────────────────── */
+function buildSpecPrompt(name, category) {
+  return 'You are a hi-fi audio equipment expert. Return accurate technical data for the component below.\n\n' +
     'Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
     'Category: ' + category + '\n' +
     'Component: "' + name + '"\n\n' +
-    'Source priority: Use official manufacturer specs when available. If not, use reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, Rtings.com, or other established audio publications and databases. Write "N/A" for any value that is genuinely unknown — never guess.\n\n' +
-    'Return this exact JSON structure (all fields required, no extra fields):\n\n' +
+    'Source priority: Use official manufacturer specs first, then reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com. Write "N/A" for genuinely unknown values — never guess.\n\n' +
+    'Return this exact JSON structure:\n\n' +
     '{\n' +
     '  "brand": "Manufacturer name only",\n' +
     '  "model": "Model name only (no brand prefix)",\n' +
     '  "fullName": "Brand and model as one string",\n' +
-    '  "msrpUSD": "e.g. $2499 or Approx. $2500 or Discontinued (~$1800)",\n' +
+    '  "msrpUSD": "e.g. $2499",\n' +
     '  "yearIntroduced": "e.g. 2021 or 2019-present",\n' +
     '  "specs": {\n' +
-    '    "Spec Name 1": "value with units",\n' +
-    '    "Spec Name 2": "value with units"\n' +
+    '    "Spec Name": "value with units"\n' +
     '  },\n' +
     '  "dimensions": {\n' +
     '    "width":  "e.g. 440mm (17.3in)",\n' +
@@ -157,16 +170,12 @@ function buildPrompt(name, category) {
     '    "weight": "e.g. 8.4kg (18.5lbs)"\n' +
     '  },\n' +
     '  "notableFeatures": ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],\n' +
-    '  "summary": "2-3 sentences describing sonic character, build quality, design philosophy, and ideal use case.",\n' +
+    '  "summary": "2-3 sentences on sonic character, build quality, and ideal use case.",\n' +
     '  "strengths": ["Strength 1", "Strength 2", "Strength 3"],\n' +
     '  "considerations": ["Consideration 1", "Consideration 2"],\n' +
-    '  "manufacturerUrl": "https://www.manufacturer.com/product-page",\n' +
-    '  "reviewLinks": [\n' +
-    '    { "outlet": "Stereophile",        "url": "https://www.stereophile.com/search/?q=' + encodedName + '" },\n' +
-    '    { "outlet": "What Hi-Fi",         "url": "https://www.whathifi.com/search?q=' + encodedName + '" },\n' +
-    '    { "outlet": "The Absolute Sound", "url": "https://www.theabsolutesound.com/?s=' + encodedName + '" }\n' +
-    '  ],\n' +
-    '  "youtubeSearches": ["' + name + ' review", "' + name + ' sound demo", "' + name + ' unboxing"]\n' +
+    '  "manufacturerUrl": "https://www.official-manufacturer-homepage.com",\n' +
+    '  "reviewLinks": [],\n' +
+    '  "youtubeSearches": ["' + name + ' review"]\n' +
     '}\n\n' +
     'Include 8-12 of the most relevant specs for a ' + category + ':\n' +
     'AMPLIFIER: Output Power (stereo/8ohm), Output Power (mono/4ohm), THD+N, SNR, Input Sensitivity, Frequency Response, Damping Factor, Inputs, Outputs, Class of operation\n' +
@@ -179,4 +188,25 @@ function buildPrompt(name, category) {
     'STREAMER: Supported Services, Max PCM Resolution, DSD Support, Network Connectivity, Outputs, Built-in DAC, App Platform, Roon Ready, MQA\n' +
     'SPEAKERS: Frequency Response, Sensitivity, Nominal Impedance, Minimum Impedance, Woofer Size, Tweeter, Enclosure Type, Crossover Frequency, Recommended Power\n' +
     'HEADPHONES: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity, THD, Weight, Cable Length, Connector, Wearing Style';
+}
+
+/* ─── Prompt 2: Manufacturer URL verification ────────────────── */
+function buildUrlPrompt(brand, model, fullName) {
+  return 'You are a fact-checker specialising in hi-fi audio manufacturers.\n\n' +
+    'Task: Return the single correct, current, official homepage URL for the manufacturer of this product.\n\n' +
+    'Manufacturer brand: "' + brand + '"\n' +
+    'Product: "' + fullName + '"\n\n' +
+    'Rules:\n' +
+    '- Return ONLY the homepage URL — nothing else. No explanation, no punctuation, no markdown.\n' +
+    '- Must be the manufacturer\'s own direct website, NOT a distributor, importer, retailer, or redirect.\n' +
+    '- Must start with https:// and be the root domain (e.g. https://www.rega.co.uk not a product sub-page).\n' +
+    '- If the brand has a dedicated product-line website (e.g. Sumiko has sumikophonocartridges.com rather than a parent company site), use that dedicated site.\n' +
+    '- If you are not confident in the exact current URL, return the word UNKNOWN.\n\n' +
+    'Examples of correct answers:\n' +
+    '  Rega Research → https://www.rega.co.uk\n' +
+    '  Sumiko → https://www.sumikophonocartridges.com\n' +
+    '  Ortofon → https://www.ortofon.com\n' +
+    '  Sennheiser → https://www.sennheiser.com\n' +
+    '  Naim Audio → https://www.naimaudio.com\n\n' +
+    'Return only the URL (or UNKNOWN):';
 }
