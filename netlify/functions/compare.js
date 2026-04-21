@@ -48,7 +48,7 @@ exports.handler = async (event) => {
 
   try {
     // ── STEP 1: Fetch full component data ────────────────────────
-    const parsed = await callClaude(buildSpecPrompt(name, category), 1200, apiKey);
+    const parsed = await callClaude(buildSpecPrompt(name, category), 1800, apiKey);
 
     // ── STEP 2: Validate / correct manufacturer URL ───────────────
     // Run in parallel with a short timeout so it never blocks the response
@@ -148,18 +148,28 @@ function extractJSON(text) {
 
 /* ─── Prompt 1: Full component specification ─────────────────── */
 function buildSpecPrompt(name, category) {
-  return 'You are a hi-fi audio equipment expert. Return accurate technical data for the component below.\n\n' +
-    'Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
+  return 'You are a hi-fi audio equipment database. Return technical specifications for the component below.\n\n' +
+    'CRITICAL: Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
     'Category: ' + category + '\n' +
     'Component: "' + name + '"\n\n' +
-    'Source priority: Use official manufacturer specs first, then reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com.\n\n' +
+    'SPECS REQUIREMENT: You MUST populate the "specs" object with at least 6 real key-value pairs. ' +
+    'Use official manufacturer data first, then Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com. ' +
+    'Do NOT return an empty specs object. For well-known products provide all specs you have. ' +
+    'For obscure products include whatever is available and note limitations in the summary.\n\n' +
     'ACCURACY RULES:\n' +
-    '- Provide all specs you can source with reasonable confidence — do not be overly cautious on well-documented products.\n' +
-    '- Write "N/A" only when you genuinely have no reliable data for a specific value — not as a blanket response.\n' +
-    '- EXCEPTION — for speakers specifically: enclosure type (bookshelf/standmount vs floorstander/tower) must come from a verified source. Do NOT infer it from the model name, number, or series siblings. If uncertain, write "N/A".\n' +
-    '- For newer, boutique, or regional products with limited data: provide what you can confirm and use "N/A" for the rest. In the summary, note if data is limited.\n' +
-    '- Do not fabricate specs. If a product is genuinely obscure, say so in the summary rather than returning empty specs.\n\n'
-    'Return this exact JSON structure:\n\n' +
+    '- Use "N/A" only for individual values you cannot confirm — not as a reason to omit entire fields or return an empty specs object.\n' +
+    '- SPEAKER EXCEPTION: enclosure type (bookshelf vs floorstander) must come from a verified source only. Do not infer from model name or siblings.\n' +
+    '- If a product is genuinely obscure, say so in the summary but still populate every spec field you can.\n\n' +
+    'EXAMPLE of a correctly filled "specs" object for an integrated amplifier:\n' +
+    '  "Output Power (8Ω stereo)": "160 W/ch",\n' +
+    '  "Output Power (4Ω stereo)": "240 W/ch",\n' +
+    '  "THD+N": "<0.1% at rated power",\n' +
+    '  "Signal-to-Noise Ratio": ">110 dB",\n' +
+    '  "Frequency Response": "5 Hz – 100 kHz",\n' +
+    '  "Damping Factor": ">1200 (8Ω)",\n' +
+    '  "Class of Operation": "Class A/AB",\n' +
+    '  "Inputs": "2 × RCA, 1 × XLR balanced"\n\n' +
+    'Return this exact JSON structure with ALL fields populated:\n\n' +
     '{\n' +
     '  "brand": "Manufacturer name only",\n' +
     '  "model": "Model name only (no brand prefix)",\n' +
@@ -167,7 +177,12 @@ function buildSpecPrompt(name, category) {
     '  "msrpUSD": "e.g. $2499",\n' +
     '  "yearIntroduced": "e.g. 2021 or 2019-present",\n' +
     '  "specs": {\n' +
-    '    "Spec Name": "value with units"\n' +
+    '    "Spec Name 1": "value with units",\n' +
+    '    "Spec Name 2": "value with units",\n' +
+    '    "Spec Name 3": "value with units",\n' +
+    '    "Spec Name 4": "value with units",\n' +
+    '    "Spec Name 5": "value with units",\n' +
+    '    "Spec Name 6": "value with units"\n' +
     '  },\n' +
     '  "dimensions": {\n' +
     '    "width":  "e.g. 440mm (17.3in)",\n' +
@@ -176,24 +191,24 @@ function buildSpecPrompt(name, category) {
     '    "weight": "e.g. 8.4kg (18.5lbs)"\n' +
     '  },\n' +
     '  "notableFeatures": ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],\n' +
-    '  "summary": "2-3 sentences on sonic character, build quality, and ideal use case.",\n' +
+    '  "summary": "2-3 sentences on sonic character, build quality, and ideal use case. If data is limited, state that clearly.",\n' +
     '  "strengths": ["Strength 1", "Strength 2", "Strength 3"],\n' +
     '  "considerations": ["Consideration 1", "Consideration 2"],\n' +
     '  "manufacturerUrl": "https://www.official-manufacturer-homepage.com",\n' +
     '  "reviewLinks": [],\n' +
     '  "youtubeSearches": ["' + name + ' review"]\n' +
     '}\n\n' +
-    'Include 8-12 of the most relevant specs for a ' + category + ':\n' +
-    'AMPLIFIER: Output Power (stereo/8ohm), Output Power (mono/4ohm), THD+N, SNR, Input Sensitivity, Frequency Response, Damping Factor, Inputs, Outputs, Class of operation\n' +
-    'PREAMPLIFIER: Gain, THD+N, SNR, Frequency Response, Input Impedance, Output Impedance, Channel Separation, Inputs, Outputs\n' +
+    'Spec fields to include (8-12 most relevant for the category):\n' +
+    'AMPLIFIER / INTEGRATED AMPLIFIER: Output Power (8Ω stereo), Output Power (4Ω stereo), Output Power (8Ω mono if applicable), THD+N, Signal-to-Noise Ratio, Frequency Response, Damping Factor, Input Impedance, Class of Operation, Inputs, Outputs, Headphone Output\n' +
+    'PREAMPLIFIER: Gain, THD+N, SNR, Frequency Response, Input Impedance, Output Impedance, Channel Separation, Inputs, Outputs, Power Supply\n' +
     'PHONO PREAMP: Gain (MM), Gain (MC), RIAA Accuracy, SNR (MM), SNR (MC), Input Impedance (MM), Input Impedance (MC), Output Impedance, Subsonic Filter, Power Supply\n' +
-    'TURNTABLE: Drive Type, Motor, Speeds, Platter Material, Platter Weight, Wow and Flutter, SNR, Tonearm (if included), Anti-Skate, Built-in Phono Stage\n' +
+    'TURNTABLE: Drive Type, Motor Type, Speeds, Platter Material, Platter Weight, Wow & Flutter, Signal-to-Noise Ratio, Included Tonearm, Anti-Skate, Built-in Phono Stage\n' +
     'TONEARM: Effective Length, Mounting Distance, Overhang, Offset Angle, Effective Mass, Bearing Type, Headshell Mount, VTA Adjustment, Anti-Skating\n' +
-    'CARTRIDGE: Type, Output Voltage, Channel Separation, Channel Balance, Frequency Response, Tracking Force, Compliance, Stylus Shape, Cantilever, Loading Impedance\n' +
-    'DAC: DAC Chip, PCM Resolution, DSD Support, Dynamic Range, THD+N, SNR, Digital Inputs, Analog Outputs, Headphone Output, USB Class\n' +
-    'STREAMER: Supported Services, Max PCM Resolution, DSD Support, Network Connectivity, Outputs, Built-in DAC, App Platform, Roon Ready, MQA\n' +
-    'SPEAKERS: Frequency Response, Sensitivity, Nominal Impedance, Minimum Impedance, Woofer Size, Tweeter, Enclosure Type, Crossover Frequency, Recommended Power\n' +
-    'HEADPHONES: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity, THD, Weight, Cable Length, Connector, Wearing Style';
+    'CARTRIDGE: Type (MM/MC/MI), Output Voltage, Channel Separation, Channel Balance, Frequency Response, Tracking Force (recommended), Compliance, Stylus Shape, Cantilever Material, Loading Impedance\n' +
+    'DAC: DAC Chip(s), Max PCM Resolution, DSD Support, Dynamic Range, THD+N, SNR, Digital Inputs, Analog Outputs, Headphone Output, USB Class\n' +
+    'STREAMER: Supported Streaming Services, Max PCM Resolution, DSD Support, Network Connectivity, Analog Outputs, Digital Outputs, Built-in DAC, Control App, Roon Ready\n' +
+    'SPEAKERS: Frequency Response, Sensitivity (dB/W/m), Nominal Impedance, Minimum Impedance, Woofer Size, Tweeter Type, Enclosure Type, Crossover Frequency, Recommended Amplifier Power\n' +
+    'HEADPHONES: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity (dB/mW), THD, Weight (without cable), Cable Length, Connector Type, Wearing Style';
 }
 
 /* ─── Prompt 2: Manufacturer URL verification ────────────────── */
