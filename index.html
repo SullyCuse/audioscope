@@ -176,6 +176,11 @@ button{cursor:pointer;font-family:inherit}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
 .ccard{background:#fff;border:1px solid #E5E7EB;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(17,24,39,.06);animation:fadeUp .4s ease forwards;transition:box-shadow .2s,transform .2s}
 .ccard:hover{box-shadow:0 10px 30px rgba(17,24,39,.1);transform:translateY(-2px)}
+.data-warning{display:flex;align-items:flex-start;gap:10px;background:#FFF7ED;border:1px solid #FED7AA;border-left:4px solid #EA580C;border-radius:8px;padding:12px 14px;font-size:13px;color:#7C2D12;line-height:1.6;margin-bottom:4px}
+.data-warning svg{flex-shrink:0;margin-top:1px;color:#EA580C}
+.data-warning strong{color:#9A3412;font-weight:600;display:block;margin-bottom:3px}
+.data-warning a{color:#9A3412;font-weight:600;text-decoration:underline}
+.data-warning a:hover{opacity:.75}
 .ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706}
 .ccard-brand{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FCD34D;margin-bottom:5px}
 .ccard-model{font-size:26px;font-weight:800;color:#F9FAFB;line-height:1.06;letter-spacing:-.02em}
@@ -440,7 +445,7 @@ button{cursor:pointer;font-family:inherit}
 
     <div class="disclaimer-banner">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span>Specifications are AI-generated and may be incomplete or inaccurate — particularly for newer or regional products. <strong>Always verify with the manufacturer before purchase.</strong> If a value shows "N/A", the AI did not have sufficient confidence to report it.</span>
+      <span>Specifications are AI-generated from manufacturer documentation and published reviews. Data may be incomplete for newer or boutique products. <strong>Always verify with the manufacturer before purchase.</strong> Fields showing "N/A" indicate the AI could not confirm a reliable value.</span>
     </div>
     <div id="loading" class="loading">
       <div class="wave"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
@@ -725,12 +730,30 @@ function renderCards(){
   document.getElementById('cards-zone').classList.remove('hidden');
   document.getElementById('cards-grid').innerHTML=done.map(it=>{
     const d=it.data;
+
+    // Detect limited data: sparse specs or summary signals insufficient data
+    const specVals=Object.values(d.specs||{});
+    const naCount=specVals.filter(v=>!v||v==='N/A'||v==='-').length;
+    const totalSpecs=specVals.length;
+    const summaryLower=(d.summary||'').toLowerCase();
+    const limitedDataSignals=['insufficient','limited data','not available','no reliable','obscure','could not','unable to','limited information','not enough'];
+    const summaryFlagged=limitedDataSignals.some(s=>summaryLower.includes(s));
+    const specsEmpty=totalSpecs===0||(totalSpecs>0&&naCount/totalSpecs>=0.7);
+    const hasLimitedData=summaryFlagged||specsEmpty;
+
+    const limitedWarning=hasLimitedData?`<div class="data-warning">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div><strong>Limited data available</strong> — reliable specifications for this component could not be confirmed. This may be a newer, boutique, or regional product not well represented in published sources. <a href="${su(d.manufacturerUrl||'')}" target="_blank" rel="noopener">Visit the manufacturer's website</a> for accurate specifications.</div>
+    </div>`:'';
+
     const mfgBase=d.manufacturerUrl?su(d.manufacturerUrl).replace(/^(https?:\/\/[^\/]+).*/,'$1'):'';
     const mfg=mfgBase?`<a href="${mfgBase}" target="_blank" rel="noopener" class="lnk"><span class="lic lm">M</span>Manufacturer Website ↗</a>`:'';
     const ytQuery=encodeURIComponent(`${d.brand} ${d.model}`);
     const yt=`<a href="https://www.youtube.com/results?search_query=${ytQuery}" target="_blank" rel="noopener" class="lnk"><span class="lic lyt">▶</span>YouTube Videos ↗</a>`;
     const cons=(d.considerations||[]).length?`<div><p class="list-l">Considerations</p><ul class="con-ul">${d.considerations.map(c=>`<li>${h(c)}</li>`).join('')}</ul></div>`:'';
-    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div></div></article>`;
+    const strengths=(d.strengths||[]).filter(s=>s&&s!=='N/A').length?`<div><p class="list-l">Strengths</p><ul class="pro-ul">${d.strengths.map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>`:'';
+
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body">${limitedWarning}<p class="ccard-sum">${h(d.summary)}</p>${strengths}${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div></div></article>`;
   }).join('');
 }
 
