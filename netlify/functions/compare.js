@@ -2,17 +2,16 @@
  * AudioScope — Netlify Function: compare.js
  *
  * Secure proxy for Anthropic API calls.
- * The ANTHROPIC_API_KEY is stored as a Netlify environment variable
- * and is NEVER exposed to the browser.
+ * ANTHROPIC_API_KEY is stored as a Netlify environment variable.
  *
  * Set in Netlify dashboard:
- *   Site settings → Environment variables → Add variable
- *   Key: ANTHROPIC_API_KEY  Value: sk-ant-xxxxxxxx
+ *   Site configuration → Environment variables → Add variable
+ *   Key: ANTHROPIC_API_KEY   Value: sk-ant-xxxxxxxx
  */
 
 const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 const MODEL        = 'claude-sonnet-4-20250514';
-const MAX_TOKENS   = 1024;
+const MAX_TOKENS   = 1200;
 
 const CORS = {
   'Content-Type':                 'application/json',
@@ -22,21 +21,15 @@ const CORS = {
 };
 
 exports.handler = async (event) => {
-  // ── CORS preflight ────────────────────────────────────────
+
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers: CORS, body: '' };
   }
 
-  // ── Method guard ──────────────────────────────────────────
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: CORS,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  // ── API key guard ─────────────────────────────────────────
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     console.error('ANTHROPIC_API_KEY environment variable is not set');
@@ -47,27 +40,17 @@ exports.handler = async (event) => {
     };
   }
 
-  // ── Parse request body ────────────────────────────────────
   let name, category;
   try {
     ({ name, category } = JSON.parse(event.body || '{}'));
   } catch (_) {
-    return {
-      statusCode: 400,
-      headers: CORS,
-      body: JSON.stringify({ error: 'Invalid JSON in request body' }),
-    };
+    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Invalid JSON in request body' }) };
   }
 
   if (!name || !category) {
-    return {
-      statusCode: 400,
-      headers: CORS,
-      body: JSON.stringify({ error: 'Missing required fields: name and category' }),
-    };
+    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Missing required fields: name and category' }) };
   }
 
-  // ── Call Anthropic API ────────────────────────────────────
   try {
     const anthropicRes = await fetch(API_ENDPOINT, {
       method: 'POST',
@@ -85,21 +68,14 @@ exports.handler = async (event) => {
 
     if (!anthropicRes.ok) {
       const errBody = await anthropicRes.text();
-      console.error(`Anthropic API error ${anthropicRes.status}:`, errBody);
-      throw new Error(`Anthropic API returned status ${anthropicRes.status}`);
+      console.error('Anthropic API error ' + anthropicRes.status + ':', errBody);
+      throw new Error('Anthropic API returned status ' + anthropicRes.status);
     }
 
     const apiData = await anthropicRes.json();
-    const rawText = (apiData.content || []).map(b => b.text || '').join('');
+    const rawText = (apiData.content || []).map(function(b) { return b.text || ''; }).join('');
 
-    // Strip markdown code fences (the model sometimes wraps JSON in ```)
-    const cleaned = rawText
-      .replace(/^```(?:json)?\s*/m, '')
-      .replace(/\s*```\s*$/m, '')
-      .trim();
-
-    // Validate JSON before returning
-    const parsed = JSON.parse(cleaned);
+    const parsed = extractJSON(rawText);
 
     return {
       statusCode: 200,
@@ -108,7 +84,7 @@ exports.handler = async (event) => {
     };
 
   } catch (err) {
-    console.error('AudioScope compare function error:', err.message);
+    console.error('AudioScope compare error:', err.message);
     return {
       statusCode: 500,
       headers:    CORS,
@@ -117,78 +93,90 @@ exports.handler = async (event) => {
   }
 };
 
-/* ─── Build AI Prompt ────────────────────────────────────────── */
-function buildPrompt(name, category) {
-  return `You are a precise, authoritative hi-fi audio equipment database. Your task is to return detailed technical information about a specific audio component.
-
-Return ONLY valid JSON — absolutely no markdown formatting, no code fences (\`\`\`), no preamble text, no explanation after the JSON. Just the raw JSON object.
-
-Category: ${category}
-Component to look up: "${name}"
-
-Return this exact JSON structure with ALL fields populated:
-
-{
-  "brand": "Manufacturer name only",
-  "model": "Model name/number only (no brand prefix)",
-  "fullName": "Complete brand + model name as one string",
-  "msrpUSD": "Price in USD, e.g. '$2,499' or 'Approx. $X,XXX' or 'Discontinued (~$X,XXX)' or 'Price varies'",
-  "yearIntroduced": "Year introduced, e.g. '2021' or '2019–present' or 'c. 2018'",
-  "specs": {
-    "Include 8–12 of the most technically important specifications for a ${category}. Use proper engineering units throughout.":
-    "AMPLIFIER specs: Output Power (stereo), Output Power (mono), THD+N, Signal-to-Noise Ratio, Input Sensitivity, Frequency Response, Damping Factor, Input Impedance, Output Impedance, Available Inputs, Available Outputs",
-    "SPEAKER specs: Frequency Response, Sensitivity, Nominal Impedance, Minimum Impedance, Woofer Diameter, Tweeter, Midrange (if applicable), Enclosure Type, Crossover Frequency, Recommended Amplifier Power",
-    "TURNTABLE specs: Drive Type, Motor Type, Platter Material, Platter Weight, Speeds, Wow & Flutter, Signal-to-Noise Ratio, Channel Separation, Included Tonearm, Anti-Skating, Tracking Force Range, Built-in Phono Stage",
-    "HEADPHONE specs: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity (SPL/mW), THD, Maximum Input Power, Weight (without cable), Cable Length, Connector Type, Headband Type",
-    "DAC specs: DAC Chip(s), Supported Sample Rates (PCM), DSD Support, Dynamic Range, THD+N, SNR, Digital Inputs, Analog Outputs, Headphone Output, USB Class, Power Requirement",
-    "PHONO PREAMP specs: Input Type (MM/MC/Both), MM Gain, MC Gain, RIAA Accuracy, SNR (MM), SNR (MC), Input Impedance (MM), Input Impedance (MC) Range, Output Impedance, Subsonic Filter, Power Supply Type",
-    "STREAMER specs: Supported Services, Supported Formats, Maximum PCM Resolution, DSD Support, Network Connectivity, Outputs, Built-in DAC, App Control Platform, Roon Ready, MQA Support",
-    "TONEARM specs: Effective Length, Mounting Distance, Overhang, Offset Angle, Effective Mass, Bearing Type, Headshell Weight, Headshell Mount Type, Azimuth Adjustment, VTA Adjustment, Anti-Skating",
-    "CARTRIDGE specs: Type (MM/MC/MI), Output Voltage, Channel Separation, Channel Balance, Frequency Response, Tracking Force (Recommended), Compliance, Stylus Shape, Cantilever Material, Body Material, Required Loading Impedance",
-    "Adapt these intelligently to the actual category. Use real technical terminology and proper units."
-  },
-  "dimensions": {
-    "width":  "measurement with both metric and imperial, e.g. '440 mm (17.3\")'",
-    "height": "measurement with both metric and imperial",
-    "depth":  "measurement with both metric and imperial (including any protruding connectors if known)",
-    "weight": "measurement with both units, e.g. '8.4 kg (18.5 lbs)'"
-  },
-  "notableFeatures": [
-    "Key distinguishing feature 1 — be specific",
-    "Key distinguishing feature 2 — be specific",
-    "Key distinguishing feature 3 — be specific",
-    "Key distinguishing feature 4 — be specific"
-  ],
-  "summary": "Write 2–3 sentences in an editorial voice describing: (1) the component's sonic character and overall design philosophy, (2) its market positioning and key strengths, and (3) the ideal system or listener it suits best. Be specific and informative — avoid generic phrases.",
-  "strengths": [
-    "Specific technical or sonic strength 1",
-    "Specific technical or sonic strength 2",
-    "Specific technical or sonic strength 3"
-  ],
-  "considerations": [
-    "Honest consideration or limitation 1",
-    "Honest consideration or limitation 2"
-  ],
-  "manufacturerUrl": "https://www.manufacturer-domain.com/product-page (best known URL for this product)",
-  "reviewLinks": [
-    { "outlet": "Stereophile",       "url": "https://www.stereophile.com/search/?q=${encodeURIComponent(name)}" },
-    { "outlet": "What Hi-Fi",        "url": "https://www.whathifi.com/search?q=${encodeURIComponent(name)}" },
-    { "outlet": "The Absolute Sound","url": "https://www.theabsolutesound.com/?s=${encodeURIComponent(name)}" }
-  ],
-  "youtubeSearches": [
-    "${name} review",
-    "${name} sound demo",
-    "${name} unboxing setup"
-  ]
-}
-
-Important: For any specification value you are not certain about, write "Contact manufacturer" rather than guessing. Accuracy is critical.`;
-}
-
 /**
- * Helper: safely encode strings for URL use within the prompt.
- * (Standard JS encodeURIComponent — just making intent clear.)
+ * Robustly extract a JSON object from the AI response.
+ * Handles markdown fences, preamble text, and trailing content.
  */
-function encodeURIComponent(str) {
-  return global.encodeURIComponent(str);
+function extractJSON(text) {
+  if (!text) throw new Error('Empty response from AI');
+
+  // Strip markdown code fences
+  var cleaned = text
+    .replace(/^```(?:json)?\s*/m, '')
+    .replace(/\s*```\s*$/m, '')
+    .trim();
+
+  // Find the outermost JSON object by brace matching
+  var start = cleaned.indexOf('{');
+  if (start === -1) throw new Error('No JSON object found in AI response');
+
+  var depth = 0;
+  var end   = -1;
+  for (var i = start; i < cleaned.length; i++) {
+    if      (cleaned[i] === '{') { depth++; }
+    else if (cleaned[i] === '}') { depth--; if (depth === 0) { end = i; break; } }
+  }
+
+  if (end === -1) throw new Error('Malformed JSON: unmatched braces in AI response');
+
+  var jsonStr = cleaned.slice(start, end + 1);
+
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    // Fix common AI mistakes: trailing commas before } or ]
+    var fixed = jsonStr
+      .replace(/,(\s*[}\]])/g, '$1');
+    return JSON.parse(fixed);
+  }
+}
+
+function buildPrompt(name, category) {
+  var encodedName = encodeURIComponent(name);
+
+  return 'You are a hi-fi audio equipment expert with access to manufacturer specifications, published reviews, and audio databases. Return accurate technical data for the component listed below.\n\n' +
+    'Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
+    'Category: ' + category + '\n' +
+    'Component: "' + name + '"\n\n' +
+    'Source priority: Use official manufacturer specs when available. If not, use reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, Rtings.com, or other established audio publications and databases. Write "N/A" for any value that is genuinely unknown — never guess.\n\n' +
+    'Return this exact JSON structure (all fields required, no extra fields):\n\n' +
+    '{\n' +
+    '  "brand": "Manufacturer name only",\n' +
+    '  "model": "Model name only (no brand prefix)",\n' +
+    '  "fullName": "Brand and model as one string",\n' +
+    '  "msrpUSD": "e.g. $2499 or Approx. $2500 or Discontinued (~$1800)",\n' +
+    '  "yearIntroduced": "e.g. 2021 or 2019-present",\n' +
+    '  "specs": {\n' +
+    '    "Spec Name 1": "value with units",\n' +
+    '    "Spec Name 2": "value with units"\n' +
+    '  },\n' +
+    '  "dimensions": {\n' +
+    '    "width":  "e.g. 440mm (17.3in)",\n' +
+    '    "height": "e.g. 116mm (4.6in)",\n' +
+    '    "depth":  "e.g. 380mm (15.0in)",\n' +
+    '    "weight": "e.g. 8.4kg (18.5lbs)"\n' +
+    '  },\n' +
+    '  "notableFeatures": ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],\n' +
+    '  "summary": "2-3 sentences describing sonic character, build quality, design philosophy, and ideal use case.",\n' +
+    '  "strengths": ["Strength 1", "Strength 2", "Strength 3"],\n' +
+    '  "considerations": ["Consideration 1", "Consideration 2"],\n' +
+    '  "manufacturerUrl": "https://www.manufacturer.com/product-page",\n' +
+    '  "reviewLinks": [\n' +
+    '    { "outlet": "Stereophile",        "url": "https://www.stereophile.com/search/?q=' + encodedName + '" },\n' +
+    '    { "outlet": "What Hi-Fi",         "url": "https://www.whathifi.com/search?q=' + encodedName + '" },\n' +
+    '    { "outlet": "The Absolute Sound", "url": "https://www.theabsolutesound.com/?s=' + encodedName + '" }\n' +
+    '  ],\n' +
+    '  "youtubeSearches": ["' + name + ' review", "' + name + ' sound demo", "' + name + ' unboxing"]\n' +
+    '}\n\n' +
+    'Include 8-12 of the most relevant specs for a ' + category + ':\n' +
+    'AMPLIFIER: Output Power (stereo/8ohm), Output Power (mono/4ohm), THD+N, SNR, Input Sensitivity, Frequency Response, Damping Factor, Inputs, Outputs, Class of operation\n' +
+    'PREAMPLIFIER: Gain, THD+N, SNR, Frequency Response, Input Impedance, Output Impedance, Channel Separation, Inputs, Outputs\n' +
+    'PHONO PREAMP: Gain (MM), Gain (MC), RIAA Accuracy, SNR (MM), SNR (MC), Input Impedance (MM), Input Impedance (MC), Output Impedance, Subsonic Filter, Power Supply\n' +
+    'TURNTABLE: Drive Type, Motor, Speeds, Platter Material, Platter Weight, Wow and Flutter, SNR, Tonearm (if included), Anti-Skate, Built-in Phono Stage\n' +
+    'TONEARM: Effective Length, Mounting Distance, Overhang, Offset Angle, Effective Mass, Bearing Type, Headshell Mount, VTA Adjustment, Anti-Skating\n' +
+    'CARTRIDGE: Type, Output Voltage, Channel Separation, Channel Balance, Frequency Response, Tracking Force, Compliance, Stylus Shape, Cantilever, Loading Impedance\n' +
+    'DAC: DAC Chip, PCM Resolution, DSD Support, Dynamic Range, THD+N, SNR, Digital Inputs, Analog Outputs, Headphone Output, USB Class\n' +
+    'STREAMER: Supported Services, Max PCM Resolution, DSD Support, Network Connectivity, Outputs, Built-in DAC, App Platform, Roon Ready, MQA\n' +
+    'SPEAKERS: Frequency Response, Sensitivity, Nominal Impedance, Minimum Impedance, Woofer Size, Tweeter, Enclosure Type, Crossover Frequency, Recommended Power\n' +
+    'HEADPHONES: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity, THD, Weight, Cable Length, Connector, Wearing Style';
 }

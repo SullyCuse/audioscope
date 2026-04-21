@@ -40,15 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
 function buildCategoryGrid() {
   const grid = document.getElementById('cat-grid');
   if (!grid) return;
-  grid.innerHTML = CATEGORIES.map(cat => `
+  grid.innerHTML = CATEGORIES.map((cat, idx) => `
     <button
       class="cat-card"
       role="listitem"
       data-cat="${cat.id}"
       aria-label="Compare ${cat.label}"
     >
+      <div class="cat-num">${String(idx + 1).padStart(2, '0')}</div>
       <div class="cat-label">${esc(cat.label)}</div>
       <div class="cat-sub">${esc(cat.sub)}</div>
+      <div class="cat-arrow">Compare → </div>
     </button>
   `).join('');
 
