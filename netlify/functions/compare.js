@@ -153,12 +153,12 @@ function buildSpecPrompt(name, category) {
     'Category: ' + category + '\n' +
     'Component: "' + name + '"\n\n' +
     'Source priority: Use official manufacturer specs first, then reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com.\n\n' +
-    'ACCURACY RULES — follow these strictly:\n' +
-    '- Write "N/A" for ANY value you are not confident about — never guess or infer.\n' +
-    '- For speakers: enclosure type (bookshelf/standmount vs floorstander/tower) is critical. If you are not 100% certain from a reliable source, write "N/A" — do NOT infer from model name, number, or series siblings.\n' +
-    '- For any component: do NOT assume specs based on related models in the same range. Each model must be verified independently.\n' +
-    '- Recent or regional products may not be in your training data. If you have low confidence in a spec, write "N/A".\n' +
-    '- In your summary, only describe characteristics you are confident about. Do not invent sonic descriptions.\n\n'
+    'ACCURACY RULES:\n' +
+    '- Provide all specs you can source with reasonable confidence — do not be overly cautious on well-documented products.\n' +
+    '- Write "N/A" only when you genuinely have no reliable data for a specific value — not as a blanket response.\n' +
+    '- EXCEPTION — for speakers specifically: enclosure type (bookshelf/standmount vs floorstander/tower) must come from a verified source. Do NOT infer it from the model name, number, or series siblings. If uncertain, write "N/A".\n' +
+    '- For newer, boutique, or regional products with limited data: provide what you can confirm and use "N/A" for the rest. In the summary, note if data is limited.\n' +
+    '- Do not fabricate specs. If a product is genuinely obscure, say so in the summary rather than returning empty specs.\n\n'
     'Return this exact JSON structure:\n\n' +
     '{\n' +
     '  "brand": "Manufacturer name only",\n' +
