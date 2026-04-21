@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AudioScope – Hi-Fi Component Comparison Tool</title>
   <meta name="description" content="Compare hi-fi audio components side by side. AI-retrieved specs, dimensions, expert summaries, and curated review links for amplifiers, speakers, turntables, DACs, headphones, and more.">
-  <meta name="keywords" content="hi-fi comparison, audiophile specs, amplifier, speaker, turntable, DAC, headphones, phono preamp, audio equipment">
-  <meta name="author" content="AudioScope">
+  <meta name="keywords" content="hi-fi comparison, audiophile specs, amplifier, speaker, turntable, DAC, headphones, phono preamp">
   <meta name="robots" content="index, follow">
-  <meta property="og:title"       content="AudioScope – Hi-Fi Component Comparison">
-  <meta property="og:description" content="AI-powered hi-fi audio component comparison. Specs, dimensions, reviews, and analysis.">
-  <meta property="og:type"        content="website">
+  <meta property="og:title" content="AudioScope – Hi-Fi Component Comparison">
+  <meta property="og:description" content="AI-powered hi-fi audio component comparison. Specs, dimensions, and expert analysis.">
+  <meta property="og:type" content="website">
   <link rel="canonical" href="https://audioscope.netlify.app/">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="google-adsense-account" content="ca-pub-8677522350792212">
@@ -21,42 +20,39 @@
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════
      HEADER
-══════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════ -->
 <header id="site-header">
   <div class="container">
-    <div class="inner">
-
-      <a href="/" class="site-logo" id="logo-link" onclick="resetApp();return false;" aria-label="AudioScope home">
-        <div class="logo-mark">
-          <svg width="22" height="22" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-            <rect x="4"  y="19" width="4" height="6"  rx="2" fill="#C49A38" opacity=".5"/>
-            <rect x="10" y="14" width="4" height="16" rx="2" fill="#C49A38" opacity=".7"/>
-            <rect x="16" y="7"  width="4" height="30" rx="2" fill="#C49A38" opacity=".88"/>
-            <rect x="22" y="2"  width="5" height="40" rx="2.5" fill="#C49A38"/>
-            <rect x="29" y="9"  width="4" height="26" rx="2" fill="#C49A38" opacity=".88"/>
-            <rect x="35" y="15" width="4" height="14" rx="2" fill="#C49A38" opacity=".65"/>
+    <div class="hdr-inner">
+      <a href="/" class="site-logo" id="logo-link" onclick="resetApp();return false;">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 44 44" fill="none">
+            <rect x="4"  y="20" width="4" height="6"  rx="2" fill="#C8881A" opacity=".5"/>
+            <rect x="10" y="14" width="4" height="18" rx="2" fill="#C8881A" opacity=".72"/>
+            <rect x="16" y="7"  width="4" height="32" rx="2" fill="#C8881A" opacity=".9"/>
+            <rect x="22" y="2"  width="5" height="42" rx="2.5" fill="#C8881A"/>
+            <rect x="29" y="8"  width="4" height="28" rx="2" fill="#C8881A" opacity=".9"/>
+            <rect x="35" y="14" width="4" height="16" rx="2" fill="#C8881A" opacity=".65"/>
           </svg>
         </div>
-        <div class="logo-text">
+        <div class="logo-words">
           <div class="logo-name">AUDIO<em>SCOPE</em></div>
-          <div class="logo-sub">Hi-Fi Component Intelligence</div>
+          <div class="logo-tag">Hi-Fi Component Intelligence</div>
         </div>
       </a>
-
-      <nav class="site-nav" aria-label="Site navigation">
-        <a href="about.html"          class="nav-a keep">About</a>
+      <nav class="site-nav">
+        <a href="about.html" class="nav-a keep">About</a>
         <a href="privacy-policy.html" class="nav-a keep">Privacy</a>
         <button id="btn-new-cmp" class="hidden" onclick="resetApp()" type="button">← New Comparison</button>
       </nav>
-
     </div>
   </div>
 </header>
 
-<!-- Top ad — shown during results -->
-<div id="ad-top" class="hidden" style="background:var(--surface); border-bottom:1px solid var(--border);">
+<!-- Top ad — visible during results -->
+<div id="ad-top" class="hidden" style="background:#fff;border-bottom:1px solid #E5E7EB">
   <div class="container">
     <div class="ad-wrap">
       <ins class="adsbygoogle" style="display:block"
@@ -71,131 +67,161 @@
 
 <main>
 
-<!-- ══════════════════════════════════════════════════════════════
-     HOME — HERO + PHOTOS + CATEGORY GRID
-══════════════════════════════════════════════════════════════ -->
-<section id="sec-home" aria-label="Category selection">
+<!-- ════════════════════════════════════════════
+     HOME — HERO + STATS + CATEGORIES + PHOTOS
+════════════════════════════════════════════ -->
+<section id="sec-home">
 
-  <!-- Full-width hero image -->
-  <div class="hero-wrap">
-    <!-- Royalty-free: Unsplash Free Commercial License -->
-    <img
-      class="hero-img"
-      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80"
-      alt="Vintage high-fidelity audio amplifier with illuminated VU meters"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
+  <!-- Split hero: text left / photo right -->
+  <div class="hero">
+    <div class="hero-left">
       <span class="eyebrow hero-eyebrow">Hi-Fi Audio Comparison Engine</span>
-      <h1 class="hero-h1">Compare<br><em>Any Component.</em></h1>
-      <p class="hero-sub">Select a category below and enter 2–6 hi-fi components to receive a full side-by-side specification table, editorial summaries, and curated review links — powered by AI.</p>
+      <h1 class="hero-h1">Compare<br><em>Any Component.</em><br>Instantly.</h1>
+      <p class="hero-sub">Select a category below, enter 2–6 specific models, and get a full side-by-side specification table with expert summaries and curated review links — all AI-powered.</p>
     </div>
-    <span class="hero-caption">Photo: Unsplash · Free Commercial License</span>
-  </div>
-
-  <!-- 3-image editorial strip -->
-  <div class="photo-strip" aria-hidden="true">
-    <div class="photo-strip-item">
+    <div class="hero-right">
+      <!-- Royalty-free: Unsplash Free Commercial License -->
       <img
-        src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80"
-        alt="Loudspeaker woofer driver close-up"
-        loading="lazy"
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85"
+        alt="High-fidelity vintage amplifier with illuminated VU meters"
+        loading="eager" fetchpriority="high"
       />
-      <span class="strip-label">Loudspeakers</span>
-    </div>
-    <div class="strip-divider" aria-hidden="true"></div>
-    <div class="photo-strip-item">
-      <img
-        src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"
-        alt="Premium over-ear headphones"
-        loading="lazy"
-      />
-      <span class="strip-label">Headphones</span>
-    </div>
-    <div class="strip-divider" aria-hidden="true"></div>
-    <div class="photo-strip-item">
-      <img
-        src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=800&q=80"
-        alt="Vinyl record on a turntable"
-        loading="lazy"
-      />
-      <span class="strip-label">Turntables</span>
+      <span class="hero-photo-credit">Photo: Unsplash · Free Commercial License</span>
     </div>
   </div>
 
-  <!-- Category selector -->
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-inner">
+        <div class="stat">
+          <div class="stat-num"><em>10</em></div>
+          <div class="stat-lbl">Component Categories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><em>6</em></div>
+          <div class="stat-lbl">Max Components Per Session</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><em>12+</em></div>
+          <div class="stat-lbl">Specs Retrieved Per Component</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><em>AI</em></div>
+          <div class="stat-lbl">Powered by Anthropic Claude</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category grid -->
   <div class="cat-section">
     <div class="container">
-
-      <div class="cat-section-hd fade-in">
-        <span class="eyebrow">Step 1 — Choose Category</span>
-        <h2>What would you like<br>to compare today?</h2>
-        <p>Select a category to begin. Then add 2–6 specific component models by brand and model name.</p>
+      <div class="cat-section-top">
+        <div>
+          <span class="eyebrow">Step 1</span>
+          <h2>Select a Category</h2>
+        </div>
+        <p>Choose the type of component you want to compare. Add 2–6 specific models by brand and model name on the next screen.</p>
       </div>
+      <div class="cat-grid" id="cat-grid" role="list"></div>
+    </div>
+  </div>
 
-      <div class="cat-grid" id="cat-grid" role="list" aria-label="Audio component categories">
-        <!-- Rendered by app.js -->
+  <!-- Photo feature strip -->
+  <div class="feature-strip">
+    <div class="container">
+      <div class="feature-strip-grid">
+
+        <div class="feat-item">
+          <img
+            src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80"
+            alt="Loudspeaker driver close-up showing woofer cone detail"
+            loading="lazy"
+          />
+          <div class="feat-overlay"></div>
+          <div class="feat-text">
+            <span class="feat-cat">Category</span>
+            <div class="feat-title">Loudspeakers</div>
+          </div>
+          <span class="feat-attr">Unsplash · Free Use</span>
+        </div>
+
+        <div class="feat-item">
+          <img
+            src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
+            alt="Premium over-ear audiophile headphones"
+            loading="lazy"
+          />
+          <div class="feat-overlay"></div>
+          <div class="feat-text">
+            <span class="feat-cat">Category</span>
+            <div class="feat-title">Headphones</div>
+          </div>
+          <span class="feat-attr">Unsplash · Free Use</span>
+        </div>
+
+        <div class="feat-item">
+          <img
+            src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=900&q=80"
+            alt="Vinyl record on a turntable platter"
+            loading="lazy"
+          />
+          <div class="feat-overlay"></div>
+          <div class="feat-text">
+            <span class="feat-cat">Category</span>
+            <div class="feat-title">Turntables</div>
+          </div>
+          <span class="feat-attr">Unsplash · Free Use</span>
+        </div>
+
       </div>
-
     </div>
   </div>
 
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════
      ADD COMPONENTS
-══════════════════════════════════════════════════════════════ -->
-<section id="sec-add" class="hidden add-section" aria-label="Add components">
+════════════════════════════════════════════ -->
+<section id="sec-add" class="hidden add-section">
   <div class="container">
-
-    <div class="sec-hd fade-in">
+    <div class="sec-hd fade-up">
       <span class="eyebrow" id="lbl-cat">Category</span>
       <h1>Add Components</h1>
-      <p>Enter 2–6 models by brand and full model name — e.g. <em>"Rega Planar 3"</em> or <em>"Marantz PM8006"</em>. Specific names yield the most accurate results.</p>
+      <p>Enter 2–6 models by full brand + model name for best results — e.g. <em>"Rega Planar 3"</em> or <em>"Marantz PM8006"</em>.</p>
     </div>
 
     <div class="input-row">
       <label for="comp-input" class="hidden">Component name</label>
-      <input
-        type="text"
-        id="comp-input"
-        class="comp-input"
+      <input type="text" id="comp-input" class="comp-input"
         placeholder='e.g. "Naim Nait XS 3" or "Focal Clear MG"'
-        autocomplete="off"
-        autocorrect="off"
-        spellcheck="false"
-        aria-label="Enter component brand and model name"
-      />
+        autocomplete="off" autocorrect="off" spellcheck="false" />
       <button class="btn-add" id="btn-add" type="button">+ Add</button>
     </div>
 
-    <div class="chips-wrap" id="chips-wrap" role="list" aria-label="Components to compare"></div>
+    <div class="chips-wrap" id="chips-wrap" role="list"></div>
 
     <div class="cmp-footer">
-      <button class="btn-gold disabled" id="btn-compare" type="button" disabled>
+      <button class="btn-primary disabled" id="btn-compare" type="button" disabled>
         Add at least 2 components
       </button>
       <span class="cnt-lbl" id="cnt-lbl" aria-live="polite">0 / 6 · minimum 2 required</span>
     </div>
-
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════
      RESULTS
-══════════════════════════════════════════════════════════════ -->
-<section id="sec-results" class="hidden results-section" aria-label="Comparison results" aria-live="polite">
+════════════════════════════════════════════ -->
+<section id="sec-results" class="hidden results-section" aria-live="polite">
   <div class="container">
-
     <div class="sec-hd">
       <span class="eyebrow" id="lbl-res-cat">Results</span>
       <h1>Comparison Results</h1>
     </div>
 
-    <!-- Loading -->
-    <div id="loading-block" class="loading-block" role="status" aria-label="Retrieving specifications">
+    <div id="loading-block" class="loading-block" role="status">
       <div class="wave-loader" aria-hidden="true">
         <div class="wb"></div><div class="wb"></div><div class="wb"></div>
         <div class="wb"></div><div class="wb"></div><div class="wb"></div>
@@ -205,10 +231,7 @@
       <p class="loading-sub" id="lbl-loading-names"></p>
     </div>
 
-    <!-- Errors -->
-    <div id="err-zone" role="alert" aria-live="polite"></div>
-
-    <!-- Spec table -->
+    <div id="err-zone" role="alert"></div>
     <div id="table-zone"></div>
 
     <!-- Mid ad -->
@@ -223,16 +246,15 @@
       </div>
     </div>
 
-    <!-- Component cards -->
     <div id="cards-zone" class="hidden">
       <h2 class="cards-hd">Component Profiles</h2>
-      <p class="cards-sub">Editorial summaries, key strengths, considerations, and curated resource links.</p>
+      <p class="cards-sub">Editorial summaries, strengths, considerations, and curated resource links.</p>
       <div class="cards-grid" id="cards-grid"></div>
     </div>
 
     <!-- Bottom ad -->
     <div id="ad-bot" class="hidden">
-      <div class="ad-wrap" style="margin-top:48px;">
+      <div class="ad-wrap" style="margin-top:44px">
         <ins class="adsbygoogle" style="display:block"
           data-ad-client="ca-pub-8677522350792212"
           data-ad-slot="REPLACE_BOT_SLOT_ID"
@@ -242,65 +264,66 @@
       </div>
     </div>
 
-    <!-- Reset CTA -->
     <div class="results-cta hidden" id="results-cta">
       <p>Ready to compare something else?</p>
-      <button class="btn-gold" onclick="resetApp()" type="button">Start New Comparison</button>
+      <button class="btn-primary" onclick="resetApp()" type="button">Start New Comparison</button>
     </div>
-
   </div>
 </section>
 
 </main>
 
-<!-- ══════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════
      FOOTER
-══════════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════ -->
 <footer id="site-footer">
   <div class="container">
-    <div class="footer-inner">
-
+    <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo-row">
-          <div class="footer-logo-mark">
-            <svg width="18" height="18" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <rect x="4"  y="19" width="4" height="6"  rx="2" fill="#C49A38" opacity=".55"/>
-              <rect x="10" y="14" width="4" height="16" rx="2" fill="#C49A38" opacity=".75"/>
-              <rect x="16" y="7"  width="4" height="30" rx="2" fill="#C49A38" opacity=".9"/>
-              <rect x="22" y="2"  width="5" height="40" rx="2.5" fill="#C49A38"/>
-              <rect x="29" y="9"  width="4" height="26" rx="2" fill="#C49A38" opacity=".9"/>
-              <rect x="35" y="15" width="4" height="14" rx="2" fill="#C49A38" opacity=".7"/>
+          <div class="footer-icon">
+            <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
+              <rect x="4"  y="20" width="4" height="6"  rx="2" fill="#C8881A" opacity=".55"/>
+              <rect x="10" y="14" width="4" height="18" rx="2" fill="#C8881A" opacity=".75"/>
+              <rect x="16" y="7"  width="4" height="32" rx="2" fill="#C8881A" opacity=".9"/>
+              <rect x="22" y="2"  width="5" height="42" rx="2.5" fill="#C8881A"/>
+              <rect x="29" y="8"  width="4" height="28" rx="2" fill="#C8881A" opacity=".9"/>
+              <rect x="35" y="14" width="4" height="16" rx="2" fill="#C8881A" opacity=".68"/>
             </svg>
           </div>
           <div class="footer-wordmark">AUDIO<em>SCOPE</em></div>
         </div>
-        <p class="footer-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
+        <p class="footer-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand or manufacturer.</p>
       </div>
-
-      <div class="footer-nav-col">
-        <span class="footer-nav-lbl">Navigation</span>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="mailto:contact@audioscope.example.com">Contact</a>
-        </nav>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <span class="footer-col-lbl">Navigate</span>
+          <div class="footer-links-list">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="mailto:contact@audioscope.example.com">Contact</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-lbl">Categories</span>
+          <div class="footer-links-list">
+            <a href="/">Amplifiers &amp; Preamps</a>
+            <a href="/">Turntables &amp; Cartridges</a>
+            <a href="/">DACs &amp; Streamers</a>
+            <a href="/">Speakers &amp; Headphones</a>
+          </div>
+        </div>
       </div>
-
-      <div class="footer-legal">
-        <p class="footer-copy">© <span id="footer-yr"></span> AudioScope<br>Powered by Anthropic Claude AI<br>Images: Unsplash Free Commercial License</p>
-      </div>
-
     </div>
-
-    <div class="footer-rule"></div>
-    <p class="footer-bottom">AudioScope is not affiliated with Anthropic, Google, or any audio manufacturer · All trademarks belong to their respective owners</p>
+    <div class="footer-bottom">
+      <span class="footer-copy">© <span id="footer-yr"></span> AudioScope · Powered by Anthropic Claude</span>
+      <span class="footer-attr">Photos: Unsplash Free Commercial License · All trademarks belong to their respective owners</span>
+    </div>
   </div>
 </footer>
 
 <script src="js/app.js"></script>
-<script>
-  document.getElementById('footer-yr').textContent = new Date().getFullYear();
-</script>
+<script>document.getElementById('footer-yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

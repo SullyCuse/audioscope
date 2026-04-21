@@ -47,10 +47,10 @@ function buildCategoryGrid() {
       data-cat="${cat.id}"
       aria-label="Compare ${cat.label}"
     >
-      <div class="cat-num">${String(idx + 1).padStart(2, '0')}</div>
+      <span class="cat-num">0${idx + 1}</span>
       <div class="cat-label">${esc(cat.label)}</div>
       <div class="cat-sub">${esc(cat.sub)}</div>
-      <div class="cat-arrow">Compare → </div>
+      <div class="cat-go">Compare →</div>
     </button>
   `).join('');
 
