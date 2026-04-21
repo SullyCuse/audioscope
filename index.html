@@ -3,1562 +3,757 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AudioChainHiFi.com — Hi-Fi Compatibility Checker</title>
-<meta name="description" content="Free AI-powered hi-fi audio system compatibility checker. Analyze impedance matching, gain staging, phono chain resonance, and signal chain compatibility.">
-<meta property="og:title" content="AudioChainHiFi.com — Hi-Fi Compatibility Checker">
-<meta property="og:description" content="Free AI-powered hi-fi compatibility analysis. Enter your components and get detailed impedance, gain, and phono chain analysis instantly.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.audiochainhifi.com">
+<title>AudioScope – Hi-Fi Component Comparison</title>
+<meta name="description" content="Compare hi-fi audio components side by side. AI-retrieved specs, dimensions, expert summaries, and review links for amplifiers, speakers, turntables, DACs, and headphones.">
 <meta name="robots" content="index, follow">
+<meta name="google-adsense-account" content="ca-pub-8677522350792212">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','wait_for_update':500});
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8677522350792212" crossorigin="anonymous"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:#F8F7F5;color:#111827;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:#B45309;text-decoration:none}
+a:hover{opacity:.75}
+button{cursor:pointer;font-family:inherit}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#F3F4F6}
+::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:3px}
 
-:root {
-  --blue:     #2563eb;
-  --blue-dk:  #1d4ed8;
-  --blue-lt:  #eff6ff;
-  --indigo:   #4f46e5;
-  --dark:     #0f172a;
-  --dark-2:   #1e293b;
-  --dark-3:   #334155;
-  --text:     #0f172a;
-  --text-2:   #475569;
-  --text-3:   #94a3b8;
-  --border:   #e2e8f0;
-  --border-2: #cbd5e1;
-  --cream:    #f8fafc;
-  --white:    #ffffff;
-  --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-  --shadow-lg:0 8px 32px rgba(0,0,0,.12);
-  --font:     'Plus Jakarta Sans', system-ui, sans-serif;
-  --radius:   12px;
-  --radius-lg:20px;
-}
+/* ── Util ── */
+.container{max-width:1140px;margin:0 auto;padding:0 32px}
+.hidden{display:none!important}
+.eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D97706}
 
-html { scroll-behavior: smooth; }
+/* ── HEADER ── */
+#hdr{position:sticky;top:0;z-index:999;background:rgba(17,24,39,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.07)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-box{width:36px;height:36px;background:#D97706;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-name{font-size:18px;font-weight:800;letter-spacing:.05em;color:#fff}
+.logo-name span{color:#FCD34D}
+.logo-tag{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:2px}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:6px 13px;border-radius:6px;border:1px solid transparent;transition:all .18s;text-decoration:none}
+.nav a:hover{color:#fff;border-color:rgba(255,255,255,.15);opacity:1}
+#btn-back{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);background:none;border:1px solid rgba(255,255,255,.15);padding:6px 16px;border-radius:6px;transition:all .18s}
+#btn-back:hover{color:#FCD34D;border-color:#D97706}
 
-body {
-  font-family: var(--font);
-  font-size: 15px;
-  background: var(--cream);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-img { display: block; max-width: 100%; }
-a  { color: var(--blue); text-decoration: none; }
-
-.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-
-/* ── NAV ── */
-.nav {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(15,23,42,0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-.nav-inner {
-  max-width: 1180px; margin: 0 auto; padding: 0 24px;
-  height: 64px; display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo {
-  font-size: 17px; font-weight: 700; color: #fff;
-  display: flex; align-items: center; gap: 10px;
-}
-.nav-logo-ring {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--indigo));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: #fff; font-weight: 700;
-}
-.nav-links { display: flex; align-items: center; gap: 6px; }
-.nav-links a {
-  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.7);
-  padding: 6px 12px; border-radius: 8px; transition: all .15s;
-}
-.nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
-.nav-links a.active { color: #fff; }
-.nav-cta {
-  font-size: 13px; font-weight: 600;
-  padding: 8px 16px; border-radius: 8px;
-  background: var(--blue); color: #fff !important;
-  transition: background .15s;
-}
-.nav-cta:hover { background: var(--blue-dk) !important; }
+/* ── TOP AD ── */
+#ad-top{background:#fff;border-bottom:1px solid #E5E7EB;padding:4px 0}
+.ad-box{min-height:90px;background:#F9FAFB;border:1px dashed #D1D5DB;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:8px 0;overflow:hidden}
+.ad-box ins{display:block;width:100%}
 
 /* ── HERO ── */
-.hero {
-  position: relative; overflow: hidden;
-  min-height: 88vh; display: flex; align-items: center;
-}
-.hero-img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg,
-    rgba(10,15,35,0.88) 0%,
-    rgba(15,25,60,0.75) 50%,
-    rgba(30,20,80,0.65) 100%);
-}
-.hero-content {
-  position: relative; z-index: 1;
-  max-width: 1180px; margin: 0 auto; padding: 80px 24px;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(99,102,241,.25);
-  border: 1px solid rgba(99,102,241,.5);
-  color: #a5b4fc; font-size: 12px; font-weight: 600;
-  letter-spacing: .06em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: 100px; margin-bottom: 28px;
-}
-.hero-badge::before { content: '●'; font-size: 8px; color: #818cf8; }
-.hero h1 {
-  font-size: clamp(36px, 5.5vw, 68px);
-  font-weight: 800; line-height: 1.08;
-  color: #fff; margin-bottom: 22px; letter-spacing: -.02em;
-  max-width: 760px;
-}
-.hero h1 span {
-  background: linear-gradient(90deg, #60a5fa, #818cf8, #c084fc);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-desc {
-  font-size: 18px; color: rgba(255,255,255,.75);
-  max-width: 520px; line-height: 1.7; margin-bottom: 36px;
-}
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 15px; font-weight: 600;
-  padding: 14px 28px; border-radius: 10px;
-  background: var(--blue); color: #fff;
-  transition: all .18s; border: none; cursor: pointer;
-  box-shadow: 0 4px 20px rgba(37,99,235,.4);
-}
-.btn-primary:hover { background: var(--blue-dk); transform: translateY(-1px); }
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 15px; font-weight: 600;
-  padding: 14px 28px; border-radius: 10px;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.2);
-  color: #fff; transition: all .18s; cursor: pointer;
-  backdrop-filter: blur(8px);
-}
-.btn-secondary:hover { background: rgba(255,255,255,.18); }
+.hero{display:flex;min-height:520px;background:#111827}
+.hero-txt{flex:0 0 52%;display:flex;flex-direction:column;justify-content:center;padding:72px 64px;border-right:1px solid rgba(255,255,255,.06)}
+.hero-h1{font-size:clamp(38px,5.5vw,72px);font-weight:800;line-height:1.0;letter-spacing:-.03em;color:#F9FAFB;margin:18px 0 20px}
+.hero-h1 em{color:#FCD34D;font-style:normal}
+.hero-sub{font-size:16px;font-weight:300;color:rgba(249,250,251,.55);line-height:1.75;max-width:400px}
+.hero-img-col{flex:1;overflow:hidden;position:relative}
+.hero-img-col img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.85)}
+.hero-credit{position:absolute;bottom:10px;right:14px;font-size:10px;color:rgba(255,255,255,.2);letter-spacing:.08em}
 
-.hero-stats {
-  display: flex; gap: 36px; margin-top: 52px;
-  flex-wrap: wrap;
-}
-.hero-stat { color: rgba(255,255,255,.6); font-size: 13px; }
-.hero-stat strong { display: block; color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+/* ── STATS ── */
+.stats{background:#fff;border-bottom:1px solid #E5E7EB}
+.stats-row{display:flex}
+.stat{flex:1;padding:22px 0;text-align:center;border-right:1px solid #E5E7EB}
+.stat:last-child{border-right:none}
+.stat-n{font-size:28px;font-weight:800;color:#111827;line-height:1;margin-bottom:4px}
+.stat-n b{color:#D97706;font-style:normal}
+.stat-l{font-size:12px;font-weight:500;color:#9CA3AF;letter-spacing:.03em}
 
-/* ── TRUST BAR ── */
-.trust-bar {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
-}
-.trust-inner {
-  max-width: 1180px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: center;
-  gap: 32px; flex-wrap: wrap;
-}
-.trust-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; font-weight: 500; color: var(--text-2);
-}
-.trust-icon { font-size: 16px; }
+/* ── CATEGORIES ── */
+.cat-sec{padding:72px 0 80px}
+.cat-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;gap:32px;flex-wrap:wrap}
+.cat-top .eyebrow{margin-bottom:10px}
+.cat-top h2{font-size:clamp(28px,3.8vw,42px);font-weight:800;color:#111827;letter-spacing:-.02em;line-height:1.1}
+.cat-top p{font-size:14px;color:#6B7280;max-width:300px;line-height:1.7}
+.cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.cat-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:14px;padding:22px 18px 18px;text-align:left;transition:all .2s;position:relative;overflow:hidden;min-height:136px;display:flex;flex-direction:column}
+.cat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#D97706;transform:scaleX(0);transition:transform .2s;transform-origin:left}
+.cat-card:hover{border-color:#D97706;box-shadow:0 8px 28px rgba(17,24,39,.1);transform:translateY(-3px)}
+.cat-card:hover::after{transform:scaleX(1)}
+.cat-n{font-size:11px;font-weight:700;letter-spacing:.16em;color:#D97706;margin-bottom:10px;display:block}
+.cat-lbl{font-size:15px;font-weight:700;color:#111827;line-height:1.25;margin-bottom:5px}
+.cat-sub{font-size:11px;color:#9CA3AF;line-height:1.5;flex:1}
+.cat-go{font-size:12px;font-weight:600;color:#D97706;margin-top:12px;opacity:0;transform:translateY(4px);transition:all .2s}
+.cat-card:hover .cat-go{opacity:1;transform:translateY(0)}
 
-/* ── SECTION ── */
-.section { padding: 88px 0; }
-.section-alt { background: var(--white); }
-.section-dark { background: var(--dark); }
+/* ── PHOTO STRIP ── */
+.photo-strip{background:#111827;padding:56px 0}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.photo-card{border-radius:16px;overflow:hidden;height:240px;position:relative;background:#1F2937}
+.photo-card img{width:100%;height:100%;object-fit:cover;filter:brightness(.68) saturate(.8);transition:transform .45s ease,filter .45s ease;display:block}
+.photo-card:hover img{transform:scale(1.05);filter:brightness(.78) saturate(.9)}
+.photo-over{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.08) 55%,transparent 100%)}
+.photo-lbl{position:absolute;bottom:20px;left:20px;z-index:1}
+.photo-cat{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#FCD34D;margin-bottom:4px;display:block}
+.photo-name{font-size:20px;font-weight:700;color:#F9FAFB;line-height:1.2}
+.photo-attr{position:absolute;top:12px;right:14px;font-size:9px;color:rgba(255,255,255,.2);z-index:1;letter-spacing:.08em}
 
-.section-label {
-  font-size: 12px; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue); margin-bottom: 12px;
-}
-.section-title {
-  font-size: clamp(26px, 3.5vw, 40px);
-  font-weight: 800; color: var(--text);
-  letter-spacing: -.02em; line-height: 1.15;
-  margin-bottom: 16px;
-}
-.section-title-white { color: #fff; }
-.section-desc { font-size: 17px; color: var(--text-2); max-width: 540px; line-height: 1.75; }
-.section-desc-white { color: rgba(255,255,255,.65); }
-.section-header { margin-bottom: 52px; }
+/* ── ADD SECTION ── */
+.add-sec{background:#fff;border-top:1px solid #E5E7EB;padding:80px 0}
+.sec-hd{margin-bottom:40px}
+.sec-hd .eyebrow{margin-bottom:10px}
+.sec-hd h1{font-size:clamp(30px,4vw,48px);font-weight:800;color:#111827;letter-spacing:-.025em;margin-bottom:12px;line-height:1.05}
+.sec-hd p{font-size:15px;color:#6B7280;max-width:480px;line-height:1.7}
+.input-row{display:flex;gap:10px;max-width:660px;margin-bottom:22px}
+.inp{flex:1;min-width:0;background:#F9FAFB;border:1.5px solid #D1D5DB;border-radius:10px;padding:13px 16px;font-size:15px;font-family:inherit;color:#111827;transition:border-color .18s,box-shadow .18s}
+.inp:focus{outline:none;border-color:#D97706;background:#fff;box-shadow:0 0 0 3px rgba(217,119,6,.1)}
+.inp::placeholder{color:#D1D5DB}
+.inp:disabled{opacity:.5;cursor:not-allowed}
+.btn-add-comp{background:#111827;color:#fff;border:none;border-radius:10px;padding:13px 24px;font-size:14px;font-weight:600;letter-spacing:.02em;transition:all .18s;white-space:nowrap}
+.btn-add-comp:hover{background:#1F2937;box-shadow:0 4px 14px rgba(17,24,39,.2)}
+.btn-add-comp:disabled{background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;box-shadow:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.chip{display:inline-flex;align-items:center;gap:9px;background:#F9FAFB;border:1.5px solid #E5E7EB;border-radius:40px;padding:7px 10px 7px 14px;font-size:13px;animation:slideIn .2s ease;transition:border-color .15s}
+.chip:hover{border-color:rgba(220,38,38,.3)}
+.chip-n{font-size:13px;font-weight:700;color:#D97706}
+.chip-nm{color:#374151}
+.chip-x{background:none;border:none;color:#D1D5DB;font-size:18px;line-height:1;padding:0 2px;transition:color .15s}
+.chip-x:hover{color:#DC2626}
+.cmp-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.cnt{font-size:13px;color:#9CA3AF}
+.btn-cmp{display:inline-flex;align-items:center;background:#111827;color:#fff;border:none;border-radius:10px;padding:13px 36px;font-size:15px;font-weight:600;letter-spacing:.025em;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-cmp:hover{background:#1F2937;transform:translateY(-2px);box-shadow:0 6px 22px rgba(17,24,39,.2)}
+.btn-cmp:disabled,.btn-cmp.dis{background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* ── FEATURE CARDS ── */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-}
+.disclaimer-banner{display:flex;align-items:flex-start;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid #D97706;border-radius:8px;padding:13px 16px;margin-bottom:32px;font-size:13px;color:#92400E;line-height:1.6}
+.disclaimer-banner svg{flex-shrink:0;margin-top:1px;color:#D97706}
+.disclaimer-banner strong{color:#78350F;font-weight:600}
+/* ── RESULTS ── */
+.res-sec{background:#F8F7F5;padding:72px 0 88px}
+.loading{text-align:center;padding:80px 20px}
+.wave{display:flex;justify-content:center;align-items:flex-end;gap:5px;height:48px;margin-bottom:22px}
+.wb{width:5px;border-radius:3px;background:#D97706;animation:wave 1.1s ease-in-out infinite}
+.wb:nth-child(1){height:14px;animation-delay:0s}
+.wb:nth-child(2){height:28px;animation-delay:.12s}
+.wb:nth-child(3){height:44px;animation-delay:.24s}
+.wb:nth-child(4){height:34px;animation-delay:.36s}
+.wb:nth-child(5){height:20px;animation-delay:.48s}
+.wb:nth-child(6){height:32px;animation-delay:.6s}
+.wb:nth-child(7){height:12px;animation-delay:.72s}
+.load-ttl{font-size:22px;font-weight:700;color:#111827;margin-bottom:8px}
+.load-sub{font-size:14px;color:#9CA3AF}
+.err-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:13px 18px;margin-bottom:10px;font-size:14px;color:#B91C1C}
 
-.feature-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: var(--shadow);
-}
-.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+/* Table */
+.tbl-wrap{overflow-x:auto;border-radius:14px;border:1px solid #E5E7EB;margin-bottom:52px;background:#fff;box-shadow:0 2px 12px rgba(17,24,39,.06)}
+.spec-tbl{width:100%;border-collapse:collapse}
+.spec-tbl thead tr{background:#111827}
+.spec-tbl th{padding:20px 22px;text-align:left;border-bottom:2px solid #D97706;vertical-align:bottom}
+.th-s{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);width:160px;min-width:140px}
+.th-c{min-width:185px}
+.th-brand{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FCD34D;margin-bottom:4px}
+.th-model{font-size:19px;font-weight:700;color:#F9FAFB;line-height:1.12}
+.th-year{font-size:11px;color:rgba(255,255,255,.3);margin-top:3px}
+.spec-tbl td{padding:12px 22px;border-bottom:1px solid #F3F4F6;font-size:13px;vertical-align:top;color:#374151;background:#fff}
+.spec-tbl tbody tr:nth-child(even) td{background:#F9FAFB}
+.spec-tbl tbody tr:hover td{background:#FFFBEB}
+.td-l{font-size:12px;color:#9CA3AF;font-weight:500}
+.row-dim td{background:#1F2937!important}
+.row-dim .td-l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.38);font-weight:600}
+.row-dim td:not(.td-l){color:#E5E7EB}
+.dim-g{display:grid;grid-template-columns:18px 1fr;gap:2px 5px;font-size:13px;line-height:1.9}
+.dim-k{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);text-align:right}
+.row-feat td{background:rgba(217,119,6,.04)!important;border-top:1px solid rgba(217,119,6,.18)!important}
+.row-feat .td-l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#B45309;font-weight:700}
+.feat-ul{list-style:none;padding:0;margin:0}
+.feat-ul li{display:flex;gap:7px;margin-bottom:5px;font-size:12px;color:#374151;line-height:1.5}
+.feat-ul li::before{content:'›';color:#D97706;flex-shrink:0;font-weight:700}
+.empty-v{color:#E5E7EB;font-size:13px}
+.load-v{color:#E5E7EB;font-size:13px;animation:blink 1.4s ease-in-out infinite}
 
-.feature-card-img {
-  width: 100%; height: 200px; object-fit: cover;
-}
+/* Cards */
+.cards-ttl{font-size:clamp(26px,3.5vw,38px);font-weight:800;color:#111827;letter-spacing:-.02em;margin-bottom:6px}
+.cards-sub{font-size:14px;color:#9CA3AF;margin-bottom:28px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.ccard{background:#fff;border:1px solid #E5E7EB;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(17,24,39,.06);animation:fadeUp .4s ease forwards;transition:box-shadow .2s,transform .2s}
+.ccard:hover{box-shadow:0 10px 30px rgba(17,24,39,.1);transform:translateY(-2px)}
+.ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706}
+.ccard-brand{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FCD34D;margin-bottom:5px}
+.ccard-model{font-size:26px;font-weight:800;color:#F9FAFB;line-height:1.06;letter-spacing:-.02em}
+.ccard-body{padding:22px 26px;display:flex;flex-direction:column;gap:16px;flex:1}
+.ccard-sum{font-size:14px;color:#374151;line-height:1.75;border-left:3px solid #D97706;padding-left:13px}
+.list-l{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#9CA3AF;margin-bottom:8px}
+.pro-ul,.con-ul{list-style:none;padding:0;margin:0}
+.pro-ul li,.con-ul li{display:flex;gap:8px;margin-bottom:5px;font-size:13px;line-height:1.5;color:#374151}
+.pro-ul li::before{content:'✓';color:#059669;font-weight:700;font-size:12px;flex-shrink:0}
+.con-ul li::before{content:'○';color:#D97706;flex-shrink:0}
+.ccard-links{border-top:1px solid #F3F4F6;padding-top:16px;display:flex;flex-direction:column;gap:7px}
+.lnk{display:flex;align-items:center;gap:10px;font-size:13px;color:#9CA3AF;text-decoration:none;transition:color .15s,padding-left .15s;padding:2px 0}
+.lnk:hover{color:#B45309;padding-left:4px;opacity:1}
+.lic{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.lm{background:rgba(217,119,6,.12);color:#B45309}
+.lr{background:#F3F4F6;color:#374151}
+.lyt{background:rgba(220,38,38,.1);color:#DC2626}
 
-.feature-card-body { padding: 24px; }
-.feature-card-icon {
-  width: 44px; height: 44px; border-radius: 10px;
-  background: var(--blue-lt); color: var(--blue);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 14px;
-}
-.feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-.feature-card p  { font-size: 14px; color: var(--text-2); line-height: 1.7; }
-
-/* ── HOW IT WORKS ── */
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 32px; }
-.step { text-align: center; }
-.step-num {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--indigo));
-  color: #fff; font-size: 22px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 18px;
-}
-.step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-.step p  { font-size: 14px; color: var(--text-2); line-height: 1.7; }
-
-/* ── SHOWCASE IMAGE ── */
-.showcase {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: center; padding: 88px 0;
-}
-@media(max-width:720px){ .showcase { grid-template-columns:1fr; } }
-
-.showcase-img {
-  border-radius: var(--radius-lg);
-  overflow: hidden; box-shadow: var(--shadow-lg);
-  aspect-ratio: 4/3;
-}
-.showcase-img img { width:100%; height:100%; object-fit:cover; }
-
-.showcase-label { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); margin-bottom:12px; }
-.showcase h2 { font-size: clamp(24px,3vw,36px); font-weight:800; color:var(--text); letter-spacing:-.02em; margin-bottom:16px; line-height:1.2; }
-.showcase p  { font-size:15px; color:var(--text-2); line-height:1.8; margin-bottom:20px; }
-.showcase ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
-.showcase ul li { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-2); }
-.showcase ul li::before {
-  content:'✓'; width:22px; height:22px; border-radius:50%;
-  background: var(--blue-lt); color:var(--blue);
-  font-size:11px; font-weight:700;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-
-/* ── TOOL SECTION ── */
-.tool-section { background: var(--white); padding: 88px 0; }
-
-.tool-header { text-align:center; margin-bottom:48px; }
-
-.tool-grid {
-  display: grid;
-  grid-template-columns: 460px 1fr;
-  gap: 28px;
-  align-items: start;
-}
-@media(max-width:960px){ .tool-grid{ grid-template-columns:1fr; } }
-
-/* ── CARDS ── */
-.card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.card-head {
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--cream);
-  display: flex; align-items: center; gap: 10px;
-}
-
-.card-step {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--indigo));
-  color: #fff; font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-
-.card-title {
-  font-size: 12px; font-weight: 700; letter-spacing:.08em;
-  text-transform: uppercase; color: var(--text-2);
-}
-
-.card-body { padding: 20px; }
-
-/* ── FORM ELEMENTS ── */
-label {
-  display: block; font-size: 12px; font-weight: 600;
-  color: var(--text-2); margin-bottom: 6px;
-  letter-spacing: .04em; text-transform: uppercase;
-}
-
-select, input[type="text"] {
-  width: 100%;
-  background: var(--white);
-  border: 1.5px solid var(--border-2);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 14px;
-  padding: 9px 12px;
-  outline: none;
-  appearance: none;
-  transition: border-color .15s, box-shadow .15s;
-}
-select:focus, input[type="text"]:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
-}
-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 34px; cursor: pointer;
-}
-
-.form-stack { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; }
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-
-.spec-hint {
-  font-size: 11px; color: var(--text-3); line-height: 1.55;
-  padding: 8px 12px; background: #f0f9ff;
-  border-left: 3px solid #bae6fd; border-radius: 0 6px 6px 0;
-}
-
-/* ── BUTTONS ── */
-.btn {
-  font-family: var(--font); font-size: 13px; font-weight: 600;
-  cursor: pointer; border-radius: 8px;
-  border: 1.5px solid var(--border-2);
-  background: var(--white); color: var(--text-2);
-  padding: 8px 16px; transition: all .15s;
-}
-.btn:hover { background: var(--cream); color: var(--text); border-color: var(--border-2); }
-.btn:active { transform: scale(0.98); }
-.btn:disabled { opacity: .38; cursor: not-allowed; }
-
-.btn-blue {
-  background: var(--blue); border-color: var(--blue); color: #fff;
-}
-.btn-blue:hover { background: var(--blue-dk); border-color: var(--blue-dk); color: #fff; }
-
-.btn-outline-blue {
-  background: var(--blue-lt); border-color: #bfdbfe; color: var(--blue);
-}
-.btn-outline-blue:hover { background: #dbeafe; }
-
-.btn-analyze {
-  width: 100%; padding: 13px 20px; font-size: 15px; font-weight: 700;
-  background: linear-gradient(135deg, var(--blue), var(--indigo));
-  border: none; color: #fff; letter-spacing: .02em;
-  border-radius: 10px; cursor: pointer; transition: opacity .15s;
-  box-shadow: 0 4px 16px rgba(37,99,235,.35);
-}
-.btn-analyze:hover:not(:disabled) { opacity: .9; }
-.btn-analyze:disabled { opacity: .4; cursor: not-allowed; }
-
-.btn-sm { padding: 6px 12px; font-size: 12px; }
-
-/* ── COMPONENT ENTRIES ── */
-.components-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-
-.comp-entry {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; background: var(--cream);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-}
-
-.comp-badge {
-  font-size: 10px; font-weight: 700; letter-spacing: .05em;
-  text-transform: uppercase; padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
-}
-
-.badge-amp       { background:#eff6ff; color:#1d4ed8; }
-.badge-preamp    { background:#f5f3ff; color:#6d28d9; }
-.badge-speakers  { background:#f0fdf4; color:#166534; }
-.badge-dac       { background:#fffbeb; color:#92400e; }
-.badge-turntable { background:#fef2f2; color:#991b1b; }
-.badge-tonearm   { background:#fff7ed; color:#9a3412; }
-.badge-cartridge { background:#fff1f2; color:#9f1239; }
-.badge-phonopre  { background:#f8fafc; color:#475569; }
-.badge-streamer  { background:#ecfeff; color:#155e75; }
-.badge-cdplayer  { background:#f0f4ff; color:#3730a3; }
-.badge-cables    { background:#f8fafc; color:#334155; }
-.badge-headphones{ background:#f0f9ff; color:#0369a1; }
-.badge-other     { background:#fdf4ff; color:#7e22ce; }
-
-.comp-name { font-size: 14px; font-weight: 500; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); }
-
-.btn-remove {
-  background: none; border: none; color: var(--text-3);
-  cursor: pointer; font-size: 14px; padding: 2px 6px;
-  flex-shrink: 0; border-radius: 6px; transition: all .15s;
-}
-.btn-remove:hover { color: #dc2626; background: #fef2f2; }
-
-/* ── CONNECTIONS ── */
-.conn-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-.conn-entry {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 14px; background: var(--cream);
-  border: 1.5px solid var(--border); border-radius: 10px;
-  font-size: 13px; flex-wrap: wrap;
-}
-.conn-from, .conn-to { font-weight: 600; color: var(--text); }
-.conn-arr { color: var(--text-3); }
-.conn-type-badge {
-  font-size: 10px; font-weight: 700; letter-spacing:.05em;
-  text-transform: uppercase; padding: 2px 8px; border-radius: 6px;
-  background: #eff6ff; color: var(--blue); margin-left: auto;
-}
-
-/* ── EMPTY ── */
-.empty {
-  text-align: center; padding: 22px 16px; color: var(--text-3);
-  font-size: 13px; border: 1.5px dashed var(--border-2);
-  border-radius: 10px; margin-bottom: 16px; background: var(--cream);
-}
-
-/* ── DIVIDER ── */
-.divider { border:none; border-top: 1px solid var(--border); margin: 18px 0; }
-
-/* ── RESULTS STICKY ── */
-.results-sticky { position: sticky; top: 80px; }
-
-.placeholder-box { padding: 52px 24px; text-align: center; }
-.placeholder-icon { font-size: 52px; color: #e2e8f0; margin-bottom: 14px; }
-.placeholder-box p { font-size: 14px; color: var(--text-3); line-height: 1.7; max-width: 240px; margin: 0 auto; }
-
-/* ── LOADING ── */
-.loading-box { padding: 48px 24px; text-align: center; }
-.vu-meter { display:flex; align-items:flex-end; justify-content:center; gap:5px; height:44px; margin-bottom:16px; }
-.vu-bar { width:7px; background:linear-gradient(to top,var(--blue),var(--indigo)); border-radius:3px; animation:vubeat .9s ease-in-out infinite; }
-.vu-bar:nth-child(1){height:16px;animation-delay:0s}
-.vu-bar:nth-child(2){height:28px;animation-delay:.1s}
-.vu-bar:nth-child(3){height:38px;animation-delay:.2s}
-.vu-bar:nth-child(4){height:26px;animation-delay:.15s}
-.vu-bar:nth-child(5){height:34px;animation-delay:.05s}
-.vu-bar:nth-child(6){height:20px;animation-delay:.25s}
-@keyframes vubeat{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
-.loading-caption { font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); }
-
-/* ── SCORE CARDS ── */
-.score-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
-.score-card { background:var(--cream); border:1.5px solid var(--border); border-radius:10px; padding:14px 12px; text-align:center; }
-.score-label { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px; display:block; }
-.score-val { font-size:26px; font-weight:800; color:var(--text); line-height:1; }
-.score-val small { font-size:13px; font-weight:500; color:var(--text-3); }
-.score-good { color:#16a34a; }
-.score-ok   { color:#d97706; }
-.score-bad  { color:#dc2626; }
-
-/* ── DIAGRAM ── */
-.diagram-wrap { overflow-x:auto; }
-.diagram-wrap svg { display:block; }
-.dv-box         { fill:#f8fafc; stroke:#e2e8f0; stroke-width:1.5; }
-.dv-box-digital { fill:#eff6ff; stroke:#93c5fd; }
-.dv-box-phono   { fill:#fefce8; stroke:#fcd34d; }
-.dv-box-shared  { fill:#f0fdf4; stroke:#86efac; }
-.dv-title { fill:#0f172a; font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:700; }
-.dv-sub   { fill:#94a3b8; font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; }
-.dv-col   { fill:#2563eb; font-family:'Plus Jakarta Sans',sans-serif; font-size:9px; font-weight:700; letter-spacing:.1em; }
-.dv-label { fill:#64748b; font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; }
-.dv-node  { cursor:pointer; }
-.dv-node:hover .dv-box,
-.dv-node:hover .dv-box-digital,
-.dv-node:hover .dv-box-phono,
-.dv-node:hover .dv-box-shared { stroke:var(--blue); stroke-width:2; }
-
-/* ── 3-PANEL RESULTS ── */
-.results-full { padding: 0 0 60px; }
-.results-full-hdr { text-align:center; padding:32px 0 28px; }
-.results-full-hdr h2 { font-size:26px; font-weight:800; color:var(--text); letter-spacing:-.01em; margin-bottom:6px; }
-.results-full-hdr p  { font-size:14px; color:var(--text-2); margin-bottom:16px; }
-.btn-print {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font); font-size:13px; font-weight:600;
-  padding:10px 20px; border-radius:10px; cursor:pointer;
-  background:var(--white); border:1.5px solid var(--border-2);
-  color:var(--text-2); transition:all .15s;
-}
-.btn-print:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-lt); }
-.results-3col { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-@media(max-width:960px){ .results-3col{ grid-template-columns:1fr; } }
-
-/* Component spec styling */
-.comp-spec-block { margin-bottom:18px; }
-.comp-spec-block:last-child { margin-bottom:0; }
-.comp-name-hdr {
-  font-size:13px; font-weight:700; color:var(--blue);
-  background:var(--blue-lt); padding:7px 12px;
-  border-radius:8px 8px 0 0; letter-spacing:.01em;
-}
-.spec-list { list-style:none; border:1.5px solid var(--border); border-top:none; border-radius:0 0 8px 8px; margin-bottom:4px; }
-.spec-list li { font-size:12px; color:var(--text-2); padding:5px 12px; border-bottom:1px solid var(--border); line-height:1.5; font-family:ui-monospace,monospace; }
-.spec-list li:last-child { border-bottom:none; }
-
-.panel-analysis { font-size:14px; line-height:1.8; color:var(--text-2); }
-.panel-analysis p { margin-bottom:10px; }
-.panel-analysis p:last-child { margin-bottom:0; }
-.panel-analysis strong { color:var(--text); font-weight:600; }
-.panel-analysis ul { list-style:none; padding:0; margin:0 0 10px; }
-.panel-analysis ul li { padding:5px 0 5px 18px; position:relative; border-bottom:1px solid var(--border); font-size:13px; }
-.panel-analysis ul li:last-child { border-bottom:none; }
-.panel-analysis ul li::before { content:'→'; position:absolute; left:0; color:var(--blue); font-size:11px; top:8px; }
-
-.panel-sub-hdr {
-  font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--blue); margin:18px 0 8px; padding-bottom:6px;
-  border-bottom:1.5px solid var(--border); display:flex; align-items:center; gap:8px;
-}
-.panel-sub-hdr:first-child { margin-top:0; }
-.panel-sub-hdr::after { content:''; flex:1; height:1px; background:var(--border); }
-
-/* ── AD UNITS ── */
-.ad-unit { padding: 16px 0; }
-.ad-unit-inner { border:1px dashed var(--border-2); border-radius:8px; padding:4px; background:var(--cream); text-align:center; }
-.ad-label { font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); display:block; margin-bottom:4px; }
-
-/* ── COOKIE BANNER ── */
-.cookie-banner {
-  position:fixed; bottom:0; left:0; right:0;
-  background:var(--dark-2); border-top:1px solid rgba(255,255,255,.1);
-  padding:16px 24px; display:flex; align-items:center; justify-content:space-between;
-  gap:16px; z-index:9999; flex-wrap:wrap;
-  box-shadow:0 -8px 24px rgba(0,0,0,.3);
-}
-.cookie-text { font-size:13px; color:rgba(255,255,255,.75); line-height:1.6; flex:1; }
-.cookie-text a { color:#60a5fa; }
-.cookie-btns { display:flex; gap:10px; flex-shrink:0; }
-.cookie-accept {
-  font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer;
-  padding:9px 18px; border-radius:8px;
-  background:var(--blue); border:none; color:#fff; transition:background .15s;
-}
-.cookie-accept:hover { background:var(--blue-dk); }
-.cookie-decline {
-  font-family:var(--font); font-size:13px; font-weight:500; cursor:pointer;
-  padding:9px 18px; border-radius:8px;
-  background:transparent; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.7);
-  transition:all .15s;
-}
-.cookie-decline:hover { background:rgba(255,255,255,.08); }
+.res-cta{text-align:center;margin-top:64px;padding-top:48px;border-top:1px solid #E5E7EB}
+.res-cta p{color:#9CA3AF;font-size:14px;margin-bottom:20px}
 
 /* ── FOOTER ── */
-.footer { background:var(--dark); padding:56px 0 32px; }
-.footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
-@media(max-width:768px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
-@media(max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
+#ftr{background:#111827;padding:56px 0 36px}
+.ftr-top{display:flex;gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.ftr-brand{flex:0 0 280px}
+.ftr-logo{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.ftr-box{width:32px;height:32px;background:#D97706;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.ftr-wm{font-size:16px;font-weight:800;letter-spacing:.05em;color:#fff}
+.ftr-wm span{color:#FCD34D}
+.ftr-disc{font-size:12px;color:rgba(255,255,255,.28);line-height:1.75}
+.ftr-cols{display:flex;gap:48px;flex:1;flex-wrap:wrap}
+.ftr-col-lbl{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;display:block}
+.ftr-links{display:flex;flex-direction:column;gap:9px}
+.ftr-links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .18s}
+.ftr-links a:hover{color:#FCD34D;opacity:1}
+.ftr-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:28px;flex-wrap:wrap;gap:10px}
+.ftr-copy{font-size:12px;color:rgba(255,255,255,.2)}
+.ftr-attr{font-size:11px;color:rgba(255,255,255,.14)}
 
-.footer-brand { }
-.footer-logo { font-size:17px; font-weight:700; color:#fff; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
-.footer-logo-dot { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--indigo)); display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; font-weight:700; }
-.footer-brand p { font-size:13px; color:rgba(255,255,255,.5); line-height:1.7; max-width:240px; }
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+@keyframes wave{0%,100%{transform:scaleY(1);opacity:.85}50%{transform:scaleY(.2);opacity:.25}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:.8}}
 
-.footer-col h4 { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:14px; }
-.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
-.footer-col ul li a { font-size:14px; color:rgba(255,255,255,.65); text-decoration:none; transition:color .15s; }
-.footer-col ul li a:hover { color:#fff; }
-
-.footer-bottom { border-top:1px solid rgba(255,255,255,.08); padding-top:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-.footer-copy { font-size:13px; color:rgba(255,255,255,.35); }
-.footer-links { display:flex; gap:20px; }
-.footer-links a { font-size:13px; color:rgba(255,255,255,.35); text-decoration:none; transition:color .15s; }
-.footer-links a:hover { color:rgba(255,255,255,.7); }
-
-/* ── UTILS ── */
-@keyframes fadein { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-.fadein { animation: fadein .3s ease forwards; }
-::-webkit-scrollbar { width:5px; height:5px; }
-::-webkit-scrollbar-track { background:var(--cream); }
-::-webkit-scrollbar-thumb { background:var(--border-2); border-radius:3px; }
+/* ── Responsive ── */
+@media(max-width:1024px){.cat-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){
+  .hero{flex-direction:column}
+  .hero-txt{flex:none;padding:52px 40px}
+  .hero-img-col{flex:none;height:280px}
+  .stats-row{flex-wrap:wrap}
+  .stat{flex:0 0 50%;border-bottom:1px solid #E5E7EB}
+  .stat:nth-child(2n){border-right:none}
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .photo-grid{grid-template-columns:1fr;gap:12px}
+  .photo-card{height:200px}
+  .ftr-brand{flex:0 0 100%}
+}
+@media(max-width:720px){
+  .container{padding:0 20px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-sec{padding:52px 0 60px}
+  .add-sec{padding:56px 0}
+  .res-sec{padding:52px 0 64px}
+  .input-row{flex-direction:column}
+  .btn-add-comp{width:100%;text-align:center}
+  .cmp-row{flex-direction:column;align-items:flex-start}
+  .cards-grid{grid-template-columns:1fr}
+  .spec-tbl td,.spec-tbl th{padding:10px 14px}
+  .hero-txt{padding:44px 20px}
+  .ftr-cols{gap:28px}
+  .ftr-bottom{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
+  .cat-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .cat-card{padding:16px 13px 14px;min-height:116px}
+  .cat-lbl{font-size:13px}
+  .stat{flex:0 0 100%;border-right:none}
+  .photo-strip{padding:36px 0}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="17" fill="#1e3a8a"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#3b82f6" stroke-width="1"/><circle cx="18" cy="7" r="2" fill="#60a5fa"/><circle cx="18" cy="13" r="1.5" fill="#93c5fd"/><circle cx="18" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="18" r="1.8" fill="#2563eb"/><circle cx="18" cy="23" r="1.5" fill="#93c5fd"/><circle cx="18" cy="29" r="2" fill="#60a5fa"/><line x1="18" y1="9" x2="18" y2="11.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="14.5" x2="18" y2="15" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="21" x2="18" y2="21.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="24.5" x2="18" y2="27" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="15.5" y1="18" x2="10" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="13" r="2" fill="#fbbf24"/><line x1="20.5" y1="18" x2="26" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><circle cx="27" cy="13" r="2" fill="#34d399"/></svg>
-      <span style="font-weight:900;color:#fff;">Audio</span><span style="font-weight:900;color:#60a5fa;">Chain</span><span style="font-weight:900;color:#fff;">HiFi</span>
-    </a>
-    <div class="nav-links">
-      <a href="/" class="active">Analyzer</a>
-      <a href="/about.html">About</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/contact.html">Contact</a>
-      <a href="#analyzer" class="nav-cta">Start Analysis →</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <img class="hero-img" src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1600&q=80" alt="High-fidelity turntable setup">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <!-- Full logo in hero — stacked wordmark -->
-    <div style="display:flex;align-items:center;gap:32px;margin-bottom:36px;">
-      <svg width="130" height="130" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="18" cy="18" r="17" fill="#1e3a8a"/>
-        <circle cx="18" cy="18" r="15.5" fill="none" stroke="#3b82f6" stroke-width="1"/>
-        <circle cx="18" cy="7" r="2" fill="#60a5fa"/>
-        <circle cx="18" cy="13" r="1.5" fill="#93c5fd"/>
-        <circle cx="18" cy="18" r="3" fill="#ffffff"/>
-        <circle cx="18" cy="18" r="1.8" fill="#2563eb"/>
-        <circle cx="18" cy="23" r="1.5" fill="#93c5fd"/>
-        <circle cx="18" cy="29" r="2" fill="#60a5fa"/>
-        <line x1="18" y1="9" x2="18" y2="11.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <line x1="18" y1="14.5" x2="18" y2="15" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <line x1="18" y1="21" x2="18" y2="21.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <line x1="18" y1="24.5" x2="18" y2="27" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <line x1="15.5" y1="18" x2="10" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <circle cx="9" cy="13" r="2" fill="#fbbf24"/>
-        <line x1="20.5" y1="18" x2="26" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/>
-        <circle cx="27" cy="13" r="2" fill="#34d399"/>
-      </svg>
-      <div style="border-left:1px solid rgba(255,255,255,0.15);padding-left:32px;">
-        <div style="font-size:clamp(32px,4.5vw,56px);font-weight:900;color:#fff;letter-spacing:-0.02em;line-height:1.0;display:flex;flex-direction:column;">
-          <span style="color:#fff;">Audio</span>
-          <span style="color:#60a5fa;">Chain</span>
-          <span style="color:#fff;">HiFi</span>
-        </div>
-        <div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.12);padding-top:10px;">
-          <div style="font-size:14px;font-weight:700;color:#60a5fa;letter-spacing:0.06em;text-transform:uppercase;">Hi-Fi Compatibility</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:0.05em;text-transform:uppercase;margin-top:3px;">Powered by AI</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-badge">AI-Powered Analysis · Free to Use</div>
-    <h1>Is Your <span>Hi-Fi System</span><br>Truly Compatible?</h1>
-    <p class="hero-desc">Enter your components and get a detailed compatibility report — impedance matching, gain staging, phono chain analysis — sourced from real manufacturer specifications.</p>
-    <div class="hero-actions">
-      <a href="#analyzer" class="btn-primary">Analyze My System →</a>
-      <a href="/about.html" class="btn-secondary">How It Works</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>Free</strong>No signup required</div>
-      <div class="hero-stat"><strong>AI</strong>Claude by Anthropic</div>
-      <div class="hero-stat"><strong>Real Specs</strong>Manufacturer data</div>
-    </div>
-  </div>
-</section>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-inner">
-    <div class="trust-item"><span class="trust-icon">⚡</span>Instant analysis</div>
-    <div class="trust-item"><span class="trust-icon">📊</span>Published spec data</div>
-    <div class="trust-item"><span class="trust-icon">🎵</span>Phono chain analysis</div>
-    <div class="trust-item"><span class="trust-icon">🔒</span>No data stored</div>
-    <div class="trust-item"><span class="trust-icon">✅</span>100% free</div>
-  </div>
-</div>
-
-<!-- AD UNIT 1 -->
-<div class="ad-unit container">
-  <div class="ad-unit-inner">
-    <span class="ad-label">Advertisement</span>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8677522350792212" data-ad-slot="AUTO" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section class="section">
+<!-- ══ HEADER ══ -->
+<header id="hdr">
   <div class="container">
-    <div class="section-header">
-      <div class="section-label">What We Analyze</div>
-      <h2 class="section-title">Complete Signal Chain Coverage</h2>
-      <p class="section-desc">Every connection in your hi-fi system analyzed against real published specifications.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <img class="feature-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="Hi-fi speakers">
-        <div class="feature-card-body">
-          <div class="feature-card-icon">⚡</div>
-          <h3>Impedance Matching</h3>
-          <p>Verifies amplifier output impedance and speaker nominal impedance are correctly matched to prevent distortion and protect your equipment.</p>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div style="width:100%;height:200px;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-          <svg width="260" height="160" viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Vinyl record platter -->
-            <circle cx="100" cy="85" r="72" fill="#1a1a2e" stroke="#334155" stroke-width="1.5"/>
-            <circle cx="100" cy="85" r="60" fill="#0f1729" stroke="#263548" stroke-width="1"/>
-            <circle cx="100" cy="85" r="48" fill="#141c30" stroke="#1e3a5f" stroke-width="0.8"/>
-            <circle cx="100" cy="85" r="36" fill="#1a1a2e" stroke="#263548" stroke-width="0.8"/>
-            <circle cx="100" cy="85" r="24" fill="#0d1117" stroke="#334155" stroke-width="0.8"/>
-            <!-- Label in center -->
-            <circle cx="100" cy="85" r="18" fill="#2563eb"/>
-            <circle cx="100" cy="85" r="4" fill="#0f172a"/>
-            <!-- Groove lines -->
-            <circle cx="100" cy="85" r="54" fill="none" stroke="#1e3a5f" stroke-width="0.5" stroke-dasharray="2 3"/>
-            <circle cx="100" cy="85" r="42" fill="none" stroke="#1e3a5f" stroke-width="0.5" stroke-dasharray="2 3"/>
-            <circle cx="100" cy="85" r="30" fill="none" stroke="#1e3a5f" stroke-width="0.5" stroke-dasharray="2 3"/>
-            <!-- Tonearm pivot base -->
-            <circle cx="195" cy="38" r="10" fill="#334155" stroke="#60a5fa" stroke-width="1.5"/>
-            <circle cx="195" cy="38" r="5" fill="#1e3a8a"/>
-            <!-- Tonearm tube -->
-            <line x1="191" y1="44" x2="138" y2="108" stroke="#93c5fd" stroke-width="3.5" stroke-linecap="round"/>
-            <!-- Headshell -->
-            <rect x="128" y="104" width="20" height="9" rx="2" fill="#60a5fa" transform="rotate(-52 138 108)"/>
-            <!-- Cartridge stylus tip dot -->
-            <circle cx="120" cy="119" r="3" fill="#fbbf24"/>
-            <!-- Anti-skate weight line -->
-            <line x1="195" y1="38" x2="215" y2="30" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="218" cy="29" r="4" fill="#334155" stroke="#60a5fa" stroke-width="1"/>
+    <div class="hdr-row">
+      <a href="/" class="logo" id="logo-link" onclick="reset();return false;">
+        <div class="logo-box">
+          <svg width="20" height="20" viewBox="0 0 44 44" fill="none">
+            <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
+            <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".72"/>
+            <rect x="17" y="5"  width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+            <rect x="24" y="1"  width="6" height="44" rx="3"   fill="#fff"/>
+            <rect x="31" y="7"  width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+            <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".65"/>
           </svg>
         </div>
-        <div class="feature-card-body">
-          <div class="feature-card-icon">🎚️</div>
-          <h3>Phono Chain Analysis</h3>
-          <p>Calculates cartridge-to-tonearm resonance frequency, verifies MC/MM gain matching, and recommends optimal loading impedance settings.</p>
+        <div>
+          <div class="logo-name">AUDIO<span>SCOPE</span></div>
+          <div class="logo-tag">Hi-Fi Component Intelligence</div>
         </div>
-      </div>
-      <div class="feature-card">
-        <img class="feature-card-img" src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&w=600&q=80" alt="Audio equipment and headphones">
-        <div class="feature-card-body">
-          <div class="feature-card-icon">📈</div>
-          <h3>Gain Staging</h3>
-          <p>Analyzes signal levels from source to preamp to power amp, ensuring optimal signal-to-noise ratio and headroom throughout the chain.</p>
-        </div>
-      </div>
+      </a>
+      <nav class="nav">
+        <a href="about.html">About</a>
+        <a href="privacy-policy.html">Privacy</a>
+        <button id="btn-back" class="hidden" onclick="reset()">← New Comparison</button>
+      </nav>
     </div>
   </div>
-</section>
+</header>
 
-<!-- SHOWCASE -->
-<section class="section-alt">
+<!-- Top ad (shown during results) -->
+<div id="ad-top" class="hidden">
   <div class="container">
-    <div class="showcase">
-      <div class="showcase-img">
-        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80" alt="Audiophile hi-fi system">
-      </div>
-      <div>
-        <div class="showcase-label">Why It Matters</div>
-        <h2>Stop guessing.<br>Start knowing.</h2>
-        <p>Building a hi-fi system requires matching dozens of technical specifications. A single mismatch — the wrong loading impedance for your cartridge, a gain structure that clips — can rob you of the sound quality you paid for.</p>
-        <ul>
-          <li>Impedance mismatches cause distortion and speaker damage</li>
-          <li>Incorrect phono loading deadens cartridge high-frequency response</li>
-          <li>Poor gain staging increases noise floor and reduces dynamics</li>
-          <li>Wrong connection types (RCA vs XLR) degrade signal integrity</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section">
-  <div class="container">
-    <div class="section-header" style="text-align:center;">
-      <div class="section-label">Simple Process</div>
-      <h2 class="section-title">Three Steps to Compatibility</h2>
-    </div>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Add Your Components</h3>
-        <p>Enter each component in your system — amplifier, speakers, DAC, turntable, cartridge, phono preamp, streamer.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Define Connections</h3>
-        <p>Specify how each component connects to the next — XLR balanced, RCA, AES/EBU, USB, speaker wire.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Get Your Analysis</h3>
-        <p>Our AI looks up real specs and delivers a complete compatibility report with scores, issues, and recommendations.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ANALYZER TOOL -->
-<section class="tool-section" id="analyzer">
-  <div class="container">
-    <div class="tool-header">
-      <div class="section-label">The Analyzer</div>
-      <h2 class="section-title">Analyze Your System</h2>
-      <p class="section-desc" style="margin:0 auto;">Enter your components below. No signup required — results in under a minute.</p>
-    </div>
-
-    <div class="tool-grid">
-
-      <!-- LEFT COLUMN -->
-      <div style="display:flex;flex-direction:column;gap:18px;">
-
-        <!-- Step 1 -->
-        <div class="card">
-          <div class="card-head">
-            <div class="card-step">1</div>
-            <span class="card-title">Add Components</span>
-          </div>
-          <div class="card-body">
-            <div class="form-stack">
-              <div class="form-group">
-                <label>Component Type</label>
-                <select id="comp-type" onchange="updateHint()">
-                  <option value="amp">Amplifier / Integrated Amp</option>
-                  <option value="preamp">Preamplifier</option>
-                  <option value="speakers">Speakers</option>
-                  <option value="dac">DAC</option>
-                  <option value="turntable">Turntable</option>
-                  <option value="tonearm">Tonearm</option>
-                  <option value="cartridge">Turntable Cartridge</option>
-                  <option value="phonopre">Phono Preamplifier</option>
-                  <option value="streamer">Streamer / Source</option>
-                  <option value="cdplayer">CD Player</option>
-                  <option value="cables">Cables / Interconnects</option>
-                  <option value="headphones">Headphones</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Manufacturer &amp; Model</label>
-                <input type="text" id="comp-name" placeholder="e.g. Parasound Halo 275 v1">
-              </div>
-              <div id="spec-hint" class="spec-hint" style="display:none;"></div>
-            </div>
-            <button class="btn btn-outline-blue btn-sm" onclick="addComponent()">+ Add Component</button>
-            <hr class="divider">
-            <div id="comp-list"></div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="card" id="conn-panel" style="display:none;">
-          <div class="card-head">
-            <div class="card-step">2</div>
-            <span class="card-title">Define Connections</span>
-          </div>
-          <div class="card-body">
-            <p style="font-size:13px;color:var(--text-3);margin-bottom:14px;line-height:1.65;">Optional but recommended for a more precise analysis.</p>
-            <div class="form-stack">
-              <div class="form-row-2">
-                <div class="form-group"><label>From</label><select id="conn-from"></select></div>
-                <div class="form-group"><label>To</label><select id="conn-to"></select></div>
-              </div>
-              <div class="form-group">
-                <label>Connection Type</label>
-                <select id="conn-type">
-                  <option value="XLR balanced">XLR balanced</option>
-                  <option value="RCA single-ended">RCA single-ended</option>
-                  <option value="USB">USB</option>
-                  <option value="Optical / TOSLINK">Optical / TOSLINK</option>
-                  <option value="AES/EBU">AES/EBU</option>
-                  <option value="I2S">I2S</option>
-                  <option value="Speaker wire">Speaker wire</option>
-                  <option value="Phono / RCA">Phono / RCA</option>
-                  <option value="Coaxial S/PDIF">Coaxial S/PDIF</option>
-                  <option value="HDMI / I2S">HDMI / I2S</option>
-                  <option value="Bluetooth">Bluetooth</option>
-                  <option value="Wi-Fi / Network">Wi-Fi / Network</option>
-                </select>
-              </div>
-            </div>
-            <button class="btn btn-outline-blue btn-sm" onclick="addConnection()">+ Add Connection</button>
-            <div id="conn-err" style="font-size:11px;color:#dc2626;margin-top:8px;min-height:16px;"></div>
-            <hr class="divider">
-            <div id="conn-list"></div>
-            <button class="btn btn-blue btn-sm" style="width:100%;margin-top:4px;" onclick="generateDiagram()">Generate Signal Chain Diagram →</button>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="card" id="analyze-panel" style="display:none;">
-          <div class="card-head">
-            <div class="card-step">3</div>
-            <span class="card-title">Run Analysis</span>
-          </div>
-          <div class="card-body">
-            <p style="font-size:13px;color:var(--text-3);margin-bottom:16px;line-height:1.65;">Our AI will look up published specs and analyze your full signal chain.</p>
-            <button class="btn-analyze" id="analyze-btn" onclick="analyze()">Run Compatibility Analysis →</button>
-            <div id="analyze-err" style="font-size:12px;color:#dc2626;margin-top:10px;min-height:16px;"></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT COLUMN -->
-      <div class="results-sticky">
-        <div class="card">
-          <div class="card-head"><span class="card-title" style="margin-left:0;">Analysis Status</span></div>
-          <div class="card-body">
-            <div id="results-content">
-              <div class="placeholder-box">
-                <div class="placeholder-icon">🎛️</div>
-                <p>Add your components and run an analysis to see your compatibility score and full signal chain report.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="diagram-panel" style="margin-top:18px;display:none;">
-          <div class="card-head"><span class="card-title" style="margin-left:0;">Signal Chain Diagram</span></div>
-          <div class="card-body" style="padding:14px;">
-            <div class="diagram-wrap" id="diagram-wrap"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 3-PANEL FULL RESULTS -->
-<div id="results-full" style="display:none;background:var(--cream);padding:0 0 60px;">
-  <div class="container">
-    <div class="results-full-hdr">
-      <h2>Full Compatibility Analysis</h2>
-      <p>Detailed breakdown across your entire signal chain</p>
-      <button class="btn-print" onclick="printReport()">🖨️ Print / Save as PDF</button>
-    </div>
-    <div id="results-scores" style="margin-bottom:20px;display:none;">
-      <div class="score-row" id="score-row-inner"></div>
-    </div>
-    <div class="results-3col">
-      <div class="card"><div class="card-head"><span class="card-title" style="margin-left:0;">Component Specifications</span></div><div class="card-body" id="panel-specs-body"></div></div>
-      <div class="card"><div class="card-head"><span class="card-title" style="margin-left:0;">Signal Chain Analysis</span></div><div class="card-body" id="panel-chain-body"></div></div>
-      <div class="card"><div class="card-head"><span class="card-title" style="margin-left:0;">Summary &amp; Recommendations</span></div><div class="card-body" id="panel-summary-body"></div></div>
+    <div class="ad-box">
+      <ins class="adsbygoogle" style="display:block"
+        data-ad-client="ca-pub-8677522350792212"
+        data-ad-slot="REPLACE_TOP_SLOT_ID"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </div>
 </div>
 
-<!-- AD UNIT 2 -->
-<div class="ad-unit container">
-  <div class="ad-unit-inner">
-    <span class="ad-label">Advertisement</span>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8677522350792212" data-ad-slot="AUTO" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-</div>
+<main>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-logo"><svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="17" fill="#1e3a8a"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#3b82f6" stroke-width="1"/><circle cx="18" cy="7" r="2" fill="#60a5fa"/><circle cx="18" cy="13" r="1.5" fill="#93c5fd"/><circle cx="18" cy="18" r="3" fill="#ffffff"/><circle cx="18" cy="18" r="1.8" fill="#2563eb"/><circle cx="18" cy="23" r="1.5" fill="#93c5fd"/><circle cx="18" cy="29" r="2" fill="#60a5fa"/><line x1="18" y1="9" x2="18" y2="11.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="14.5" x2="18" y2="15" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="21" x2="18" y2="21.5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="18" y1="24.5" x2="18" y2="27" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><line x1="15.5" y1="18" x2="10" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="13" r="2" fill="#fbbf24"/><line x1="20.5" y1="18" x2="26" y2="14" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round"/><circle cx="27" cy="13" r="2" fill="#34d399"/></svg><span style="font-weight:900;color:#fff;">Audio</span><span style="font-weight:900;color:#60a5fa;">Chain</span><span style="font-weight:900;color:#fff;">HiFi</span></div>
-        <p>Free AI-powered hi-fi compatibility analysis. Powered by Claude AI from Anthropic.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Tool</h4>
-        <ul>
-          <li><a href="#analyzer">Analyzer</a></li>
-          <li><a href="#analyzer">How It Works</a></li>
-          <li><a href="/about.html">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="/privacy.html">Privacy Policy</a></li>
-          <li><a href="/contact.html">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a></li>
-          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy</a></li>
-          <li><a href="https://adssettings.google.com" target="_blank" rel="noopener">Ads Settings</a></li>
-        </ul>
+<!-- ══ HOME ══ -->
+<section id="sec-home">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-txt">
+      <span class="eyebrow">Hi-Fi Audio Comparison Engine</span>
+      <h1 class="hero-h1">Compare<br><em>Any</em><br>Component.</h1>
+      <p class="hero-sub">Select a category, enter 2–6 specific models, and get a full side-by-side spec table with editorial summaries and review links — powered by AI.</p>
+    </div>
+    <div class="hero-img-col">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85"
+        alt="Hi-fi amplifier with illuminated VU meters" loading="eager" fetchpriority="high">
+      <span class="hero-credit">Photo: Unsplash · Free Commercial License</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat"><div class="stat-n"><b>10</b></div><div class="stat-l">Component Categories</div></div>
+        <div class="stat"><div class="stat-n"><b>6</b></div><div class="stat-l">Components Per Session</div></div>
+        <div class="stat"><div class="stat-n"><b>12+</b></div><div class="stat-l">Specs Per Component</div></div>
+        <div class="stat"><div class="stat-n"><b>AI</b></div><div class="stat-l">Powered by Claude</div></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2025 AudioChainHiFi.com · All rights reserved</p>
-      <div class="footer-links">
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/contact.html">Contact</a>
+  </div>
+
+  <!-- Categories -->
+  <div class="cat-sec">
+    <div class="container">
+      <div class="cat-top">
+        <div>
+          <span class="eyebrow">Step 1</span>
+          <h2>Select a Category</h2>
+        </div>
+        <p>Choose a component type below, then add 2–6 models by brand and model name.</p>
       </div>
+      <div class="cat-grid" id="cat-grid" role="list"></div>
+    </div>
+  </div>
+
+  <!-- Photo strip -->
+  <div class="photo-strip">
+    <div class="container">
+      <div class="photo-grid">
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=900&q=80" alt="Loudspeaker woofer" loading="lazy">
+          <div class="photo-over"></div>
+          <div class="photo-lbl"><span class="photo-cat">Compare</span><div class="photo-name">Loudspeakers</div></div>
+          <span class="photo-attr">Unsplash Free Use</span>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt="Premium headphones" loading="lazy">
+          <div class="photo-over"></div>
+          <div class="photo-lbl"><span class="photo-cat">Compare</span><div class="photo-name">Headphones</div></div>
+          <span class="photo-attr">Unsplash Free Use</span>
+        </div>
+        <div class="photo-card" style="background:#0d0d0d;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-label="Vinyl record turntable illustration" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;opacity:.9">
+            <!-- Platter shadow -->
+            <circle cx="150" cy="154" r="112" fill="rgba(0,0,0,.5)"/>
+            <!-- Platter surface -->
+            <circle cx="150" cy="150" r="112" fill="#1a1918"/>
+            <!-- Vinyl grooves -->
+            <circle cx="150" cy="150" r="108" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="150" cy="150" r="102" fill="none" stroke="#242424" stroke-width=".8"/>
+            <circle cx="150" cy="150" r="96" fill="none" stroke="#222" stroke-width=".9"/>
+            <circle cx="150" cy="150" r="90" fill="none" stroke="#232323" stroke-width=".8"/>
+            <circle cx="150" cy="150" r="84" fill="none" stroke="#222" stroke-width=".9"/>
+            <circle cx="150" cy="150" r="78" fill="none" stroke="#242424" stroke-width=".8"/>
+            <circle cx="150" cy="150" r="72" fill="none" stroke="#222" stroke-width="1"/>
+            <circle cx="150" cy="150" r="66" fill="none" stroke="#232323" stroke-width=".8"/>
+            <circle cx="150" cy="150" r="60" fill="none" stroke="#222" stroke-width=".9"/>
+            <!-- Label -->
+            <circle cx="150" cy="150" r="44" fill="#C8881A"/>
+            <circle cx="150" cy="150" r="40" fill="#B8780A"/>
+            <!-- Label text lines -->
+            <line x1="118" y1="143" x2="182" y2="143" stroke="rgba(0,0,0,.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="122" y1="150" x2="178" y2="150" stroke="rgba(0,0,0,.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="120" y1="157" x2="180" y2="157" stroke="rgba(0,0,0,.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Center hole -->
+            <circle cx="150" cy="150" r="5" fill="#0d0d0d"/>
+            <!-- Tonearm pivot -->
+            <circle cx="248" cy="58" r="9" fill="#5a5a5a" stroke="#3a3a3a" stroke-width="1.5"/>
+            <circle cx="248" cy="58" r="5" fill="#3a3a3a"/>
+            <!-- Tonearm -->
+            <line x1="248" y1="58" x2="190" y2="145" stroke="#888" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Headshell -->
+            <rect x="182" y="139" width="14" height="10" rx="2" fill="#777" transform="rotate(-30 189 144)"/>
+            <!-- Cartridge needle -->
+            <line x1="188" y1="152" x2="185" y2="160" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Platter edge highlight -->
+            <circle cx="150" cy="150" r="112" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="2"/>
+          </svg>
+          <div class="photo-over" style="background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 50%,transparent 100%)"></div>
+          <div class="photo-lbl"><span class="photo-cat">Compare</span><div class="photo-name">Turntables</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ ADD ══ -->
+<section id="sec-add" class="hidden add-sec">
+  <div class="container">
+    <div class="sec-hd">
+      <span class="eyebrow" id="lbl-cat">Category</span>
+      <h1>Add Components</h1>
+      <p>Enter 2–6 models by full brand + model name — e.g. <em>"Rega Planar 3"</em> or <em>"Focal Clear MG"</em>.</p>
+    </div>
+    <div class="input-row">
+      <input type="text" id="comp-inp" class="inp" placeholder='e.g. "Naim Nait XS 3" or "KEF LS50 Meta"' autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="btn-add-comp" id="btn-add" type="button">+ Add</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="cmp-row">
+      <button class="btn-cmp dis" id="btn-cmp" type="button" disabled>Add at least 2 components</button>
+      <span class="cnt" id="cnt">0 / 6 · minimum 2 required</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESULTS ══ -->
+<section id="sec-results" class="hidden res-sec" aria-live="polite">
+  <div class="container">
+    <div class="sec-hd">
+      <span class="eyebrow" id="lbl-res">Results</span>
+      <h1>Comparison Results</h1>
+    </div>
+
+    <div class="disclaimer-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Specifications are AI-generated and may be incomplete or inaccurate — particularly for newer or regional products. <strong>Always verify with the manufacturer before purchase.</strong> If a value shows "N/A", the AI did not have sufficient confidence to report it.</span>
+    </div>
+    <div id="loading" class="loading">
+      <div class="wave"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+      <p class="load-ttl">Retrieving specifications…</p>
+      <p class="load-sub" id="load-names"></p>
+    </div>
+    <div id="errs"></div>
+    <div id="tbl-zone"></div>
+    <div id="ad-mid" class="hidden">
+      <div class="ad-box" style="margin:16px 0">
+        <ins class="adsbygoogle" style="display:block"
+          data-ad-client="ca-pub-8677522350792212"
+          data-ad-slot="REPLACE_MID_SLOT_ID"
+          data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+    <div id="cards-zone" class="hidden">
+      <h2 class="cards-ttl">Component Profiles</h2>
+      <p class="cards-sub">Editorial summaries, strengths, considerations, and curated resource links.</p>
+      <div class="cards-grid" id="cards-grid"></div>
+    </div>
+    <div id="ad-bot" class="hidden">
+      <div class="ad-box" style="margin:16px 0">
+        <ins class="adsbygoogle" style="display:block"
+          data-ad-client="ca-pub-8677522350792212"
+          data-ad-slot="REPLACE_BOT_SLOT_ID"
+          data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+    <div id="res-cta" class="res-cta hidden">
+      <p>Ready to compare something else?</p>
+      <button class="btn-cmp" onclick="reset()" type="button">Start New Comparison</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer id="ftr">
+  <div class="container">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="ftr-box">
+            <svg width="16" height="16" viewBox="0 0 44 44" fill="none">
+              <rect x="3" y="20" width="5" height="6" rx="2.5" fill="#fff" opacity=".55"/>
+              <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".75"/>
+              <rect x="17" y="5" width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="24" y="1" width="6" height="44" rx="3" fill="#fff"/>
+              <rect x="31" y="7" width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
+            </svg>
+          </div>
+          <div class="ftr-wm">AUDIO<span>SCOPE</span></div>
+        </div>
+        <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
+      </div>
+      <div class="ftr-cols">
+        <div>
+          <span class="ftr-col-lbl">Navigation</span>
+          <div class="ftr-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="mailto:contact@audioscope.example.com">Contact</a>
+          </div>
+        </div>
+        <div>
+          <span class="ftr-col-lbl">Categories</span>
+          <div class="ftr-links">
+            <a href="/">Amplifiers &amp; Preamps</a>
+            <a href="/">Turntables &amp; Tonearms</a>
+            <a href="/">DACs &amp; Streamers</a>
+            <a href="/">Speakers &amp; Headphones</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span class="ftr-copy">© <span id="yr"></span> AudioScope · Powered by Anthropic Claude</span>
+      <span class="ftr-attr">Photos: Unsplash Free Commercial License · All trademarks belong to their respective owners</span>
     </div>
   </div>
 </footer>
 
-<!-- COOKIE BANNER -->
-<div class="cookie-banner" id="cookie-banner" style="display:none;">
-  <p class="cookie-text">We use cookies for advertising (Google AdSense) and analytics. See our <a href="/privacy.html">Privacy Policy</a> to learn more.</p>
-  <div class="cookie-btns">
-    <button class="cookie-decline" onclick="declineCookies()">Decline</button>
-    <button class="cookie-accept" onclick="acceptCookies()">Accept Cookies</button>
-  </div>
-</div>
-
 <script>
-const components=[];
-const connections=[];
-const typeLabels={amp:'Amplifier',preamp:'Preamplifier',speakers:'Speakers',dac:'DAC',turntable:'Turntable',tonearm:'Tonearm',cartridge:'Cartridge',phonopre:'Phono Preamp',streamer:'Streamer',cdplayer:'CD Player',cables:'Cables',headphones:'Headphones',other:'Other'};
-const specHints={amp:'Key specs: power output (W/ch), impedance range (Ω), input sensitivity (mV)',preamp:'Key specs: gain (dB), output impedance (Ω), input sensitivity (mV)',speakers:'Key specs: impedance (Ω), sensitivity (dB/W/m), power handling (W)',dac:'Key specs: output voltage (Vrms), output impedance (Ω), supported inputs',turntable:'Key specs: drive type, tonearm effective mass (g), speeds (RPM)',tonearm:'Key specs: effective mass (g), effective length (mm), offset angle, brand and model',cartridge:'Key specs: type (MM/MC), output voltage (mV), compliance (µm/mN), tracking force (g)',phonopre:'Key specs: gain (dB), input impedance (Ω/kΩ), MM/MC support, output voltage',streamer:'Key specs: digital outputs (AES/USB/COAX), supported formats and sample rates',cdplayer:'Key specs: digital outputs (COAX/optical/AES), analog output voltage (Vrms), output impedance (Ω), DAC type',cables:'Key specs: type (RCA/XLR/speaker), length, shielding',headphones:'Key specs: impedance (Ω), sensitivity (dB/mW), driver type, connection (3.5mm/4.4mm/XLR)',other:'Describe the component and its relevant electrical or mechanical specs'};
+// ── Constants ──
+const CATS=[
+  {id:'amplifier',    lbl:'Integrated Amplifier', sub:'Power amps & integrated'},
+  {id:'preamplifier', lbl:'Preamplifier',          sub:'Line stage & control'},
+  {id:'phono_preamp', lbl:'Phono Preamplifier',    sub:'MM/MC phono stages'},
+  {id:'turntable',    lbl:'Turntable',             sub:'Belt, direct & idler drive'},
+  {id:'tonearm',      lbl:'Tonearm',               sub:'Pivoted & tangential arms'},
+  {id:'cartridge',    lbl:'Phono Cartridge',       sub:'MM, MC & moving iron'},
+  {id:'dac',          lbl:'DAC',                   sub:'Digital-to-analog converters'},
+  {id:'streamer',     lbl:'Streamer',              sub:'Network audio players'},
+  {id:'speakers',     lbl:'Loudspeakers',          sub:'Floorstanders & monitors'},
+  {id:'headphones',   lbl:'Headphones',            sub:'Over-ear, IEM & planar'},
+];
 
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function updateHint(){const t=document.getElementById('comp-type').value,h=document.getElementById('spec-hint');h.textContent=specHints[t]||'';h.style.display=specHints[t]?'block':'none';}
-updateHint();
+// ── State ──
+let st={cat:null,catLbl:'',items:[],running:false,uid:1};
 
-function addComponent(){
-  const type=document.getElementById('comp-type').value,name=document.getElementById('comp-name').value.trim();
-  if(!name){document.getElementById('comp-name').focus();return;}
-  components.push({id:Date.now(),type,name});
-  document.getElementById('comp-name').value='';
-  renderAll();
+// ── Init ──
+document.getElementById('yr').textContent=new Date().getFullYear();
+buildGrid();
+bindEvents();
+
+function buildGrid(){
+  const g=document.getElementById('cat-grid');
+  g.innerHTML=CATS.map((c,i)=>`
+    <button class="cat-card" data-cat="${c.id}" aria-label="Compare ${c.lbl}">
+      <span class="cat-n">0${i+1}</span>
+      <div class="cat-lbl">${h(c.lbl)}</div>
+      <div class="cat-sub">${h(c.sub)}</div>
+      <div class="cat-go">Compare →</div>
+    </button>`).join('');
+  g.addEventListener('click',e=>{
+    const b=e.target.closest('.cat-card');
+    if(b) selectCat(b.dataset.cat);
+  });
 }
-function removeComponent(id){
-  const i=components.findIndex(c=>c.id===id);if(i>-1)components.splice(i,1);
-  connections.filter(c=>c.fromId===id||c.toId===id).forEach(c=>{const j=connections.findIndex(x=>x.id===c.id);if(j>-1)connections.splice(j,1);});
-  renderAll();
+
+function bindEvents(){
+  const inp=document.getElementById('comp-inp');
+  const addBtn=document.getElementById('btn-add');
+  const cmpBtn=document.getElementById('btn-cmp');
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')addComp()});
+  addBtn.addEventListener('click',addComp);
+  cmpBtn.addEventListener('click',()=>{if(!cmpBtn.disabled)runComparison()});
 }
-function addConnection(){
-  const fromId=parseInt(document.getElementById('conn-from').value),toId=parseInt(document.getElementById('conn-to').value),type=document.getElementById('conn-type').value;
-  const errEl=document.getElementById('conn-err');errEl.textContent='';
-  if(fromId===toId){errEl.textContent='Source and destination must be different.';return;}
-  const fromComp=components.find(c=>c.id===fromId),toComp=components.find(c=>c.id===toId);
-  const dupe=connections.find(c=>c.fromId===fromId&&c.toId===toId);
-  if(dupe){dupe.type=type;}else{connections.push({id:Date.now(),fromId,toId,fromName:fromComp.name,toName:toComp.name,type});}
-  renderConnections();
-  const toSel=document.getElementById('conn-to'),fromSel=document.getElementById('conn-from');
-  const lastIdx=Array.from(toSel.options).findIndex(o=>parseInt(o.value)===toId);
-  let next=(lastIdx+1)%toSel.options.length;
-  if(parseInt(toSel.options[next].value)===fromId)next=(next+1)%toSel.options.length;
-  toSel.selectedIndex=next;
+
+// ── Navigation ──
+function show(id){
+  ['sec-home','sec-add','sec-results'].forEach(s=>{
+    const el=document.getElementById(s);
+    el.classList.toggle('hidden',s!==id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function removeConnection(id){const i=connections.findIndex(c=>c.id===id);if(i>-1)connections.splice(i,1);renderConnections();}
-function renderAll(){renderComponents();renderConnections();updateConnDropdowns();const show=components.length>=2;['conn-panel','analyze-panel'].forEach(id=>document.getElementById(id).style.display=show?'block':'none');}
-function generateDiagram(){
-  updateDiagram();
-  document.getElementById('diagram-panel').style.display='block';
-  document.getElementById('diagram-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+
+function selectCat(id){
+  const c=CATS.find(x=>x.id===id);
+  if(!c)return;
+  st.cat=id; st.catLbl=c.lbl;
+  document.getElementById('lbl-cat').textContent=c.lbl;
+  show('sec-add');
+  setTimeout(()=>document.getElementById('comp-inp').focus(),120);
 }
-function renderComponents(){
-  const el=document.getElementById('comp-list');
-  if(components.length===0){el.innerHTML='<div class="empty">No components yet.<br>Add at least two to begin.</div>';return;}
-  el.innerHTML=`<div class="components-list">${components.map(c=>`<div class="comp-entry fadein"><span class="comp-badge badge-${c.type}">${typeLabels[c.type]}</span><span class="comp-name">${esc(c.name)}</span><button class="btn-remove" onclick="removeComponent(${c.id})" title="Remove">✕</button></div>`).join('')}</div>`;
+
+// ── Add / Remove ──
+function addComp(){
+  if(st.running)return;
+  const inp=document.getElementById('comp-inp');
+  const v=inp.value.trim();
+  if(!v||st.items.length>=6)return;
+  st.items.push({id:st.uid++,name:v,status:'idle',data:null,err:null});
+  inp.value='';inp.focus();
+  refreshAdd();
 }
-function renderConnections(){
-  const el=document.getElementById('conn-list');if(!el)return;
-  if(connections.length===0){el.innerHTML='<div class="empty">No connections defined yet.</div>';return;}
-  el.innerHTML=`<div class="conn-list">${connections.map(c=>`<div class="conn-entry fadein"><span class="conn-from">${esc(c.fromName)}</span><span class="conn-arr">→</span><span class="conn-to">${esc(c.toName)}</span><span class="conn-type-badge">${esc(c.type)}</span><button class="btn-remove" onclick="removeConnection(${c.id})" title="Remove">✕</button></div>`).join('')}</div>`;
+function removeComp(uid){
+  st.items=st.items.filter(i=>i.id!==uid);
+  refreshAdd();
 }
-function updateConnDropdowns(){
-  const fS=document.getElementById('conn-from'),tS=document.getElementById('conn-to');if(!fS||!tS)return;
-  const pF=fS.value?parseInt(fS.value):null,pT=tS.value?parseInt(tS.value):null;
-  const opts=components.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
-  fS.innerHTML=opts;tS.innerHTML=opts;
-  if(pF&&components.find(c=>c.id===pF))fS.value=pF;
-  if(pT&&components.find(c=>c.id===pT))tS.value=pT;
-  if(parseInt(fS.value)===parseInt(tS.value)&&components.length>=2){tS.selectedIndex=(Array.from(fS.options).findIndex(o=>parseInt(o.value)===parseInt(fS.value))+1)%tS.options.length;}
+function refreshAdd(){
+  const n=st.items.length;
+  // chips
+  document.getElementById('chips').innerHTML=st.items.map((it,idx)=>`
+    <div class="chip">
+      <span class="chip-n">${idx+1}</span>
+      <span class="chip-nm">${h(it.name)}</span>
+      <button class="chip-x" onclick="removeComp(${it.id})">×</button>
+    </div>`).join('');
+  // count
+  document.getElementById('cnt').textContent=`${n} / 6 · minimum 2 required`;
+  // compare btn
+  const btn=document.getElementById('btn-cmp');
+  if(n>=2){btn.textContent=`Compare ${n} Component${n>1?'s':''} →`;btn.disabled=false;btn.classList.remove('dis');}
+  else{btn.textContent='Add at least 2 components';btn.disabled=true;btn.classList.add('dis');}
+  // input
+  const inp=document.getElementById('comp-inp');
+  const addBtn=document.getElementById('btn-add');
+  inp.disabled=addBtn.disabled=n>=6;
 }
-async function analyze(){
-  const btn=document.getElementById('analyze-btn'),errEl=document.getElementById('analyze-err'),rEl=document.getElementById('results-content');
-  errEl.textContent='';btn.disabled=true;
-  rEl.innerHTML=`<div class="loading-box"><div class="vu-meter">${Array(6).fill('<div class="vu-bar"></div>').join('')}</div><p class="loading-caption">Analyzing signal chain…</p></div>`;
-  try{
-    const payload=JSON.stringify({components,connections});
-    const [specsRes,chainRes,summaryRes]=await Promise.all([
-      fetch('/.netlify/functions/analyze-specs',{method:'POST',headers:{'Content-Type':'application/json'},body:payload}),
-      fetch('/.netlify/functions/analyze-chain',{method:'POST',headers:{'Content-Type':'application/json'},body:payload}),
-      fetch('/.netlify/functions/analyze-summary',{method:'POST',headers:{'Content-Type':'application/json'},body:payload})
-    ]);
-    const [specsRaw,chainRaw,summaryRaw]=await Promise.all([specsRes.text(),chainRes.text(),summaryRes.text()]);
-    let specsData,chainData,summaryData;
-    try{specsData=JSON.parse(specsRaw);}catch(e){throw new Error(`Specs: ${specsRaw.slice(0,120)}`);}
-    try{chainData=JSON.parse(chainRaw);}catch(e){throw new Error(`Chain: ${chainRaw.slice(0,120)}`);}
-    try{summaryData=JSON.parse(summaryRaw);}catch(e){throw new Error(`Summary: ${summaryRaw.slice(0,120)}`);}
-    if(specsData.error)throw new Error(specsData.error);
-    if(chainData.error)throw new Error(chainData.error);
-    if(summaryData.error)throw new Error(summaryData.error);
-    // Combine all three into one text for renderResults
-    const combined=`${summaryData.text}\n\nCOMPONENT SPECS\n${specsData.text}\n\n${chainData.text}`;
-    renderResults(combined);
-  }catch(e){
-    rEl.innerHTML=`<div class="placeholder-box"><div class="placeholder-icon">⚠️</div><p>${esc(e.message||'Analysis failed. Please try again.')}</p></div>`;
-    errEl.textContent=e.message;
-  }
-  btn.disabled=false;
-}
-function renderResults(text){
-  const rEl=document.getElementById('results-content'),fullEl=document.getElementById('results-full');
-  const sM=text.match(/OVERALL SCORE:\s*(\d+(?:\.\d+)?)\/10/i),iM=text.match(/IMPEDANCE MATCH:\s*(.+)/i),nM=text.match(/SENSITIVITY MATCH:\s*(.+)/i);
-  const score=sM?parseFloat(sM[1]):null,iStr=iM?iM[1].trim().replace(/\*+/g,''):null,nStr=nM?nM[1].trim().replace(/\*+/g,''):null;
-  const nC=n=>n>=8?'score-good':n>=6?'score-ok':'score-bad';
-  const wC=v=>{if(!v)return'';const l=v.toLowerCase();return l.includes('good')?'score-good':l.includes('poor')?'score-bad':'score-ok';};
 
-  // Show scores above 3-col
-  if(score!==null||iStr||nStr){
-    const scoresEl=document.getElementById('results-scores');
-    const inner=document.getElementById('score-row-inner');
-    inner.innerHTML=`
-      ${score!==null?`<div class="score-card"><span class="score-label">Overall</span><div class="score-val ${nC(score)}">${score}<small>/10</small></div></div>`:''}
-      ${iStr?`<div class="score-card"><span class="score-label">Impedance</span><div class="score-val ${wC(iStr)}" style="font-size:16px;margin-top:4px;">${iStr}</div></div>`:''}
-      ${nStr?`<div class="score-card"><span class="score-label">Sensitivity</span><div class="score-val ${wC(nStr)}" style="font-size:16px;margin-top:4px;">${nStr}</div></div>`:''}`;
-    scoresEl.style.display='block';
-  }
-
-  // Update right panel status
-  rEl.innerHTML=`<div class="fadein" style="text-align:center;padding:20px 0;">
-    <div style="font-size:36px;margin-bottom:10px;">✅</div>
-    <p style="font-size:13px;color:var(--text-3);">Analysis complete — see full breakdown below.</p>
-  </div>`;
-
-  const clean=text.replace(/OVERALL SCORE:.*\n?/i,'').replace(/IMPEDANCE MATCH:.*\n?/i,'').replace(/SENSITIVITY MATCH:.*\n?/i,'');
-
-  function extractSections(src){
-    const hdrs=['COMPONENT SPECS','COMPATIBILITY SUMMARY','SIGNAL CHAIN ANALYSIS','PHONO CHAIN','ISSUES & RECOMMENDATIONS'];
-    const upper=src.toUpperCase();
-    const found=[];
-    hdrs.forEach(h=>{const idx=upper.indexOf(h);if(idx!==-1)found.push({name:h,idx});});
-    found.sort((a,b)=>a.idx-b.idx);
-    const result={};
-    found.forEach((f,i)=>{
-      const contentStart=f.idx+f.name.length;
-      const contentEnd=i<found.length-1?found[i+1].idx:src.length;
-      result[f.name]=src.slice(contentStart,contentEnd).replace(/^[\s:]+/,'').trim();
-    });
-    return result;
-  }
-
-  const secs=extractSections(clean);
-  if(!Object.values(secs).some(v=>v))secs['COMPATIBILITY SUMMARY']=clean.trim();
-
-  document.getElementById('panel-specs-body').innerHTML=renderCompSpecs(secs['COMPONENT SPECS']);
-  const cp=[secs['SIGNAL CHAIN ANALYSIS']&&{label:'Signal chain',text:secs['SIGNAL CHAIN ANALYSIS']},secs['PHONO CHAIN']&&{label:'Phono chain',text:secs['PHONO CHAIN']}].filter(Boolean);
-  document.getElementById('panel-chain-body').innerHTML=renderPanelSections(cp.length?cp:[{label:'Signal chain',text:'No content.'}]);
-  const sp=[secs['COMPATIBILITY SUMMARY']&&{label:'Overall verdict',text:secs['COMPATIBILITY SUMMARY']},secs['ISSUES & RECOMMENDATIONS']&&{label:'Issues & recommendations',text:secs['ISSUES & RECOMMENDATIONS']}].filter(Boolean);
-  document.getElementById('panel-summary-body').innerHTML=renderPanelSections(sp.length?sp:[{label:'Summary',text:'No content.'}]);
-
-  fullEl.style.display='block';
-  setTimeout(()=>fullEl.scrollIntoView({behavior:'smooth',block:'start'}),100);
-}
-function renderCompSpecs(text){
-  if(!text)return'<p style="font-size:13px;color:var(--text-3);">No specifications found.</p>';
-
-  // Split on component headers: lines starting with ** (bold name) or ### name
-  // Try splitting on **ComponentName** pattern first
-  let html='';
-  const lines=text.split('\n');
-  let currentBlock=[];
-  let currentName=null;
-  let blocks=[];
-
-  lines.forEach(line=>{
-    const trimmed=line.trim();
-    // Detect a component header: **Name** at start of line, or ### Name
-    const boldHdr=trimmed.match(/^\*\*([^*]+)\*\*\s*[-–]?\s*(.*)$/);
-    const hashHdr=trimmed.match(/^#{2,3}\s+(.+)$/);
-    if(boldHdr&&trimmed.startsWith('**')){
-      if(currentName!==null)blocks.push({name:currentName,lines:currentBlock});
-      currentName=boldHdr[1].trim();
-      currentBlock=boldHdr[2]?[boldHdr[2]]:[];
-    } else if(hashHdr){
-      if(currentName!==null)blocks.push({name:currentName,lines:currentBlock});
-      currentName=hashHdr[1].trim();
-      currentBlock=[];
-    } else {
-      if(currentName!==null){currentBlock.push(trimmed);}
-      else if(trimmed&&trimmed!=='---'){html+=`<p class="panel-analysis" style="margin-bottom:8px;">${fmtInline(trimmed)}</p>`;}
+// ── Run Comparison ──
+async function runComparison(){
+  if(st.items.length<2||st.running)return;
+  st.running=true;
+  show('sec-results');
+  document.getElementById('btn-back').classList.remove('hidden');
+  document.getElementById('ad-top').classList.remove('hidden');
+  document.getElementById('lbl-res').textContent=`${st.catLbl} · Comparison`;
+  document.getElementById('load-names').textContent=st.items.map(i=>i.name).join(' · ');
+  document.getElementById('loading').style.display='block';
+  document.getElementById('tbl-zone').innerHTML='';
+  document.getElementById('errs').innerHTML='';
+  document.getElementById('cards-grid').innerHTML='';
+  document.getElementById('cards-zone').classList.add('hidden');
+  document.getElementById('ad-mid').classList.add('hidden');
+  document.getElementById('ad-bot').classList.add('hidden');
+  document.getElementById('res-cta').classList.add('hidden');
+  st.items=st.items.map(i=>({...i,status:'loading'}));
+  for(let i=0;i<st.items.length;i++){
+    try{
+      const data=await fetchComp(st.items[i].name,st.catLbl);
+      st.items[i]={...st.items[i],status:'done',data};
+    }catch(e){
+      st.items[i]={...st.items[i],status:'error',err:e.message||'Could not retrieve data.'};
+      const z=document.getElementById('errs');
+      z.innerHTML+=`<div class="err-box"><strong>${h(st.items[i].name)}</strong> — ${h(st.items[i].err)}</div>`;
     }
-  });
-  if(currentName!==null)blocks.push({name:currentName,lines:currentBlock});
-
-  // If no blocks found, fall back to generic markdown rendering
-  if(blocks.length===0){
-    return renderPanelSections([{label:'Specifications',text}]);
+    renderProgress();
   }
+  st.running=false;
+  document.getElementById('loading').style.display='none';
+  const done=st.items.filter(i=>i.data).length;
+  if(done>0){
+    document.getElementById('ad-mid').classList.remove('hidden');
+    document.getElementById('ad-bot').classList.remove('hidden');
+  }
+  document.getElementById('res-cta').classList.remove('hidden');
+}
 
-  blocks.forEach(b=>{
-    const items=b.lines.filter(l=>l&&l!=='---').map(l=>{
-      const stripped=l.replace(/^[-•*]\s*/,'').trim();
-      return stripped?`<li>${fmtInline(stripped)}</li>`:'';
-    }).filter(Boolean);
-    html+=`<div class="comp-spec-block fadein">
-      <div class="comp-name-hdr">${esc(b.name)}</div>
-      ${items.length?`<ul class="spec-list">${items.join('')}</ul>`:''}
-    </div>`;
+async function fetchComp(name,category){
+  const r=await fetch('/.netlify/functions/compare',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name,category})
   });
-  return html;
+  if(!r.ok){let j={};try{j=await r.json()}catch(_){}; throw new Error(j.error||`Server error ${r.status}`);}
+  return r.json();
 }
 
-function fmtInline(s){
-  return s
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/`(.+?)`/g,'<code style="font-family:ui-monospace,monospace;font-size:11px;background:#f1f5f9;padding:1px 4px;border-radius:3px;">$1</code>');
+function renderProgress(){
+  const done=st.items.filter(i=>i.data);
+  if(!done.length)return;
+  document.getElementById('loading').style.display='none';
+  renderTable();renderCards();
 }
-function renderPanelSections(parts){
-  if(!parts.length)return'<p style="font-size:13px;color:var(--text-3);">No content.</p>';
-  return parts.map(({label,text})=>{
-    let html=text
-      .replace(/^---+\s*$/gm,'')           // strip horizontal rules
-      .replace(/^#{1,3}\s*/gm,'')          // strip ## ### headings
-      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-      .replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>')
-      .replace(/^[-•]\s+(.+)$/gm,'<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)/g,'<ul>$1</ul>')
-      .replace(/<\/ul>\s*<ul>/g,'')
-      .replace(/\n\n+/g,'</p><p>')
-      .replace(/^(?!<[upl\/]|$)(.+)$/gm,'<p>$1</p>')
-      .replace(/<p>\s*<\/p>/g,'')
-      .trim();
-    return `<div class="fadein"><div class="panel-sub-hdr">${esc(label)}</div><div class="panel-analysis">${html}</div></div>`;
+
+// ── Table ──
+function renderTable(){
+  const zone=document.getElementById('tbl-zone');
+  const done=st.items.filter(i=>i.data);
+  if(!done.length||!zone)return;
+  const keys=[...new Set(done.flatMap(i=>Object.keys(i.data.specs||{})))];
+  const minW=Math.max(540,165+st.items.length*190);
+  const cols=st.items.map(it=>{
+    if(it.status==='loading')return`<th class="th-c"><div class="load-v">Loading ${h(it.name)}…</div></th>`;
+    if(it.data)return`<th class="th-c"><div class="th-brand">${h(it.data.brand)}</div><div class="th-model">${h(it.data.model)}</div><div class="th-year">${h(it.data.yearIntroduced)}</div></th>`;
+    return`<th class="th-c"><div style="color:#6B7280">${h(it.name)}</div></th>`;
+  }).join('');
+  const dimRow=st.items.map(it=>{
+    if(it.status==='loading')return`<td><span class="load-v">·  ·  ·</span></td>`;
+    if(!it.data?.dimensions)return`<td><span class="empty-v">—</span></td>`;
+    const d=it.data.dimensions;
+    return`<td><div class="dim-g"><span class="dim-k">W</span><span>${h(d.width||'—')}</span><span class="dim-k">H</span><span>${h(d.height||'—')}</span><span class="dim-k">D</span><span>${h(d.depth||'—')}</span><span class="dim-k">Wt</span><span>${h(d.weight||'—')}</span></div></td>`;
+  }).join('');
+  const specRows=keys.map(k=>{
+    const cells=st.items.map(it=>{
+      if(it.status==='loading')return`<td><span class="load-v">·  ·  ·</span></td>`;
+      const v=it.data?.specs?.[k];
+      return v?`<td>${h(v)}</td>`:`<td><span class="empty-v">—</span></td>`;
+    }).join('');
+    return`<tr><td class="td-l">${h(k)}</td>${cells}</tr>`;
+  }).join('');
+  const featRow=st.items.map(it=>{
+    if(it.status==='loading')return`<td><span class="load-v">·  ·  ·</span></td>`;
+    if(!it.data?.notableFeatures?.length)return`<td><span class="empty-v">—</span></td>`;
+    return`<td><ul class="feat-ul">${it.data.notableFeatures.map(f=>`<li>${h(f)}</li>`).join('')}</ul></td>`;
+  }).join('');
+  zone.innerHTML=`<div class="tbl-wrap"><table class="spec-tbl" style="min-width:${minW}px"><thead><tr><th class="th-s">Specification</th>${cols}</tr></thead><tbody><tr class="row-dim"><td class="td-l">Dimensions</td>${dimRow}</tr>${specRows}<tr class="row-feat"><td class="td-l">Notable Features</td>${featRow}</tr></tbody></table></div>`;
+}
+
+// ── Cards ──
+function renderCards(){
+  const done=st.items.filter(i=>i.data);
+  if(!done.length)return;
+  document.getElementById('cards-zone').classList.remove('hidden');
+  document.getElementById('cards-grid').innerHTML=done.map(it=>{
+    const d=it.data;
+    const mfgBase=d.manufacturerUrl?su(d.manufacturerUrl).replace(/^(https?:\/\/[^\/]+).*/,'$1'):'';
+    const mfg=mfgBase?`<a href="${mfgBase}" target="_blank" rel="noopener" class="lnk"><span class="lic lm">M</span>Manufacturer Website ↗</a>`:'';
+    const ytQuery=encodeURIComponent(`${d.brand} ${d.model}`);
+    const yt=`<a href="https://www.youtube.com/results?search_query=${ytQuery}" target="_blank" rel="noopener" class="lnk"><span class="lic lyt">▶</span>YouTube Videos ↗</a>`;
+    const cons=(d.considerations||[]).length?`<div><p class="list-l">Considerations</p><ul class="con-ul">${d.considerations.map(c=>`<li>${h(c)}</li>`).join('')}</ul></div>`:'';
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body"><p class="ccard-sum">${h(d.summary)}</p><div><p class="list-l">Strengths</p><ul class="pro-ul">${(d.strengths||[]).map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div></div></article>`;
   }).join('');
 }
-function updateDiagram(){const wrap=document.getElementById('diagram-wrap');if(components.length<2){wrap.innerHTML='';return;}wrap.innerHTML=buildDiagram();}
-function buildDiagram(){
-  const W=600,BW=160,BH=50,G=20;
-  const dig=components.filter(c=>['streamer','dac','cdplayer'].includes(c.type)),pho=components.filter(c=>['turntable','phonopre'].includes(c.type)),shr=components.filter(c=>!dig.includes(c)&&!pho.includes(c)&&c.type!=='cartridge'&&c.type!=='tonearm'),hasBoth=dig.length>0&&pho.length>0;
 
-  // Level-based topological sort (BFS): all sources appear before the nodes they feed
-  // This correctly handles multiple sources (M1T + CXA35) both feeding one DAC
-  function levelSort(chain){
-    if(chain.length<=1)return chain;
-    const ids=new Set(chain.map(c=>c.id));
-    const intConns=connections.filter(cn=>ids.has(cn.fromId)&&ids.has(cn.toId));
-    const inDeg={};
-    chain.forEach(c=>inDeg[c.id]=0);
-    intConns.forEach(cn=>inDeg[cn.toId]++);
-    const result=[],vis=new Set();
-    let level=chain.filter(c=>inDeg[c.id]===0);
-    if(!level.length)level=chain.slice(0,1); // fallback for cycles
-    while(level.length>0){
-      level.forEach(c=>{result.push(c);vis.add(c.id);});
-      const next=[];
-      level.forEach(c=>{
-        intConns.filter(cn=>cn.fromId===c.id).forEach(cn=>{
-          if(!vis.has(cn.toId)){
-            inDeg[cn.toId]--;
-            if(inDeg[cn.toId]===0){const nx=chain.find(x=>x.id===cn.toId);if(nx)next.push(nx);}
-          }
-        });
-      });
-      level=next;
-    }
-    chain.filter(c=>!vis.has(c.id)).forEach(c=>result.push(c));
-    return result;
-  }
-
-  // For shared chain: also consider connections FROM dig/pho nodes to determine first shr node
-  function levelSortShr(chain){
-    if(chain.length<=1)return chain;
-    const ids=new Set(chain.map(c=>c.id));
-    const intConns=connections.filter(cn=>ids.has(cn.fromId)&&ids.has(cn.toId));
-    const extIn=new Set();
-    connections.forEach(cn=>{if(!ids.has(cn.fromId)&&ids.has(cn.toId))extIn.add(cn.toId);});
-    const inDeg={};
-    chain.forEach(c=>inDeg[c.id]=0);
-    intConns.forEach(cn=>inDeg[cn.toId]++);
-    // Nodes receiving from outside (dig/pho) are treated as level-0 sources if no internal in
-    const result=[],vis=new Set();
-    let level=chain.filter(c=>inDeg[c.id]===0&&extIn.has(c.id));
-    if(!level.length)level=chain.filter(c=>inDeg[c.id]===0);
-    if(!level.length)level=chain.slice(0,1);
-    while(level.length>0){
-      level.forEach(c=>{result.push(c);vis.add(c.id);});
-      const next=[];
-      level.forEach(c=>{
-        intConns.filter(cn=>cn.fromId===c.id).forEach(cn=>{
-          if(!vis.has(cn.toId)){
-            inDeg[cn.toId]--;
-            if(inDeg[cn.toId]===0){const nx=chain.find(x=>x.id===cn.toId);if(nx)next.push(nx);}
-          }
-        });
-      });
-      level=next;
-    }
-    chain.filter(c=>!vis.has(c.id)).forEach(c=>result.push(c));
-    return result;
-  }
-
-  const digS=levelSort(dig),phoS=levelSort(pho),shrS=levelSortShr(shr);
-
-  const ARR=`<defs><marker id="da" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 2L8 5L2 8" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/></marker></defs>`;
-
-  // Wrap name into lines based on max chars (derived from box width)
-  const wrapNameW=(s,mc=18)=>{
-    const e=esc(s);
-    if(e.length<=mc)return[e];
-    let sp=e.lastIndexOf(' ',mc-1);
-    if(sp<3)sp=mc-1;
-    return[e.slice(0,sp),e.slice(sp).trim().slice(0,mc)+(e.slice(sp).trim().length>mc?'…':'')];
-  };
-
-  const cartridge=components.find(c=>c.type==='cartridge');
-  const tonearm=components.find(c=>c.type==='tonearm');
-
-  // Box height — accepts optional width (defaults to BW), affects line-wrapping estimate
-  const boxH=(c,w=BW)=>{
-    const mc=Math.max(10,Math.floor(w/8));
-    const lines=wrapNameW(c.name,mc).length;
-    if(c.type==='turntable'){
-      const subs=(tonearm?1:0)+(cartridge?1:0);
-      return BH+(lines>1?18:0)+(subs>0?18+subs*17:0);
-    }
-    return BH+(lines>1?18:0);
-  };
-
-  // Box renderer — accepts optional width
-  const box=(x,y,c,cls,w=BW)=>{
-    const cx=x+w/2;
-    const mc=Math.max(10,Math.floor(w/8));
-    const lines=wrapNameW(c.name,mc);
-    const bh=boxH(c,w);
-    let inner='';
-    if(lines.length===1){
-      inner+=`<text class="dv-title" x="${cx}" y="${y+Math.round(bh*0.38)}" text-anchor="middle" dominant-baseline="central">${lines[0]}</text>`;
-      inner+=`<text class="dv-sub" x="${cx}" y="${y+Math.round(bh*0.67)}" text-anchor="middle" dominant-baseline="central">${esc(typeLabels[c.type])}</text>`;
-    }else{
-      inner+=`<text class="dv-title" x="${cx}" y="${y+Math.round(bh*0.24)}" text-anchor="middle" dominant-baseline="central">${lines[0]}</text>`;
-      inner+=`<text class="dv-title" x="${cx}" y="${y+Math.round(bh*0.46)}" text-anchor="middle" dominant-baseline="central">${lines[1]}</text>`;
-      inner+=`<text class="dv-sub" x="${cx}" y="${y+Math.round(bh*0.72)}" text-anchor="middle" dominant-baseline="central">${esc(typeLabels[c.type])}</text>`;
-    }
-    if(c.type==='turntable'){
-      const subs=[];
-      if(tonearm)subs.push('⟳ '+wrapNameW(tonearm.name,mc)[0]);
-      if(cartridge)subs.push('◆ '+wrapNameW(cartridge.name,mc)[0]);
-      if(subs.length>0){
-        const divY=y+Math.round(bh*0.78);
-        inner+=`<line x1="${x+6}" x2="${x+w-6}" y1="${divY}" y2="${divY}" stroke="#e2e8f0" stroke-width="1"/>`;
-        subs.forEach((s,i)=>{inner+=`<text class="dv-sub" x="${cx}" y="${divY+11+i*17}" text-anchor="middle" dominant-baseline="central" style="font-size:9px;">${esc(s)}</text>`;});
-      }
-    }
-    return `<g class="dv-node"><rect x="${x}" y="${y}" width="${w}" height="${bh}" rx="8" class="dv-box ${cls}"/>${inner}</g>`;
-  };
-
-  const pt=d=>`<path fill="none" stroke="#2563eb" stroke-width="1.2" d="${d}"/>`;
-  const ln=(x1,y1,x2,y2)=>`<line stroke="#2563eb" stroke-width="1.2" fill="none" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#da)"/>`;
-  const lbl=(x,y,t,a)=>t?`<text class="dv-label" x="${x}" y="${y}" text-anchor="${a||'start'}" dominant-baseline="central">${esc(t)}</text>`:'';
-  const ct=(a,b_)=>{if(!a||!b_)return null;const c=connections.find(x=>(x.fromId===a.id&&x.toId===b_.id)||(x.fromId===b_.id&&x.toId===a.id));return c?c.type:null;};
-
-  // Render a chain column using connection-based arrows
-  // Returns {b, p, lastBot, lastComp, totalY}
-  function renderChain(chain,startX,startY,cls,colBW=BW){
-    const ids=new Set(chain.map(c=>c.id));
-    const intConns=connections.filter(cn=>ids.has(cn.fromId)&&ids.has(cn.toId));
-    const hasInSet=new Set(intConns.map(cn=>cn.toId));
-    const sources=chain.filter(c=>!hasInSet.has(c.id));
-    const hubs=chain.filter(c=>hasInSet.has(c.id));
-    let b='',p='';
-    let curY=startY,lastBot=null,lastComp=null;
-    const colCx=startX+colBW/2;
-
-    if(sources.length>=2){
-      // Sub-column layout: use 1.6× colBW so each source box is readable
-      const srcAreaW=Math.round(colBW*1.6);
-      const srcBW=Math.floor((srcAreaW-G)/2);
-      // Render source boxes
-      const srcHeights=sources.map(s=>boxH(s,srcBW));
-      const maxSrcH=Math.max(...srcHeights);
-      sources.forEach((c,i)=>{
-        const sx=startX+i*(srcBW+G);
-        b+=box(sx,curY,c,cls,srcBW);
-      });
-      const srcsBotY=curY+maxSrcH;
-      // Connect to first hub via bus merge
-      if(hubs.length>0){
-        const hub=hubs[0];
-        const hubY=srcsBotY+G;
-        const mergeY=srcsBotY+G/2;
-        const hubConn=connections.filter(cn=>cn.toId===hub.id&&ids.has(cn.fromId));
-        sources.forEach((c,i)=>{
-          const scx=startX+i*(srcBW+G)+srcBW/2;
-          const srcBot=curY+srcHeights[i];
-          const conn=hubConn.find(cn=>cn.fromId===c.id);
-          p+=`<line stroke="#2563eb" stroke-width="1.2" x1="${scx}" y1="${srcBot}" x2="${scx}" y2="${mergeY}"/>`;
-          p+=`<line stroke="#2563eb" stroke-width="1.2" x1="${scx}" y1="${mergeY}" x2="${colCx}" y2="${mergeY}"/>`;
-          // Label on vertical segment, outside edge of each source
-          if(conn){
-            const isLeft=scx<=colCx;
-            b+=lbl(isLeft?scx+4:scx-4,(srcBot+mergeY)/2,conn.type,isLeft?'start':'end');
-          }
-        });
-        p+=`<line stroke="#2563eb" stroke-width="1.2" fill="none" x1="${colCx}" y1="${mergeY}" x2="${colCx}" y2="${hubY}" marker-end="url(#da)"/>`;
-        b+=box(startX,hubY,hub,cls,colBW);
-        lastBot=hubY+boxH(hub,colBW);lastComp=hub;curY=lastBot+G;
-        for(let i=1;i<hubs.length;i++){
-          const c=hubs[i];
-          p+=ln(colCx,lastBot,colCx,curY);
-          const t=ct(lastComp,c);if(t)b+=lbl(colCx+5,(lastBot+curY)/2,t);
-          b+=box(startX,curY,c,cls,colBW);
-          lastBot=curY+boxH(c,colBW);lastComp=c;curY=lastBot+G;
-        }
-      }else{
-        lastBot=srcsBotY;lastComp=sources[sources.length-1];curY=srcsBotY+G;
-      }
-    }else{
-      // Single source or simple sequential chain
-      chain.forEach(c=>{
-        if(lastBot!==null){
-          p+=ln(colCx,lastBot,colCx,curY);
-          const t=ct(lastComp,c);if(t)b+=lbl(colCx+5,(lastBot+curY)/2,t);
-        }
-        b+=box(startX,curY,c,cls,colBW);
-        lastBot=curY+boxH(c,colBW);lastComp=c;curY=lastBot+G;
-      });
-    }
-    return{b,p,lastBot,lastComp,totalY:curY};
-  }
-
-  if(hasBoth){
-    const lX=10,rX=W/2+10;
-    let p='',b='';
-    b+=`<text class="dv-col" x="${lX+BW/2}" y="16" text-anchor="middle">DIGITAL</text>`;
-    b+=`<text class="dv-col" x="${rX+BW/2}" y="16" text-anchor="middle">PHONO</text>`;
-
-    const digR=renderChain(digS,lX,24,'dv-box-digital',BW);
-    b+=digR.b;p+=digR.p;
-    const phoR=renderChain(phoS,rX,24,'dv-box-phono',BW);    b+=phoR.b;p+=phoR.p;
-
-    const lB=digR.lastBot,lPrev=digR.lastComp;
-    const rB=phoR.lastBot,rPrev=phoR.lastComp;
-    const mergeY=Math.max(digR.totalY,phoR.totalY);
-    const sX=W/2-BW/2,sCx=sX+BW/2;let sY=mergeY+G;
-
-    if(shrS.length>0){
-      const fS=shrS[0];
-      if(lB!==null){p+=`<path fill="none" stroke="#2563eb" stroke-width="1.2" d="M${lX+BW/2},${lB} L${lX+BW/2},${mergeY} L${sCx-14},${mergeY} L${sCx-14},${sY}" marker-end="url(#da)"/>`;const t=ct(lPrev,fS);if(t)b+=lbl(Math.round((lX+BW/2+sCx-14)/2),mergeY-8,t,'middle');}
-      if(rB!==null){p+=`<path fill="none" stroke="#2563eb" stroke-width="1.2" d="M${rX+BW/2},${rB} L${rX+BW/2},${mergeY} L${sCx+14},${mergeY} L${sCx+14},${sY}" marker-end="url(#da)"/>`;const t=ct(rPrev,fS);if(t)b+=lbl(Math.round((rX+BW/2+sCx+14)/2),mergeY-8,t,'middle');}
-    }
-    let pB=null,shrPrev=null;
-    shrS.forEach(c=>{if(pB!==null){p+=ln(sCx,pB,sCx,sY);const t=ct(shrPrev,c);if(t)b+=lbl(sCx+5,(pB+sY)/2,t);}b+=box(sX,sY,c,'dv-box-shared');pB=sY+boxH(c);shrPrev=c;sY+=boxH(c)+G;});
-    return `<svg width="100%" viewBox="0 0 ${W} ${(pB||sY)+20}" xmlns="http://www.w3.org/2000/svg">${ARR}${p}${b}</svg>`;
-  }
-
-  const all=[...digS,...phoS,...shrS],x=W/2-BW/2,cx=W/2;
-  let y=20,p='',b='',prev=null;
-  all.forEach((c,i)=>{const cls=dig.includes(c)?'dv-box-digital':pho.includes(c)?'dv-box-phono':'dv-box-shared';if(i>0){p+=ln(cx,y,cx,y+G);const t=ct(prev,c);if(t)b+=lbl(cx+5,y+G/2,t);y+=G;}b+=box(x,y,c,cls);y+=boxH(c);prev=c;});
-  return `<svg width="100%" viewBox="0 0 ${W} ${y+20}" xmlns="http://www.w3.org/2000/svg">${ARR}${p}${b}</svg>`;
+// ── Reset ──
+function reset(){
+  st={cat:null,catLbl:'',items:[],running:false,uid:1};
+  document.getElementById('btn-back').classList.add('hidden');
+  document.getElementById('ad-top').classList.add('hidden');
+  document.getElementById('tbl-zone').innerHTML='';
+  document.getElementById('cards-grid').innerHTML='';
+  document.getElementById('errs').innerHTML='';
+  document.getElementById('chips').innerHTML='';
+  const inp=document.getElementById('comp-inp');
+  if(inp){inp.value='';inp.disabled=false;}
+  document.getElementById('btn-add').disabled=false;
+  const btn=document.getElementById('btn-cmp');
+  btn.textContent='Add at least 2 components';btn.disabled=true;btn.classList.add('dis');
+  show('sec-home');
 }
-renderAll();
 
-function printReport(){
-  const diagramEl=document.getElementById('diagram-wrap');
-  const specsEl=document.getElementById('panel-specs-body');
-  const chainEl=document.getElementById('panel-chain-body');
-  const summaryEl=document.getElementById('panel-summary-body');
-  const scoreEl=document.getElementById('results-content');
-  const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  const compList=components.map(c=>`<li><strong>${esc(typeLabels[c.type])}:</strong> ${esc(c.name)}</li>`).join('');
-  const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><title>AudioChainHiFi.com — Compatibility Report</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1e293b;line-height:1.65;background:#fff;padding:32px 48px;}
-@media print{body{padding:0;}.no-print{display:none!important;}@page{margin:20mm 18mm;}}
-.rpt-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:3px solid #2563eb;padding-bottom:14px;margin-bottom:22px;}
-.rpt-logo{font-size:18px;font-weight:800;color:#0f172a;}.rpt-logo span{color:#2563eb;}
-.rpt-meta{font-size:11px;color:#64748b;margin-top:4px;line-height:1.6;}
-.rpt-date{font-size:11px;color:#94a3b8;text-align:right;}
-.toolbar{display:flex;gap:10px;margin-bottom:22px;}
-.toolbar button{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;}
-.btn-p{background:#2563eb;color:#fff;}.btn-c{background:#f1f5f9;color:#475569;}
-.score-row{display:flex;gap:10px;margin-bottom:20px;}
-.score-card{flex:1;border:1.5px solid #e2e8f0;border-radius:8px;padding:12px;text-align:center;}
-.score-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;display:block;margin-bottom:4px;}
-.score-val{font-size:24px;font-weight:800;line-height:1;}
-.score-val small{font-size:13px;font-weight:500;color:#94a3b8;}
-.score-good{color:#16a34a;}.score-ok{color:#d97706;}.score-bad{color:#dc2626;}
-h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#2563eb;border-bottom:1.5px solid #e2e8f0;padding-bottom:6px;margin:24px 0 12px;}
-.comp-list{list-style:none;}
-.comp-list li{font-size:12px;color:#475569;padding:2px 0;}
-.comp-list li strong{color:#1e293b;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-right:4px;}
-.diagram-wrap svg{max-width:500px;height:auto;display:block;margin:0 auto;}
-.dv-box{fill:#f8fafc;stroke:#e2e8f0;stroke-width:1.5;}
-.dv-box-digital{fill:#eff6ff;stroke:#93c5fd;}
-.dv-box-phono{fill:#fefce8;stroke:#fcd34d;}
-.dv-box-shared{fill:#f0fdf4;stroke:#86efac;}
-.dv-title{fill:#0f172a;font-family:Arial,sans-serif;font-size:12px;font-weight:700;}
-.dv-sub{fill:#94a3b8;font-family:Arial,sans-serif;font-size:10px;}
-.dv-col{fill:#2563eb;font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;}
-.dv-label{fill:#64748b;font-family:Arial,sans-serif;font-size:10px;}
-.comp-name-hdr{font-size:12px;font-weight:700;color:#2563eb;background:#eff6ff;padding:5px 10px;border-radius:6px 6px 0 0;margin-top:10px;}
-.comp-spec-block:first-child .comp-name-hdr{margin-top:0;}
-.spec-list{list-style:none;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 6px 6px;margin-bottom:2px;}
-.spec-list li{font-size:11px;font-family:'Courier New',monospace;color:#475569;padding:3px 10px;border-bottom:1px solid #f8fafc;}
-.spec-list li:last-child{border-bottom:none;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
-.panel-analysis p{font-size:13px;color:#475569;margin-bottom:8px;line-height:1.7;}
-.panel-analysis strong{color:#1e293b;font-weight:600;}
-.panel-analysis ul{list-style:none;padding:0;margin:0 0 8px;}
-.panel-analysis ul li{font-size:12px;color:#475569;padding:4px 0 4px 16px;position:relative;border-bottom:1px solid #f1f5f9;}
-.panel-analysis ul li:last-child{border-bottom:none;}
-.panel-analysis ul li::before{content:'→';position:absolute;left:0;color:#2563eb;font-size:11px;top:6px;}
-.panel-sub-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#2563eb;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:8px;}
-.panel-sub-hdr:first-child{margin-top:0;}
-.panel-sub-hdr::after{content:'';flex:1;height:1px;background:#e2e8f0;}
-.page-break{page-break-before:always;height:0;}
-.rpt-footer{margin-top:28px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
-</style></head><body>
-<div class="toolbar no-print">
-  <button class="btn-p" onclick="window.print()">🖨️ Print / Save as PDF</button>
-  <button class="btn-c" onclick="window.close()">✕ Close</button>
-</div>
-<div class="rpt-header">
-  <div>
-    <div class="rpt-logo">AudioChain<span>HiFi</span>.com</div>
-    <div class="rpt-meta">Hi-Fi Compatibility Report · ${components.length} components · ${connections.length} connections</div>
-  </div>
-  <div class="rpt-date">Generated<br>${date}</div>
-</div>
-<h2>System Components</h2>
-<ul class="comp-list">${compList}</ul>
-${scoreEl&&scoreEl.querySelector('.score-row')?'<h2>Compatibility Scores</h2>'+scoreEl.querySelector('.score-row').outerHTML:''}
-<h2>Signal Chain Diagram</h2>
-<div class="diagram-wrap">${diagramEl&&diagramEl.innerHTML?diagramEl.innerHTML:'<p style="color:#94a3b8;font-size:13px;font-style:italic;">Diagram not generated. Click Generate Signal Chain Diagram before printing.</p>'}</div>
-<div class="page-break"></div>
-<h2>Component Specifications</h2>
-<div>${specsEl&&specsEl.innerHTML?specsEl.innerHTML:'<p style="color:#94a3b8;font-size:13px;font-style:italic;">Run the analysis first.</p>'}</div>
-<div class="two-col" style="margin-top:24px;">
-  <div><h2>Signal Chain Analysis</h2><div>${chainEl&&chainEl.innerHTML?chainEl.innerHTML:'<p style="color:#94a3b8;font-size:13px;font-style:italic;">Run the analysis first.</p>'}</div></div>
-  <div><h2>Summary &amp; Recommendations</h2><div>${summaryEl&&summaryEl.innerHTML?summaryEl.innerHTML:'<p style="color:#94a3b8;font-size:13px;font-style:italic;">Run the analysis first.</p>'}</div></div>
-</div>
-<div class="rpt-footer">
-  <span>AudioChainHiFi.com · Powered by Claude AI · Anthropic</span>
-  <span>For informational purposes only — not a substitute for professional audio engineering advice.</span>
-</div>
-</body></html>`);
-  win.document.close();
-}{localStorage.setItem('cookie_consent','accepted');document.getElementById('cookie-banner').style.display='none';gtag('consent','update',{'ad_storage':'granted','ad_user_data':'granted','ad_personalization':'granted','analytics_storage':'granted'});}
-function declineCookies(){localStorage.setItem('cookie_consent','declined');document.getElementById('cookie-banner').style.display='none';}
-(function(){const c=localStorage.getItem('cookie_consent');if(!c){document.getElementById('cookie-banner').style.display='flex';}else if(c==='accepted'){gtag('consent','update',{'ad_storage':'granted','ad_user_data':'granted','ad_personalization':'granted','analytics_storage':'granted'});}})();
+// ── Utils ──
+function h(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function su(s){if(!s)return'#';const t=String(s).trim();return(t.startsWith('http://')||t.startsWith('https://'))?t:'#';}
 </script>
 </body>
 </html>
