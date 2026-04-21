@@ -152,7 +152,13 @@ function buildSpecPrompt(name, category) {
     'Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
     'Category: ' + category + '\n' +
     'Component: "' + name + '"\n\n' +
-    'Source priority: Use official manufacturer specs first, then reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com. Write "N/A" for genuinely unknown values — never guess.\n\n' +
+    'Source priority: Use official manufacturer specs first, then reputable sources such as Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com.\n\n' +
+    'ACCURACY RULES — follow these strictly:\n' +
+    '- Write "N/A" for ANY value you are not confident about — never guess or infer.\n' +
+    '- For speakers: enclosure type (bookshelf/standmount vs floorstander/tower) is critical. If you are not 100% certain from a reliable source, write "N/A" — do NOT infer from model name, number, or series siblings.\n' +
+    '- For any component: do NOT assume specs based on related models in the same range. Each model must be verified independently.\n' +
+    '- Recent or regional products may not be in your training data. If you have low confidence in a spec, write "N/A".\n' +
+    '- In your summary, only describe characteristics you are confident about. Do not invent sonic descriptions.\n\n'
     'Return this exact JSON structure:\n\n' +
     '{\n' +
     '  "brand": "Manufacturer name only",\n' +

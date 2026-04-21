@@ -124,6 +124,9 @@ button{cursor:pointer;font-family:inherit}
 .btn-cmp:hover{background:#1F2937;transform:translateY(-2px);box-shadow:0 6px 22px rgba(17,24,39,.2)}
 .btn-cmp:disabled,.btn-cmp.dis{background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;transform:none;box-shadow:none}
 
+.disclaimer-banner{display:flex;align-items:flex-start;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid #D97706;border-radius:8px;padding:13px 16px;margin-bottom:32px;font-size:13px;color:#92400E;line-height:1.6}
+.disclaimer-banner svg{flex-shrink:0;margin-top:1px;color:#D97706}
+.disclaimer-banner strong{color:#78350F;font-weight:600}
 /* ── RESULTS ── */
 .res-sec{background:#F8F7F5;padding:72px 0 88px}
 .loading{text-align:center;padding:80px 20px}
@@ -433,6 +436,11 @@ button{cursor:pointer;font-family:inherit}
     <div class="sec-hd">
       <span class="eyebrow" id="lbl-res">Results</span>
       <h1>Comparison Results</h1>
+    </div>
+
+    <div class="disclaimer-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Specifications are AI-generated and may be incomplete or inaccurate — particularly for newer or regional products. <strong>Always verify with the manufacturer before purchase.</strong> If a value shows "N/A", the AI did not have sufficient confidence to report it.</span>
     </div>
     <div id="loading" class="loading">
       <div class="wave"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
