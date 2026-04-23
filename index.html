@@ -197,9 +197,9 @@ button{cursor:pointer;font-family:inherit}
 .ccard-links{border-top:1px solid #F3F4F6;padding-top:16px;display:flex;flex-direction:column;gap:7px}
 
 /* Feedback */
-.feedback-trigger{background:none;border:none;font-family:inherit;font-size:12px;color:#D1D5DB;cursor:pointer;padding:6px 0 0;text-align:left;display:flex;align-items:center;gap:5px;transition:color .18s;width:100%}
-.feedback-trigger:hover{color:#9CA3AF}
-.feedback-trigger svg{flex-shrink:0}
+.feedback-trigger{background:#F9FAFB;border:1.5px solid #E5E7EB;font-family:inherit;font-size:13px;font-weight:600;color:#6B7280;cursor:pointer;padding:9px 14px;text-align:left;display:flex;align-items:center;gap:7px;transition:all .18s;width:100%;border-radius:8px;margin-top:4px}
+.feedback-trigger:hover{background:#FFF7ED;border-color:#D97706;color:#B45309}
+.feedback-trigger svg{flex-shrink:0;color:#D97706}
 .feedback-form{display:none;margin-top:10px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:10px;padding:14px 16px}
 .feedback-form.open{display:block;animation:fadeUp .2s ease}
 .feedback-form label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;margin-bottom:5px}
@@ -570,6 +570,7 @@ button{cursor:pointer;font-family:inherit}
   <input name="bot-field">
   <input name="component">
   <input name="category">
+  <input name="email">
   <select name="error-type"><option>Wrong spec value</option></select>
   <textarea name="correction"></textarea>
 </form>
@@ -843,7 +844,7 @@ function renderCards(){
     const strengths=(d.strengths||[]).filter(s=>s&&s!=='N/A').length?`<div><p class="list-l">Strengths</p><ul class="pro-ul">${d.strengths.map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>`:'';
 
     const feedbackId=`fb-${it.id||Math.random().toString(36).slice(2)}`;
-    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body">${limitedWarning}<p class="ccard-sum">${h(d.summary)}</p>${strengths}${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div><div class="feedback-section"><button class="feedback-trigger" onclick="toggleFeedback('${feedbackId}')" type="button"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Report inaccuracy</button><div class="feedback-form" id="${feedbackId}"><label for="${feedbackId}-type">What's wrong?</label><select id="${feedbackId}-type"><option value="Wrong spec value">Wrong spec value</option><option value="Wrong enclosure type">Wrong enclosure type (speaker)</option><option value="Wrong manufacturer website">Wrong manufacturer website</option><option value="Component not found / wrong product">Component not found / wrong product</option><option value="Wrong dimensions or weight">Wrong dimensions or weight</option><option value="Other">Other</option></select><label for="${feedbackId}-note">What's the correct information?</label><textarea id="${feedbackId}-note" placeholder="e.g. This is a bookshelf speaker, not a floorstander"></textarea><div class="feedback-actions"><button class="btn-feedback-submit" onclick="submitFeedback('${feedbackId}','${h(d.brand+' '+d.model)}','${h(st.catLbl)}')" type="button">Submit Report</button><button class="btn-feedback-cancel" onclick="toggleFeedback('${feedbackId}')" type="button">Cancel</button></div><div class="feedback-success hidden" id="${feedbackId}-ok">✓ Thank you — we'll review this and apply a correction.</div><div class="feedback-error hidden" id="${feedbackId}-err">Submission failed. Please try again.</div></div></div></div></article>`;
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body">${limitedWarning}<p class="ccard-sum">${h(d.summary)}</p>${strengths}${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div><div class="feedback-section"><button class="feedback-trigger" onclick="toggleFeedback('${feedbackId}')" type="button"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Report Inaccuracy</button><div class="feedback-form" id="${feedbackId}"><label for="${feedbackId}-email">Your Email <span style="color:#DC2626">*</span></label><input type="email" id="${feedbackId}-email" placeholder="your@email.com" style="width:100%;font-family:inherit;font-size:13px;background:#fff;border:1.5px solid #E5E7EB;border-radius:7px;padding:8px 10px;color:#111827;margin-bottom:10px;transition:border-color .18s" required><label for="${feedbackId}-type">What's wrong?</label><select id="${feedbackId}-type"><option value="Wrong spec value">Wrong spec value</option><option value="Wrong enclosure type">Wrong enclosure type (speaker)</option><option value="Wrong manufacturer website">Wrong manufacturer website</option><option value="Component not found / wrong product">Component not found / wrong product</option><option value="Wrong dimensions or weight">Wrong dimensions or weight</option><option value="Other">Other</option></select><label for="${feedbackId}-note">What's the correct information? <span style="color:#DC2626">*</span></label><textarea id="${feedbackId}-note" placeholder="e.g. This is a bookshelf speaker, not a floorstander"></textarea><div class="feedback-actions"><button class="btn-feedback-submit" onclick="submitFeedback('${feedbackId}','${h(d.brand+' '+d.model)}','${h(st.catLbl)}')" type="button">Submit Report</button><button class="btn-feedback-cancel" onclick="toggleFeedback('${feedbackId}')" type="button">Cancel</button></div><div class="feedback-success hidden" id="${feedbackId}-ok">✓ Thank you — we'll review this and apply a correction.</div><div class="feedback-error hidden" id="${feedbackId}-err">Submission failed. Please try again.</div></div></div></div></article>`;
   }).join('');
 }
 
@@ -954,17 +955,26 @@ function toggleFeedback(id){
 }
 
 async function submitFeedback(id,component,category){
-  const typeEl=document.getElementById(id+'-type');
-  const noteEl=document.getElementById(id+'-note');
-  const okEl  =document.getElementById(id+'-ok');
-  const errEl =document.getElementById(id+'-err');
-  const btn   =document.querySelector(`#${id} .btn-feedback-submit`);
-  if(!typeEl||!noteEl)return;
+  const emailEl=document.getElementById(id+'-email');
+  const typeEl =document.getElementById(id+'-type');
+  const noteEl =document.getElementById(id+'-note');
+  const okEl   =document.getElementById(id+'-ok');
+  const errEl  =document.getElementById(id+'-err');
+  const btn    =document.querySelector(`#${id} .btn-feedback-submit`);
+  if(!emailEl||!typeEl||!noteEl)return;
+
+  const email=emailEl.value.trim();
   const correction=noteEl.value.trim();
-  if(!correction){noteEl.focus();return;}
+
+  // Validate required fields
+  if(!email||!email.includes('@')){emailEl.focus();emailEl.style.borderColor='#DC2626';return;}
+  if(!correction){noteEl.focus();noteEl.style.borderColor='#DC2626';return;}
+
+  // Reset border colors
+  emailEl.style.borderColor='';noteEl.style.borderColor='';
+
   if(btn){btn.disabled=true;btn.textContent='Sending…';}
-  okEl.classList.add('hidden');
-  errEl.classList.add('hidden');
+  okEl.classList.add('hidden');errEl.classList.add('hidden');
   try{
     const res=await fetch('/',{
       method:'POST',
@@ -974,13 +984,14 @@ async function submitFeedback(id,component,category){
         'bot-field': '',
         'component':  component,
         'category':   category,
+        'email':      email,
         'error-type': typeEl.value,
         'correction': correction,
       }).toString(),
     });
     if(res.ok){
       okEl.classList.remove('hidden');
-      noteEl.value='';
+      emailEl.value='';noteEl.value='';
     }else{
       errEl.classList.remove('hidden');
     }
