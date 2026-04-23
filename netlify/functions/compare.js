@@ -46,6 +46,15 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Missing required fields: name and category' }) };
   }
 
+  // Guard against excessively long inputs
+  if (name.length > 200 || category.length > 100) {
+    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Input too long' }) };
+  }
+
+  // Strip characters that could break prompt formatting
+  name     = name.trim().replace(/[`\\]/g, '');
+  category = category.trim().replace(/[`\\]/g, '');
+
   try {
     // ── STEP 1: Fetch full component data ────────────────────────
     const parsed = await callClaude(buildSpecPrompt(name, category), 1800, apiKey);
@@ -79,8 +88,8 @@ exports.handler = async (event) => {
   }
 };
 
-/* ─── Call Claude → parse JSON response ─────────────────────── */
-async function callClaude(prompt, maxTokens, apiKey) {
+/* ─── Shared API fetch ───────────────────────────────────────── */
+async function callAPI(prompt, maxTokens, apiKey) {
   const res = await fetch(API_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -98,29 +107,19 @@ async function callClaude(prompt, maxTokens, apiKey) {
     const body = await res.text();
     throw new Error('Anthropic API error ' + res.status + ': ' + body.slice(0, 120));
   }
-  const data    = await res.json();
-  const rawText = (data.content || []).map(function(b) { return b.text || ''; }).join('');
+  const data = await res.json();
+  return (data.content || []).map(function(b) { return b.text || ''; }).join('');
+}
+
+/* ─── Call Claude → parse JSON response ─────────────────────── */
+async function callClaude(prompt, maxTokens, apiKey) {
+  const rawText = await callAPI(prompt, maxTokens, apiKey);
   return extractJSON(rawText);
 }
 
 /* ─── Call Claude → return plain text response ──────────────── */
 async function callClaudeText(prompt, maxTokens, apiKey) {
-  const res = await fetch(API_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type':      'application/json',
-      'x-api-key':         apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model:      MODEL,
-      max_tokens: maxTokens,
-      messages:   [{ role: 'user', content: prompt }],
-    }),
-  });
-  if (!res.ok) throw new Error('URL validation API error ' + res.status);
-  const data = await res.json();
-  return (data.content || []).map(function(b) { return b.text || ''; }).join('').trim();
+  return (await callAPI(prompt, maxTokens, apiKey)).trim();
 }
 
 /* ─── Extract JSON robustly from AI response ─────────────────── */
