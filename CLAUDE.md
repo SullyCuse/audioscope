@@ -1,65 +1,75 @@
-# CLAUDE.md
-
-Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
-
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+# Karpathy-Inspired Coding Guidelines
+# Source: github.com/forrestchang/andrej-karpathy-skills (MIT License)
+# Derived from Andrej Karpathy's observations on LLM coding pitfalls.
+#
+# Tradeoff: These guidelines bias toward caution over speed.
+# For trivial tasks, use judgment. Don't apply full rigor to simple one-liners.
 
 ## 1. Think Before Coding
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+Don't assume. Don't hide confusion. Surface tradeoffs.
 
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
+- State your assumptions explicitly before writing any code.
+- If uncertain, ask. If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so before implementing the complex one.
+- Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
-## 2. Simplicity First
-
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
-
-## 3. Surgical Changes
-
-**Touch only what you must. Clean up only your own mess.**
-
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+**Addresses:** Wrong assumptions, hidden confusion, missing tradeoffs.
 
 ---
 
-**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+## 2. Simplicity First
+
+Minimum code that solves the problem. Nothing speculative.
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No design patterns applied prematurely.
+- Prefer 100 lines over 1000 lines when both solve the problem.
+- Don't clean up, refactor, or "improve" code that isn't part of the task.
+- Simple code can be refactored later when complexity is actually needed.
+
+**Addresses:** Overcomplication, bloated abstractions, premature optimization.
+
+---
+
+## 3. Surgical Changes
+
+Only touch what the task requires. Nothing else.
+
+- Change only the lines that directly address the reported issue or request.
+- Do not reformat, rename, retype, or restructure code that is orthogonal to the task.
+- Do not remove comments or code you don't fully understand as a side effect.
+- Minimal diffs — every changed line should be explainable by the task.
+- If you notice something unrelated that should be fixed, flag it separately rather than fixing it silently.
+
+**Addresses:** Unintended side effects, orthogonal edits, touching code you shouldn't.
+
+---
+
+## 4. Goal-Driven Execution
+
+Define success criteria. Loop until verified.
+
+Transform imperative instructions into declarable goals with verification:
+
+- "Add validation" → "Write tests, then make them pass"
+- "Fix the bug" → "Reproduce it, then fix, then confirm it's gone"
+- "Refactor X" → "Ensure behaviour is identical before and after"
+
+Don't tell yourself what to do — define what done looks like, then verify.
+
+**Addresses:** Vague completion, no verification, drifting from the actual goal.
+
+---
+
+## AudioScope Project Context
+
+These principles apply to all work on this project. Specific notes:
+
+- **compare.js** is the Netlify serverless function — changes here affect live API calls. Apply Surgical Changes strictly.
+- **index.html** is self-contained (CSS + JS inline). Think Before Coding before any edit — the file is large and changes can have wide visual impact.
+- **Prompt engineering** in `buildSpecPrompt()` and `buildUrlPrompt()` is delicate. State your reasoning before modifying prompts.
+- **Ad slot IDs** (`REPLACE_*_SLOT_ID`) are placeholders — never replace with fabricated values, always flag to the user.
+- When adding features (e.g., "Add Another Component"), use Goal-Driven Execution: define what the feature should do and how to verify it works before writing code.
