@@ -1,1 +1,26 @@
-google.com, pub-8677522350792212, DIRECT, f08c47fec0942fa0
+# Environment variables — NEVER commit your API key
+.env
+.env.local
+.env.*.local
+
+# Netlify
+.netlify/
+
+# Node
+node_modules/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverrideDirectory
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo

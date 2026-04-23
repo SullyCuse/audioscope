@@ -1,36 +1,10 @@
-# ═══════════════════════════════════════════════════════════════
-# AudioScope — Netlify Configuration
-# ═══════════════════════════════════════════════════════════════
-
-[build]
-  # No build step needed — pure HTML/CSS/JS
-  publish   = "."
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "20"
-
-# ── Security Headers (AdSense-compatible — no strict CSP) ──────
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options        = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy        = "strict-origin-when-cross-origin"
-    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
-
-# ── Cache static assets ────────────────────────────────────────
-[[headers]]
-  for = "/favicon.svg"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/ads.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
+  <rect width="44" height="44" rx="10" fill="#111827"/>
+  <rect x="4"  y="19" width="3" height="6"  rx="1.5" fill="#D97706" opacity="0.5"/>
+  <rect x="9"  y="15" width="3" height="14" rx="1.5" fill="#D97706" opacity="0.68"/>
+  <rect x="14" y="9"  width="3" height="26" rx="1.5" fill="#D97706" opacity="0.84"/>
+  <rect x="20" y="4"  width="4" height="36" rx="2"   fill="#D97706"/>
+  <rect x="26" y="11" width="3" height="22" rx="1.5" fill="#D97706" opacity="0.88"/>
+  <rect x="31" y="16" width="3" height="12" rx="1.5" fill="#D97706" opacity="0.68"/>
+  <rect x="36" y="20" width="3" height="4"  rx="1.5" fill="#D97706" opacity="0.5"/>
+</svg>
