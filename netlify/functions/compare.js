@@ -11,6 +11,26 @@
 const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 const MODEL        = 'claude-sonnet-4-20250514';
 
+/**
+ * KNOWN_CORRECTIONS — verified fixes contributed by user feedback.
+ *
+ * How to add a correction:
+ *   1. A user reports an inaccuracy via the feedback form (Netlify Forms → your email).
+ *   2. You verify it against the manufacturer's website.
+ *   3. Add one entry here: 'Brand Model': 'Correction text.'
+ *   4. Push to GitHub. Done — all future comparisons for this component
+ *      will inject this correction directly into the AI prompt.
+ *
+ * Key format: exact "Brand Model" as the user would type it (case-insensitive match).
+ * Value: a plain English sentence stating the correct fact.
+ *
+ * Examples (add real corrections below as feedback comes in):
+ */
+const KNOWN_CORRECTIONS = {
+  // 'Wharfedale EVO 5.1': 'Enclosure type is Bookshelf/Standmount — NOT a floorstander.',
+  // 'Sumiko Black Pearl':  'Official manufacturer website is sumikophonocartridges.com',
+};
+
 const CORS = {
   'Content-Type':                 'application/json',
   'Access-Control-Allow-Origin':  '*',
@@ -147,10 +167,20 @@ function extractJSON(text) {
 
 /* ─── Prompt 1: Full component specification ─────────────────── */
 function buildSpecPrompt(name, category) {
+  // Check for known corrections (case-insensitive)
+  const correctionKey = Object.keys(KNOWN_CORRECTIONS).find(
+    k => k.toLowerCase() === name.toLowerCase()
+  );
+  const correctionBlock = correctionKey
+    ? 'VERIFIED CORRECTION — treat this as authoritative fact, overriding any conflicting data:\n' +
+      '  ' + KNOWN_CORRECTIONS[correctionKey] + '\n\n'
+    : '';
+
   return 'You are a hi-fi audio equipment database. Return technical specifications for the component below.\n\n' +
     'CRITICAL: Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
     'Category: ' + category + '\n' +
     'Component: "' + name + '"\n\n' +
+    correctionBlock +
     'SPECS REQUIREMENT: You MUST populate the "specs" object with at least 6 real key-value pairs. ' +
     'Use official manufacturer data first, then Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com. ' +
     'Do NOT return an empty specs object. For well-known products provide all specs you have. ' +

@@ -1,262 +1,208 @@
-/**
- * AudioScope — Netlify Function: compare.js
- *
- * Two-step process:
- *   1. Fetch full component specs from Claude
- *   2. Validate / correct the manufacturer URL with a dedicated second call
- *
- * ANTHROPIC_API_KEY must be set in Netlify environment variables.
- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About AudioScope – AI-Powered Hi-Fi Comparison</title>
+<meta name="description" content="AudioScope is a free AI-powered tool for comparing hi-fi audio components including amplifiers, turntables, speakers, headphones, and DACs.">
+<meta name="robots" content="index, follow">
+<meta name="google-adsense-account" content="ca-pub-8677522350792212">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8677522350792212" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:#F8F7F5;color:#111827;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:#B45309;text-decoration:none}
+a:hover{opacity:.75}
+.container{max-width:1140px;margin:0 auto;padding:0 32px}
+.eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#D97706}
 
-const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
-const MODEL        = 'claude-sonnet-4-20250514';
+/* Header */
+#hdr{position:sticky;top:0;z-index:999;background:rgba(17,24,39,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.07)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-box{width:46px;height:46px;background:#D97706;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-name{font-size:24px;font-weight:800;letter-spacing:.05em;color:#fff}
+.logo-name span{color:#FCD34D}
+.logo-tag{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:3px}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:6px 13px;border-radius:6px;text-decoration:none;transition:color .18s}
+.nav a:hover{color:#FCD34D;opacity:1}
 
-/**
- * KNOWN_CORRECTIONS — verified fixes contributed by user feedback.
- *
- * How to add a correction:
- *   1. A user reports an inaccuracy via the feedback form (Netlify Forms → your email).
- *   2. You verify it against the manufacturer's website.
- *   3. Add one entry here: 'Brand Model': 'Correction text.'
- *   4. Push to GitHub. Done — all future comparisons for this component
- *      will inject this correction directly into the AI prompt.
- *
- * Key format: exact "Brand Model" as the user would type it (case-insensitive match).
- * Value: a plain English sentence stating the correct fact.
- *
- * Examples (add real corrections below as feedback comes in):
- */
-const KNOWN_CORRECTIONS = {
-  // 'Wharfedale EVO 5.1': 'Enclosure type is Bookshelf/Standmount — NOT a floorstander.',
-  // 'Sumiko Black Pearl':  'Official manufacturer website is sumikophonocartridges.com',
-};
+/* Page hero — split layout */
+.page-hero{display:flex;min-height:320px;background:#111827;overflow:hidden}
+.ph-left{flex:0 0 55%;display:flex;flex-direction:column;justify-content:center;padding:64px 60px;border-right:1px solid rgba(255,255,255,.06)}
+.ph-left .eyebrow{color:#FCD34D;margin-bottom:14px}
+.ph-left h1{font-size:clamp(34px,5vw,58px);font-weight:800;color:#F9FAFB;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.ph-left p{font-size:16px;font-weight:300;color:rgba(249,250,251,.5);max-width:380px;line-height:1.7}
+.ph-right{flex:1;overflow:hidden}
+.ph-right img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.8);display:block}
 
-const CORS = {
-  'Content-Type':                 'application/json',
-  'Access-Control-Allow-Origin':  '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-};
+/* Ad */
+.ad-bar{background:#F8F7F5;border-bottom:1px solid #E5E7EB;padding:4px 0}
+.ad-box{min-height:90px;background:#fff;border:1px dashed #D1D5DB;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:8px 0;overflow:hidden}
+.ad-box ins{display:block;width:100%}
 
-exports.handler = async (event) => {
+/* Content */
+.content-sec{background:#fff;padding:72px 0 96px}
+.content{max-width:720px}
+.content h2{font-size:20px;font-weight:700;color:#111827;margin:48px 0 14px;padding-bottom:12px;border-bottom:1px solid #F3F4F6;letter-spacing:-.01em}
+.content h2:first-child{margin-top:0}
+.content p{color:#374151;font-size:15px;margin-bottom:16px;line-height:1.8}
+.content strong{color:#111827;font-weight:600}
+.content ul{list-style:none;padding:0;margin-bottom:18px}
+.content ul li{display:flex;gap:10px;margin-bottom:8px;font-size:15px;color:#374151;line-height:1.65}
+.content ul li::before{content:'›';color:#D97706;font-weight:700;flex-shrink:0;padding-top:1px}
+.content a{color:#B45309;font-weight:500}
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS, body: '' };
-  }
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
+/* Footer */
+#ftr{background:#111827;padding:52px 0 32px}
+.ftr-top{display:flex;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.ftr-brand{flex:0 0 260px}
+.ftr-logo{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.ftr-box{width:32px;height:32px;background:#D97706;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.ftr-wm{font-size:16px;font-weight:800;letter-spacing:.05em;color:#fff}
+.ftr-wm span{color:#FCD34D}
+.ftr-disc{font-size:12px;color:rgba(255,255,255,.28);line-height:1.75}
+.ftr-col-lbl{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;display:block}
+.ftr-links{display:flex;flex-direction:column;gap:9px}
+.ftr-links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .18s}
+.ftr-links a:hover{color:#FCD34D;opacity:1}
+.ftr-bottom{display:flex;justify-content:space-between;margin-top:24px;flex-wrap:wrap;gap:8px}
+.ftr-copy{font-size:12px;color:rgba(255,255,255,.2)}
+.ftr-attr{font-size:11px;color:rgba(255,255,255,.14)}
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return {
-      statusCode: 500,
-      headers: CORS,
-      body: JSON.stringify({ error: 'Server configuration error: API key not set.' }),
-    };
-  }
+@media(max-width:900px){.page-hero{flex-direction:column}.ph-left{flex:none;padding:52px 32px}.ph-right{flex:none;height:240px}.ftr-brand{flex:0 0 100%}}
+@media(max-width:720px){.container{padding:0 20px}.ph-left{padding:44px 20px}.content-sec{padding:52px 0 72px}.ftr-bottom{flex-direction:column}}
+</style>
+</head>
+<body>
 
-  let name, category;
-  try {
-    ({ name, category } = JSON.parse(event.body || '{}'));
-  } catch (_) {
-    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Invalid JSON in request body' }) };
-  }
-  if (!name || !category) {
-    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Missing required fields: name and category' }) };
-  }
+<header id="hdr">
+  <div class="container">
+    <div class="hdr-row">
+      <a href="index.html" class="logo">
+        <div class="logo-box">
+          <svg width="26" height="26" viewBox="0 0 44 44" fill="none">
+            <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
+            <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".72"/>
+            <rect x="17" y="5"  width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+            <rect x="24" y="1"  width="6" height="44" rx="3"   fill="#fff"/>
+            <rect x="31" y="7"  width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+            <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".65"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-name">AUDIO<span>SCOPE</span></div>
+          <div class="logo-tag">Hi-Fi Component Intelligence</div>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy</a>
+      </nav>
+    </div>
+  </div>
+</header>
 
-  // Guard against excessively long inputs
-  if (name.length > 200 || category.length > 100) {
-    return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Input too long' }) };
-  }
+<div class="page-hero">
+  <div class="ph-left">
+    <span class="eyebrow">About AudioScope</span>
+    <h1>Intelligent Hi-Fi Analysis</h1>
+    <p>A free AI-powered reference tool built for audiophiles and anyone making informed hi-fi purchasing decisions.</p>
+  </div>
+  <div class="ph-right">
+    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt="Premium audiophile headphones" loading="eager">
+  </div>
+</div>
 
-  // Strip characters that could break prompt formatting
-  name     = name.trim().replace(/[`\\]/g, '');
-  category = category.trim().replace(/[`\\]/g, '');
+<div class="ad-bar">
+  <div class="container">
+    <div class="ad-box">
+      <ins class="adsbygoogle" style="display:block"
+        data-ad-client="ca-pub-8677522350792212"
+        data-ad-slot="REPLACE_ABOUT_SLOT_ID"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+</div>
 
-  try {
-    // ── STEP 1: Fetch full component data ────────────────────────
-    const parsed = await callClaude(buildSpecPrompt(name, category), 1800, apiKey);
+<div class="content-sec">
+  <div class="container">
+    <div class="content">
+      <h2>What Is AudioScope?</h2>
+      <p>AudioScope is a free online comparison tool that lets you evaluate 2–6 hi-fi audio components side by side in seconds. Whether you are choosing between integrated amplifiers, phono preamplifiers, turntables, DACs, streamers, speakers, or headphones, AudioScope retrieves detailed technical specifications, pricing, dimensions, editorial summaries, and curated resource links.</p>
+      <h2>How It Works</h2>
+      <p>AudioScope is powered by Anthropic's Claude AI. When you enter a component's brand and model name, our system queries the AI for a comprehensive technical profile drawn from manufacturer documentation and reputable audio publications including Stereophile, What Hi-Fi, and Audio Science Review.</p>
+      <p>Each comparison retrieves full technical specifications with proper units, physical dimensions in metric and imperial, MSRP pricing, notable features, editorial summaries, strengths and considerations, and links to professional reviews and YouTube demonstrations.</p>
+      <h2>Supported Categories</h2>
+      <ul>
+        <li><strong>Integrated Amplifiers</strong> — Entry-level to reference-grade integrated amps</li>
+        <li><strong>Preamplifiers</strong> — Standalone line stages and control preamplifiers</li>
+        <li><strong>Phono Preamplifiers</strong> — MM and MC phono stages for analog playback</li>
+        <li><strong>Turntables</strong> — Belt drive, direct drive, and idler wheel designs</li>
+        <li><strong>Tonearms</strong> — Pivoted and tangential tracking arms</li>
+        <li><strong>Phono Cartridges</strong> — Moving magnet, moving coil, and moving iron</li>
+        <li><strong>DACs</strong> — Desktop, portable, and network-connected converters</li>
+        <li><strong>Streamers</strong> — Network audio transports, streaming DACs, and Roon endpoints</li>
+        <li><strong>Loudspeakers</strong> — Floorstanders, standmounts, and active speakers</li>
+        <li><strong>Headphones</strong> — Over-ear, in-ear monitors, and planar magnetic designs</li>
+      </ul>
+      <h2>Tips for Best Results</h2>
+      <ul>
+        <li>Always include both brand and full model number — <em>"Rega Planar 3"</em> not just <em>"Rega"</em></li>
+        <li>Include the version for different generations — e.g. <em>"Naim Nait XS 3"</em></li>
+        <li>For cartridges, include the stylus designation — e.g. <em>"Ortofon 2M Blue"</em></li>
+        <li>Mixing price tiers in one comparison often reveals the best value options</li>
+      </ul>
+      <h2>Accuracy &amp; Disclaimer</h2>
+      <p>Specifications are AI-generated and intended for reference only. <strong>Always verify critical specifications with the manufacturer before purchase.</strong> AudioScope is independent and unaffiliated with any audio brand or manufacturer.</p>
+      <h2>Contact</h2>
+      <p>Questions or found an inaccuracy? <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+    </div>
+  </div>
+</div>
 
-    // ── STEP 2: Validate / correct manufacturer URL ───────────────
-    // Run in parallel with a short timeout so it never blocks the response
-    try {
-      const verifiedUrl = await callClaudeText(buildUrlPrompt(parsed.brand, parsed.model, name), 200, apiKey);
-      const clean = verifiedUrl.trim().replace(/['"<>\s]/g, '');
-      if (clean.startsWith('http://') || clean.startsWith('https://')) {
-        parsed.manufacturerUrl = clean;
-      }
-    } catch (urlErr) {
-      // URL validation failed — keep whatever the first call returned
-      console.warn('URL validation step failed, using original:', urlErr.message);
-    }
-
-    return {
-      statusCode: 200,
-      headers:    CORS,
-      body:       JSON.stringify(parsed),
-    };
-
-  } catch (err) {
-    console.error('AudioScope compare error:', err.message);
-    return {
-      statusCode: 500,
-      headers:    CORS,
-      body:       JSON.stringify({ error: err.message || 'Internal server error' }),
-    };
-  }
-};
-
-/* ─── Shared API fetch ───────────────────────────────────────── */
-async function callAPI(prompt, maxTokens, apiKey) {
-  const res = await fetch(API_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type':      'application/json',
-      'x-api-key':         apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model:      MODEL,
-      max_tokens: maxTokens,
-      messages:   [{ role: 'user', content: prompt }],
-    }),
-  });
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error('Anthropic API error ' + res.status + ': ' + body.slice(0, 120));
-  }
-  const data = await res.json();
-  return (data.content || []).map(function(b) { return b.text || ''; }).join('');
-}
-
-/* ─── Call Claude → parse JSON response ─────────────────────── */
-async function callClaude(prompt, maxTokens, apiKey) {
-  const rawText = await callAPI(prompt, maxTokens, apiKey);
-  return extractJSON(rawText);
-}
-
-/* ─── Call Claude → return plain text response ──────────────── */
-async function callClaudeText(prompt, maxTokens, apiKey) {
-  return (await callAPI(prompt, maxTokens, apiKey)).trim();
-}
-
-/* ─── Extract JSON robustly from AI response ─────────────────── */
-function extractJSON(text) {
-  if (!text) throw new Error('Empty response from AI');
-  var cleaned = text
-    .replace(/^```(?:json)?\s*/m, '')
-    .replace(/\s*```\s*$/m, '')
-    .trim();
-  var start = cleaned.indexOf('{');
-  if (start === -1) throw new Error('No JSON object in AI response');
-  var depth = 0, end = -1;
-  for (var i = start; i < cleaned.length; i++) {
-    if      (cleaned[i] === '{') depth++;
-    else if (cleaned[i] === '}') { depth--; if (depth === 0) { end = i; break; } }
-  }
-  if (end === -1) throw new Error('Malformed JSON: unmatched braces');
-  var jsonStr = cleaned.slice(start, end + 1);
-  try {
-    return JSON.parse(jsonStr);
-  } catch (e) {
-    return JSON.parse(jsonStr.replace(/,(\s*[}\]])/g, '$1'));
-  }
-}
-
-/* ─── Prompt 1: Full component specification ─────────────────── */
-function buildSpecPrompt(name, category) {
-  // Check for known corrections (case-insensitive)
-  const correctionKey = Object.keys(KNOWN_CORRECTIONS).find(
-    k => k.toLowerCase() === name.toLowerCase()
-  );
-  const correctionBlock = correctionKey
-    ? 'VERIFIED CORRECTION — treat this as authoritative fact, overriding any conflicting data:\n' +
-      '  ' + KNOWN_CORRECTIONS[correctionKey] + '\n\n'
-    : '';
-
-  return 'You are a hi-fi audio equipment database. Return technical specifications for the component below.\n\n' +
-    'CRITICAL: Return ONLY a raw JSON object. No markdown, no code fences, no preamble, no trailing text. Start with { and end with }.\n\n' +
-    'Category: ' + category + '\n' +
-    'Component: "' + name + '"\n\n' +
-    correctionBlock +
-    'SPECS REQUIREMENT: You MUST populate the "specs" object with at least 6 real key-value pairs. ' +
-    'Use official manufacturer data first, then Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, or Rtings.com. ' +
-    'Do NOT return an empty specs object. For well-known products provide all specs you have. ' +
-    'For obscure products include whatever is available and note limitations in the summary.\n\n' +
-    'ACCURACY RULES:\n' +
-    '- Use "N/A" only for individual values you cannot confirm — not as a reason to omit entire fields or return an empty specs object.\n' +
-    '- SPEAKER EXCEPTION: enclosure type (bookshelf vs floorstander) must come from a verified source only. Do not infer from model name or siblings.\n' +
-    '- If a product is genuinely obscure, say so in the summary but still populate every spec field you can.\n\n' +
-    'EXAMPLE of a correctly filled "specs" object for an integrated amplifier:\n' +
-    '  "Output Power (8Ω stereo)": "160 W/ch",\n' +
-    '  "Output Power (4Ω stereo)": "240 W/ch",\n' +
-    '  "THD+N": "<0.1% at rated power",\n' +
-    '  "Signal-to-Noise Ratio": ">110 dB",\n' +
-    '  "Frequency Response": "5 Hz – 100 kHz",\n' +
-    '  "Damping Factor": ">1200 (8Ω)",\n' +
-    '  "Class of Operation": "Class A/AB",\n' +
-    '  "Inputs": "2 × RCA, 1 × XLR balanced"\n\n' +
-    'Return this exact JSON structure with ALL fields populated:\n\n' +
-    '{\n' +
-    '  "brand": "Manufacturer name only",\n' +
-    '  "model": "Model name only (no brand prefix)",\n' +
-    '  "fullName": "Brand and model as one string",\n' +
-    '  "msrpUSD": "e.g. $2499",\n' +
-    '  "yearIntroduced": "e.g. 2021 or 2019-present",\n' +
-    '  "specs": {\n' +
-    '    "Spec Name 1": "value with units",\n' +
-    '    "Spec Name 2": "value with units",\n' +
-    '    "Spec Name 3": "value with units",\n' +
-    '    "Spec Name 4": "value with units",\n' +
-    '    "Spec Name 5": "value with units",\n' +
-    '    "Spec Name 6": "value with units"\n' +
-    '  },\n' +
-    '  "dimensions": {\n' +
-    '    "width":  "e.g. 440mm (17.3in)",\n' +
-    '    "height": "e.g. 116mm (4.6in)",\n' +
-    '    "depth":  "e.g. 380mm (15.0in)",\n' +
-    '    "weight": "e.g. 8.4kg (18.5lbs)"\n' +
-    '  },\n' +
-    '  "notableFeatures": ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],\n' +
-    '  "summary": "2-3 sentences on sonic character, build quality, and ideal use case. If data is limited, state that clearly.",\n' +
-    '  "strengths": ["Strength 1", "Strength 2", "Strength 3"],\n' +
-    '  "considerations": ["Consideration 1", "Consideration 2"],\n' +
-    '  "manufacturerUrl": "https://www.official-manufacturer-homepage.com",\n' +
-    '  "reviewLinks": [],\n' +
-    '  "youtubeSearches": ["' + name + ' review"]\n' +
-    '}\n\n' +
-    'Spec fields to include (8-12 most relevant for the category):\n' +
-    'AMPLIFIER / INTEGRATED AMPLIFIER: Output Power (8Ω stereo), Output Power (4Ω stereo), Output Power (8Ω mono if applicable), THD+N, Signal-to-Noise Ratio, Frequency Response, Damping Factor, Input Impedance, Class of Operation, Inputs, Outputs, Headphone Output\n' +
-    'PREAMPLIFIER: Gain, THD+N, SNR, Frequency Response, Input Impedance, Output Impedance, Channel Separation, Inputs, Outputs, Power Supply\n' +
-    'PHONO PREAMP: Gain (MM), Gain (MC), RIAA Accuracy, SNR (MM), SNR (MC), Input Impedance (MM), Input Impedance (MC), Output Impedance, Subsonic Filter, Power Supply\n' +
-    'TURNTABLE: Drive Type, Motor Type, Speeds, Platter Material, Platter Weight, Wow & Flutter, Signal-to-Noise Ratio, Included Tonearm, Anti-Skate, Built-in Phono Stage\n' +
-    'TONEARM: Effective Length, Mounting Distance, Overhang, Offset Angle, Effective Mass, Bearing Type, Headshell Mount, VTA Adjustment, Anti-Skating\n' +
-    'CARTRIDGE: Type (MM/MC/MI), Output Voltage, Channel Separation, Channel Balance, Frequency Response, Tracking Force (recommended), Compliance, Stylus Shape, Cantilever Material, Loading Impedance\n' +
-    'DAC: DAC Chip(s), Max PCM Resolution, DSD Support, Dynamic Range, THD+N, SNR, Digital Inputs, Analog Outputs, Headphone Output, USB Class\n' +
-    'STREAMER: Supported Streaming Services, Max PCM Resolution, DSD Support, Network Connectivity, Analog Outputs, Digital Outputs, Built-in DAC, Control App, Roon Ready\n' +
-    'SPEAKERS: Frequency Response, Sensitivity (dB/W/m), Nominal Impedance, Minimum Impedance, Woofer Size, Tweeter Type, Enclosure Type, Crossover Frequency, Recommended Amplifier Power\n' +
-    'HEADPHONES: Driver Type, Driver Size, Frequency Response, Impedance, Sensitivity (dB/mW), THD, Weight (without cable), Cable Length, Connector Type, Wearing Style';
-}
-
-/* ─── Prompt 2: Manufacturer URL verification ────────────────── */
-function buildUrlPrompt(brand, model, fullName) {
-  return 'You are a fact-checker specialising in hi-fi audio manufacturers.\n\n' +
-    'Task: Return the single correct, current, official homepage URL for the manufacturer of this product.\n\n' +
-    'Manufacturer brand: "' + brand + '"\n' +
-    'Product: "' + fullName + '"\n\n' +
-    'Rules:\n' +
-    '- Return ONLY the homepage URL — nothing else. No explanation, no punctuation, no markdown.\n' +
-    '- Must be the manufacturer\'s own direct website, NOT a distributor, importer, retailer, or redirect.\n' +
-    '- Must start with https:// and be the root domain (e.g. https://www.rega.co.uk not a product sub-page).\n' +
-    '- If the brand has a dedicated product-line website (e.g. Sumiko has sumikophonocartridges.com rather than a parent company site), use that dedicated site.\n' +
-    '- If you are not confident in the exact current URL, return the word UNKNOWN.\n\n' +
-    'Examples of correct answers:\n' +
-    '  Rega Research → https://www.rega.co.uk\n' +
-    '  Sumiko → https://www.sumikophonocartridges.com\n' +
-    '  Ortofon → https://www.ortofon.com\n' +
-    '  Sennheiser → https://www.sennheiser.com\n' +
-    '  Naim Audio → https://www.naimaudio.com\n\n' +
-    'Return only the URL (or UNKNOWN):';
-}
+<footer id="ftr">
+  <div class="container">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="ftr-box">
+            <svg width="16" height="16" viewBox="0 0 44 44" fill="none">
+              <rect x="3" y="20" width="5" height="6" rx="2.5" fill="#fff" opacity=".55"/>
+              <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".75"/>
+              <rect x="17" y="5" width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="24" y="1" width="6" height="44" rx="3" fill="#fff"/>
+              <rect x="31" y="7" width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
+            </svg>
+          </div>
+          <div class="ftr-wm">AUDIO<span>SCOPE</span></div>
+        </div>
+        <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase.</p>
+      </div>
+      <div>
+        <span class="ftr-col-lbl">Navigation</span>
+        <div class="ftr-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="mailto:contact@audioscopehifi.com">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span class="ftr-copy">© <script>document.write(new Date().getFullYear())</script> AudioScope · Powered by Anthropic Claude</span>
+      <span class="ftr-attr">Photos: Unsplash Free Commercial License</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
