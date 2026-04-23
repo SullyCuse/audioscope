@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://audioscope.netlify.app/</loc>
+    <loc>https://audioscopehifi.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://audioscope.netlify.app/about.html</loc>
+    <loc>https://audioscopehifi.com/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://audioscope.netlify.app/privacy-policy.html</loc>
+    <loc>https://audioscopehifi.com/privacy-policy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

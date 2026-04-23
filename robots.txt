@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://audioscope.netlify.app/sitemap.xml
+Sitemap: https://audioscopehifi.com/sitemap.xml

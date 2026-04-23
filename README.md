@@ -2,7 +2,7 @@
 
 An AI-powered hi-fi audio equipment comparison tool. Compare 2–6 components side by side with full technical specifications, physical dimensions, pricing, expert summaries, and curated links to professional reviews.
 
-**Live demo:** https://audioscope.netlify.app
+**Live demo:** https://audioscopehifi.com
 
 ---
 
@@ -165,7 +165,7 @@ Before applying, verify:
 - [ ] Domain verified in Google AdSense
 - [ ] Site has been live with real traffic for a few weeks
 - [ ] Update contact email (currently `contact@audioscope.example.com`)
-- [ ] Update canonical URLs if your domain differs from `audioscope.netlify.app`
+- [ ] Update canonical URLs if your domain differs from `audioscopehifi.com`
 
 ---
 
