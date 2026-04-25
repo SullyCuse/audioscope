@@ -184,7 +184,14 @@ button{cursor:pointer;font-family:inherit}
 .data-warning strong{color:#9A3412;font-weight:600;display:block;margin-bottom:3px}
 .data-warning a{color:#9A3412;font-weight:600;text-decoration:underline}
 .data-warning a:hover{opacity:.75}
-.ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706}
+.ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706;position:relative}
+.btn-remove-comp{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:rgba(255,255,255,.5);font-size:13px;line-height:1;padding:4px 8px;cursor:pointer;transition:all .18s;font-family:inherit}
+.btn-remove-comp:hover{background:rgba(220,38,38,.2);border-color:rgba(220,38,38,.4);color:#FCA5A5}
+.btn-remove-comp:disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
+.th-remove{display:block;margin-top:8px}
+.btn-rm-col{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:5px;color:rgba(255,255,255,.4);font-size:11px;font-weight:500;padding:3px 10px;cursor:pointer;transition:all .18s;font-family:inherit;white-space:nowrap}
+.btn-rm-col:hover{background:rgba(220,38,38,.18);border-color:rgba(220,38,38,.35);color:#FCA5A5}
+.btn-rm-col:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
 .ccard-brand{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FCD34D;margin-bottom:5px}
 .ccard-model{font-size:26px;font-weight:800;color:#F9FAFB;line-height:1.06;letter-spacing:-.02em}
 .ccard-body{padding:22px 26px;display:flex;flex-direction:column;gap:16px;flex:1}
@@ -897,9 +904,10 @@ function renderTable(){
   if(!done.length||!zone)return;
   const keys=[...new Set(done.flatMap(i=>Object.keys(i.data.specs||{})))];
   const minW=Math.max(540,165+st.items.length*190);
+  const canRemove=st.items.filter(i=>i.data).length>1;
   const cols=st.items.map(it=>{
     if(it.status==='loading')return`<th class="th-c"><div class="load-v">Loading ${h(it.name)}…</div></th>`;
-    if(it.data)return`<th class="th-c"><div class="th-brand">${h(it.data.brand)}</div><div class="th-model">${h(it.data.model)}</div><div class="th-year">${h(it.data.yearIntroduced)}</div></th>`;
+    if(it.data)return`<th class="th-c"><div class="th-brand">${h(it.data.brand)}</div><div class="th-model">${h(it.data.model)}</div><div class="th-year">${h(it.data.yearIntroduced)}</div><span class="th-remove"><button class="btn-rm-col" onclick="removeFromResults(${it.id})" type="button" ${canRemove?'':'disabled'} aria-label="Remove ${h(it.data.model)}">✕ Remove</button></span></th>`;
     return`<th class="th-c"><div style="color:#6B7280">${h(it.name)}</div></th>`;
   }).join('');
   const dimRow=st.items.map(it=>{
@@ -955,7 +963,8 @@ function renderCards(){
     const strengths=(d.strengths||[]).filter(s=>s&&s!=='N/A').length?`<div><p class="list-l">Strengths</p><ul class="pro-ul">${d.strengths.map(s=>`<li>${h(s)}</li>`).join('')}</ul></div>`:'';
 
     const feedbackId=`fb-${it.id||Math.random().toString(36).slice(2)}`;
-    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div></div><div class="ccard-body">${limitedWarning}<p class="ccard-sum">${h(d.summary)}</p>${strengths}${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div><div class="feedback-section"><button class="feedback-trigger" onclick="toggleFeedback('${feedbackId}')" type="button"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Report Inaccuracy</button><div class="feedback-form" id="${feedbackId}"><label for="${feedbackId}-email">Your Email <span style="color:#DC2626">*</span></label><input type="email" id="${feedbackId}-email" placeholder="your@email.com" style="width:100%;font-family:inherit;font-size:13px;background:#fff;border:1.5px solid #E5E7EB;border-radius:7px;padding:8px 10px;color:#111827;margin-bottom:10px;transition:border-color .18s" required><label for="${feedbackId}-type">What's wrong?</label><select id="${feedbackId}-type"><option value="Wrong spec value">Wrong spec value</option><option value="Wrong enclosure type">Wrong enclosure type (speaker)</option><option value="Wrong manufacturer website">Wrong manufacturer website</option><option value="Component not found / wrong product">Component not found / wrong product</option><option value="Wrong dimensions or weight">Wrong dimensions or weight</option><option value="Other">Other</option></select><label for="${feedbackId}-note">What's the correct information? <span style="color:#DC2626">*</span></label><textarea id="${feedbackId}-note" placeholder="e.g. This is a bookshelf speaker, not a floorstander"></textarea><div class="feedback-actions"><button class="btn-feedback-submit" onclick="submitFeedback('${feedbackId}','${h(d.brand+' '+d.model)}','${h(st.catLbl)}')" type="button">Submit Report</button><button class="btn-feedback-cancel" onclick="toggleFeedback('${feedbackId}')" type="button">Cancel</button></div><div class="feedback-success hidden" id="${feedbackId}-ok">✓ Thank you — we'll review this and apply a correction.</div><div class="feedback-error hidden" id="${feedbackId}-err">Submission failed. Please try again.</div></div></div></div></article>`;
+    const canRemove=st.items.filter(i=>i.data).length>1;
+    return`<article class="ccard"><div class="ccard-top"><div class="ccard-brand">${h(d.brand)}</div><div class="ccard-model">${h(d.model)}</div><button class="btn-remove-comp" onclick="removeFromResults(${it.id})" type="button" ${canRemove?'':'disabled'} aria-label="Remove ${h(d.model)} from comparison">✕</button></div><div class="ccard-body">${limitedWarning}<p class="ccard-sum">${h(d.summary)}</p>${strengths}${cons}<div class="ccard-links"><p class="list-l">Resources</p>${mfg}${yt}</div><div class="feedback-section"><button class="feedback-trigger" onclick="toggleFeedback('${feedbackId}')" type="button"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Report Inaccuracy</button><div class="feedback-form" id="${feedbackId}"><label for="${feedbackId}-email">Your Email <span style="color:#DC2626">*</span></label><input type="email" id="${feedbackId}-email" placeholder="your@email.com" style="width:100%;font-family:inherit;font-size:13px;background:#fff;border:1.5px solid #E5E7EB;border-radius:7px;padding:8px 10px;color:#111827;margin-bottom:10px;transition:border-color .18s" required><label for="${feedbackId}-type">What's wrong?</label><select id="${feedbackId}-type"><option value="Wrong spec value">Wrong spec value</option><option value="Wrong enclosure type">Wrong enclosure type (speaker)</option><option value="Wrong manufacturer website">Wrong manufacturer website</option><option value="Component not found / wrong product">Component not found / wrong product</option><option value="Wrong dimensions or weight">Wrong dimensions or weight</option><option value="Other">Other</option></select><label for="${feedbackId}-note">What's the correct information? <span style="color:#DC2626">*</span></label><textarea id="${feedbackId}-note" placeholder="e.g. This is a bookshelf speaker, not a floorstander"></textarea><div class="feedback-actions"><button class="btn-feedback-submit" onclick="submitFeedback('${feedbackId}','${h(d.brand+' '+d.model)}','${h(st.catLbl)}')" type="button">Submit Report</button><button class="btn-feedback-cancel" onclick="toggleFeedback('${feedbackId}')" type="button">Cancel</button></div><div class="feedback-success hidden" id="${feedbackId}-ok">✓ Thank you — we'll review this and apply a correction.</div><div class="feedback-error hidden" id="${feedbackId}-err">Submission failed. Please try again.</div></div></div></div></article>`;
   }).join('');
 }
 
@@ -1030,6 +1039,16 @@ function refreshAddMore(){
     maxMsg.classList.remove('hidden');
     sub.textContent='Maximum reached';
   }
+}
+
+// ── Remove one component from results ──
+function removeFromResults(uid){
+  if(st.items.filter(i=>i.data).length<=1)return; // keep at least 1
+  st.items=st.items.filter(i=>i.id!==uid);
+  renderTable();
+  renderRatings();
+  renderCards();
+  refreshAddMore();
 }
 
 // ── Reset ──
