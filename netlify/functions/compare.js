@@ -225,8 +225,19 @@ function buildSpecPrompt(name, category) {
     '  "considerations": ["Consideration 1", "Consideration 2"],\n' +
     '  "manufacturerUrl": "https://www.official-manufacturer-homepage.com",\n' +
     '  "reviewLinks": [],\n' +
-    '  "youtubeSearches": ["' + name + ' review"]\n' +
+    '  "youtubeSearches": ["' + name + ' review"],\n' +
+    '  "ratings": null\n' +
     '}\n\n' +
+    'RATINGS — populate ONLY when category is Loudspeakers/Speakers. For all other categories set "ratings": null.\n' +
+    'For speakers, replace "ratings": null with this object:\n' +
+    '  "ratings": {\n' +
+    '    "detailClarity": <integer 1-10, where 1=very dull/rolled-off, 10=highly detailed/extended>,\n' +
+    '    "bass": <integer 1-10, where 1=very thin/lean, 10=very powerful/heavy>,\n' +
+    '    "vocals": <integer 1-10, where 1=recessed/laid-back, 10=very forward/prominent>,\n' +
+    '    "soundProfile": <integer 1-10, where 1=very warm, 5=neutral, 10=very bright>\n' +
+    '  }\n' +
+    'Base all ratings on published professional reviews (Stereophile, What Hi-Fi, Audio Science Review, The Absolute Sound, SoundStage). Use the consensus view across multiple reviews where available.\n' +
+    'IMPORTANT: If you do not have sufficient published review data to make an accurate judgement for a specific rating, set that field to null — do not guess. It is better to return null than an inaccurate number.\n\n' +
     'Spec fields to include (8-12 most relevant for the category):\n' +
     'AMPLIFIER / INTEGRATED AMPLIFIER: Output Power (8Ω stereo), Output Power (4Ω stereo), Output Power (8Ω mono if applicable), THD+N, Signal-to-Noise Ratio, Frequency Response, Damping Factor, Input Impedance, Class of Operation, Inputs, Outputs, Headphone Output\n' +
     'PREAMPLIFIER: Gain, THD+N, SNR, Frequency Response, Input Impedance, Output Impedance, Channel Separation, Inputs, Outputs, Power Supply\n' +
