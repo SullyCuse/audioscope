@@ -237,6 +237,32 @@ button{cursor:pointer;font-family:inherit}
 .btn-amp:disabled{background:#E5E7EB;color:#9CA3AF;cursor:not-allowed;box-shadow:none}
 .amp-max{font-size:13px;color:#6B7280;margin-top:14px;padding:10px 14px;background:#F9FAFB;border-radius:8px;border:1px solid #E5E7EB}
 
+/* ── Speaker Ratings Panel ── */
+.ratings-panel{background:#fff;border:0.5px solid #E5E7EB;border-radius:16px;padding:28px 28px 20px;margin-bottom:52px;box-shadow:0 2px 12px rgba(17,24,39,.05);overflow-x:auto}
+.ratings-hd{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:0.5px solid #F3F4F6}
+.ratings-icon{width:36px;height:36px;background:#111827;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ratings-title{font-size:17px;font-weight:700;color:#111827;margin-bottom:2px}
+.ratings-sub{font-size:11px;color:#9CA3AF;line-height:1.5}
+.rtable{width:100%;border-collapse:collapse;min-width:480px}
+.rtable .th-blank{width:160px}
+.rtable .th-comp{text-align:center;padding:10px 14px;border-bottom:1.5px solid #111827;vertical-align:bottom}
+.rtable .th-brand{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D97706;margin-bottom:3px}
+.rtable .th-model{font-size:14px;font-weight:700;color:#111827;line-height:1.2}
+.rtable .td-lbl{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;padding:14px 0;vertical-align:middle;border-bottom:0.5px solid #F3F4F6;white-space:nowrap;padding-right:16px}
+.rtable .td-lbl small{display:block;font-size:10px;font-weight:400;letter-spacing:.02em;text-transform:none;color:#D1D5DB;margin-top:2px}
+.rtable .td-val{padding:14px;border-bottom:0.5px solid #F3F4F6;border-left:0.5px solid #F3F4F6;vertical-align:middle}
+.rbar-row{display:flex;align-items:center;gap:10px}
+.rbar-track{flex:1;height:8px;background:#F3F4F6;border-radius:4px;overflow:hidden;min-width:60px}
+.rbar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#D97706,#F59E0B);transition:width .9s cubic-bezier(.4,0,.2,1)}
+.rscore{font-size:15px;font-weight:700;color:#111827;min-width:32px;text-align:right;white-space:nowrap}
+.rscore small{font-size:10px;font-weight:400;color:#9CA3AF}
+.rna{font-size:13px;color:#D1D5DB;font-style:italic;text-align:center;width:100%;display:block}
+.sprofile-track{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#EF9F27 0%,#D1D5DB 50%,#60A5FA 100%);position:relative;min-width:60px}
+.sprofile-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#fff;border:2.5px solid #111827;transform:translate(-50%,-50%);transition:left .9s cubic-bezier(.4,0,.2,1)}
+.ratings-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:0.5px solid #F3F4F6;font-size:11px;color:#9CA3AF;align-items:center}
+.legend-gradient{height:7px;width:72px;border-radius:3px;background:linear-gradient(90deg,#EF9F27 0%,#D1D5DB 50%,#60A5FA 100%);display:inline-block;vertical-align:middle;margin-right:6px}
+.ratings-note{font-size:11px;color:#9CA3AF;margin-top:14px;padding-top:12px;border-top:0.5px solid #F3F4F6;line-height:1.6}
+
 @media(max-width:720px){.amp-row{flex-direction:column}.btn-amp{width:100%;text-align:center}.add-more-panel{padding:22px 20px}}
 
 /* ── FOOTER ── */
@@ -506,6 +532,7 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div id="errs"></div>
     <div id="tbl-zone"></div>
+    <div id="ratings-zone" class="hidden"></div>
     <div id="ad-mid">
       <div class="ad-box" style="margin:16px 0">
         <div class="ad-label"><span>Advertisement</span></div>
@@ -776,7 +803,9 @@ function renderProgress(){
   const done=st.items.filter(i=>i.data);
   if(!done.length)return;
   document.getElementById('loading').style.display='none';
-  renderTable();renderCards();
+  renderTable();
+  renderRatings();
+  renderCards();
 }
 
 // ── Table ──
@@ -927,6 +956,8 @@ function reset(){
   document.getElementById('btn-back').classList.add('hidden');
   document.getElementById('ad-top').classList.add('hidden');
   document.getElementById('tbl-zone').innerHTML='';
+  document.getElementById('ratings-zone').innerHTML='';
+  document.getElementById('ratings-zone').classList.add('hidden');
   document.getElementById('cards-grid').innerHTML='';
   document.getElementById('errs').innerHTML='';
   document.getElementById('chips').innerHTML='';
@@ -938,6 +969,109 @@ function reset(){
   const btn=document.getElementById('btn-cmp');
   btn.textContent='Add at least 2 components';btn.disabled=true;btn.classList.add('dis');
   show('sec-home');
+}
+
+// ── Speaker Ratings Panel ──
+function renderRatings(){
+  const zone=document.getElementById('ratings-zone');
+  if(!zone)return;
+
+  // Only for loudspeakers
+  if(!st.catLbl.toLowerCase().includes('speaker')){
+    zone.classList.add('hidden');
+    return;
+  }
+
+  const done=st.items.filter(i=>i.data&&i.data.ratings);
+  if(!done.length){zone.classList.add('hidden');return;}
+
+  // Helper: clamp to 1-10 or null
+  function clamp(v){
+    const n=typeof v==='number'?v:parseFloat(v);
+    return isNaN(n)?null:Math.round(Math.min(10,Math.max(1,n)));
+  }
+
+  // Header row
+  const thCells=done.map(it=>`
+    <th class="th-comp">
+      <div class="th-brand">${h(it.data.brand)}</div>
+      <div class="th-model">${h(it.data.model)}</div>
+    </th>`).join('');
+
+  // Amber bar rows: Detail/Clarity, Bass, Vocals
+  function barRow(label,sublabel,key){
+    const cells=done.map(it=>{
+      const score=clamp(it.data.ratings?.[key]);
+      if(score===null)return`<td class="td-val"><span class="rna">N/A</span></td>`;
+      return`<td class="td-val">
+        <div class="rbar-row">
+          <div class="rbar-track"><div class="rbar-fill" style="width:${score*10}%"></div></div>
+          <div class="rscore">${score}<small>/10</small></div>
+        </div>
+      </td>`;
+    }).join('');
+    return`<tr>
+      <td class="td-lbl">${h(label)}<small>${h(sublabel)}</small></td>
+      ${cells}
+    </tr>`;
+  }
+
+  // Sound Profile gradient row
+  const profileCells=done.map(it=>{
+    const score=clamp(it.data.ratings?.soundProfile);
+    if(score===null)return`<td class="td-val"><span class="rna">N/A</span></td>`;
+    const pct=((score-1)/9*100).toFixed(1);
+    // Dot color: warm=amber, neutral=gray, bright=blue
+    const dotColor=score<=4?'#D97706':score>=7?'#60A5FA':'#9CA3AF';
+    return`<td class="td-val">
+      <div class="rbar-row">
+        <div class="sprofile-track">
+          <div class="sprofile-dot" style="left:${pct}%;border-color:${dotColor}"></div>
+        </div>
+        <div class="rscore">${score}<small>/10</small></div>
+      </div>
+    </td>`;
+  }).join('');
+
+  zone.innerHTML=`
+    <div class="ratings-panel">
+      <div class="ratings-hd">
+        <div class="ratings-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="ratings-title">Sound character ratings</div>
+          <div class="ratings-sub">AI-estimated from published reviews, manufacturer data &amp; analysis · N/A shown when data is insufficient · Loudspeakers only</div>
+        </div>
+      </div>
+
+      <table class="rtable" aria-label="Sound character ratings comparison">
+        <thead>
+          <tr>
+            <th class="th-blank"></th>
+            ${thCells}
+          </tr>
+        </thead>
+        <tbody>
+          ${barRow('Detail / Clarity','1 = dull · 10 = very detailed','detailClarity')}
+          ${barRow('Bass','1 = thin · 10 = very powerful','bass')}
+          ${barRow('Vocals','1 = recessed · 10 = very forward','vocals')}
+          <tr>
+            <td class="td-lbl">Sound profile<small>1 = very warm · 5 = neutral · 10 = very bright</small></td>
+            ${profileCells}
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="ratings-legend">
+        <span><span class="legend-gradient"></span>Sound profile scale: warm → neutral → bright</span>
+        <span style="font-style:italic">N/A = insufficient review data to make an accurate judgement</span>
+      </div>
+
+      <div class="ratings-note">Ratings reflect typical listening impressions drawn from professional reviews. They are not absolute measurements. Do not use these as the sole basis for a purchase decision.</div>
+    </div>`;
+
+  zone.classList.remove('hidden');
 }
 
 // ── Feedback ──
