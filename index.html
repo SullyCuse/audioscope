@@ -325,6 +325,78 @@ button{cursor:pointer;font-family:inherit}
   .stat{flex:0 0 100%;border-right:none}
   .photo-strip{padding:36px 0}
 }
+
+/* ── Print button ── */
+.btn-print{display:inline-flex;align-items:center;gap:8px;background:#F9FAFB;color:#374151;border:1.5px solid #E5E7EB;border-radius:9px;padding:9px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn-print:hover{background:#F3F4F6;border-color:#D1D5DB;box-shadow:0 2px 8px rgba(17,24,39,.08)}
+.btn-print svg{flex-shrink:0}
+.results-hd-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.results-hd-row .sec-hd{margin-bottom:0}
+
+/* ── @media print ── */
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* Hide everything except the results content */
+  #hdr,#ad-top,#sec-home,#sec-add,
+  .stats-bar,.hero,.photo-strip,.cat-sec,.feature-strip,
+  #ad-mid,#ad-bot,#add-more-panel,#res-cta,
+  .disclaimer-banner,.loading,.btn-print,
+  .feedback-section,#ftr,#errs{display:none!important}
+
+  /* Page setup */
+  body{background:#fff;font-family:Arial,sans-serif;font-size:12px;color:#111}
+  .container{max-width:100%;padding:0}
+  #sec-results{display:block!important}
+  .res-sec{padding:0}
+  .results-hd-row{margin-bottom:24px}
+
+  /* Print header with branding */
+  #sec-results::before{
+    content:'';
+    display:block;
+    padding-bottom:16px;
+    margin-bottom:24px;
+    border-bottom:2px solid #111827;
+  }
+  .print-brand{display:flex!important}
+
+  /* Spec table */
+  .tbl-wrap{border:1px solid #ddd;border-radius:0;box-shadow:none;margin-bottom:28px;overflow:visible}
+  .spec-tbl{font-size:11px}
+  .spec-tbl thead tr{background:#111827!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .spec-tbl th{padding:10px 14px;border-bottom:2px solid #D97706}
+  .spec-tbl td{padding:8px 14px}
+  .spec-tbl tbody tr:nth-child(even) td{background:#F9FAFB!important}
+
+  /* Ratings panel */
+  .ratings-panel{border:1px solid #ddd;border-radius:0;box-shadow:none;padding:16px;margin-bottom:28px;break-inside:avoid}
+  .rbar-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sprofile-track{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* Component cards — 2 per row */
+  .cards-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .ccard{border:1px solid #ddd;border-radius:8px;box-shadow:none;break-inside:avoid}
+  .ccard-top{background:#111827!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:14px 18px}
+  .ccard-body{padding:14px 18px}
+  .data-warning{border:1px solid #FED7AA;background:#FFF7ED!important;-webkit-print-color-adjust:exact;break-inside:avoid}
+
+  /* Page breaks */
+  #tbl-zone{break-after:avoid}
+  #ratings-zone{break-inside:avoid}
+  #cards-zone{break-before:auto}
+
+  /* Footer note */
+  #sec-results::after{
+    content:'Printed from audioscopehifi.com · Specifications are AI-generated for reference only. Always verify with the manufacturer.';
+    display:block;
+    margin-top:32px;
+    padding-top:12px;
+    border-top:1px solid #ddd;
+    font-size:10px;
+    color:#9CA3AF;
+  }
+}
 </style>
 </head>
 <body>
@@ -516,9 +588,16 @@ button{cursor:pointer;font-family:inherit}
 <!-- ══ RESULTS ══ -->
 <section id="sec-results" class="hidden res-sec" aria-live="polite">
   <div class="container">
-    <div class="sec-hd">
-      <span class="eyebrow" id="lbl-res">Results</span>
-      <h1>Comparison Results</h1>
+
+    <div class="results-hd-row">
+      <div class="sec-hd">
+        <span class="eyebrow" id="lbl-res">Results</span>
+        <h1>Comparison Results</h1>
+      </div>
+      <button class="btn-print" onclick="window.print()" type="button" aria-label="Print or save as PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save PDF
+      </button>
     </div>
 
     <div class="disclaimer-banner">
