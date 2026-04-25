@@ -185,13 +185,13 @@ button{cursor:pointer;font-family:inherit}
 .data-warning a{color:#9A3412;font-weight:600;text-decoration:underline}
 .data-warning a:hover{opacity:.75}
 .ccard-top{background:#111827;padding:24px 26px 22px;border-bottom:2px solid #D97706;position:relative}
-.btn-remove-comp{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:rgba(255,255,255,.5);font-size:13px;line-height:1;padding:4px 8px;cursor:pointer;transition:all .18s;font-family:inherit}
-.btn-remove-comp:hover{background:rgba(220,38,38,.2);border-color:rgba(220,38,38,.4);color:#FCA5A5}
+.btn-remove-comp{position:absolute;top:12px;right:12px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.45);border-radius:6px;color:#FCA5A5;font-size:12px;font-weight:600;line-height:1;padding:5px 9px;cursor:pointer;transition:all .18s;font-family:inherit}
+.btn-remove-comp:hover{background:rgba(239,68,68,.28);border-color:rgba(239,68,68,.7);color:#FEE2E2}
 .btn-remove-comp:disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
 .th-remove{display:block;margin-top:8px}
-.btn-rm-col{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:5px;color:rgba(255,255,255,.4);font-size:11px;font-weight:500;padding:3px 10px;cursor:pointer;transition:all .18s;font-family:inherit;white-space:nowrap}
-.btn-rm-col:hover{background:rgba(220,38,38,.18);border-color:rgba(220,38,38,.35);color:#FCA5A5}
-.btn-rm-col:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
+.btn-rm-col{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.45);border-radius:5px;color:#FCA5A5;font-size:11px;font-weight:600;padding:4px 11px;cursor:pointer;transition:all .18s;font-family:inherit;white-space:nowrap}
+.btn-rm-col:hover{background:rgba(239,68,68,.28);border-color:rgba(239,68,68,.7);color:#FEE2E2}
+.btn-rm-col:disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
 .ccard-brand{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FCD34D;margin-bottom:5px}
 .ccard-model{font-size:26px;font-weight:800;color:#F9FAFB;line-height:1.06;letter-spacing:-.02em}
 .ccard-body{padding:22px 26px;display:flex;flex-direction:column;gap:16px;flex:1}
@@ -611,7 +611,7 @@ button{cursor:pointer;font-family:inherit}
       <p class="load-sub" id="load-names"></p>
     </div>
     <div id="errs"></div>
-    <div id="print-btn-zone" class="hidden" style="display:none;justify-content:flex-end;margin-bottom:14px">
+    <div id="print-btn-zone" style="display:none;justify-content:flex-end;margin-bottom:14px">
       <button class="btn-print" onclick="window.print()" type="button" aria-label="Print or save as PDF">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         Print / Save PDF
