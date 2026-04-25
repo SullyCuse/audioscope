@@ -589,15 +589,9 @@ button{cursor:pointer;font-family:inherit}
 <section id="sec-results" class="hidden res-sec" aria-live="polite">
   <div class="container">
 
-    <div class="results-hd-row">
-      <div class="sec-hd">
-        <span class="eyebrow" id="lbl-res">Results</span>
-        <h1>Comparison Results</h1>
-      </div>
-      <button class="btn-print" onclick="window.print()" type="button" aria-label="Print or save as PDF">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Print / Save PDF
-      </button>
+    <div class="sec-hd">
+      <span class="eyebrow" id="lbl-res">Results</span>
+      <h1>Comparison Results</h1>
     </div>
 
     <div class="disclaimer-banner">
@@ -610,6 +604,12 @@ button{cursor:pointer;font-family:inherit}
       <p class="load-sub" id="load-names"></p>
     </div>
     <div id="errs"></div>
+    <div id="print-btn-zone" class="hidden" style="display:none;justify-content:flex-end;margin-bottom:14px">
+      <button class="btn-print" onclick="window.print()" type="button" aria-label="Print or save as PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
     <div id="tbl-zone"></div>
     <div id="ratings-zone" class="hidden"></div>
     <div id="ad-mid">
@@ -838,7 +838,7 @@ async function runComparison(){
   show('sec-results');
   document.getElementById('btn-back').classList.remove('hidden');
   document.getElementById('ad-top').classList.remove('hidden');
-  document.getElementById('lbl-res').textContent=`${st.catLbl} · Comparison`;
+  document.getElementById('lbl-res').textContent=`${st.catLbl} · Comparison — provided by audioscopehifi.com driven by Claude AI`;
   document.getElementById('load-names').textContent=st.items.map(i=>i.name).join(' · ');
   document.getElementById('loading').style.display='block';
   document.getElementById('tbl-zone').innerHTML='';
@@ -882,6 +882,9 @@ function renderProgress(){
   const done=st.items.filter(i=>i.data);
   if(!done.length)return;
   document.getElementById('loading').style.display='none';
+  // Show print button once we have data
+  const pbz=document.getElementById('print-btn-zone');
+  if(pbz){pbz.style.display='flex';}
   renderTable();
   renderRatings();
   renderCards();
@@ -1037,6 +1040,8 @@ function reset(){
   document.getElementById('tbl-zone').innerHTML='';
   document.getElementById('ratings-zone').innerHTML='';
   document.getElementById('ratings-zone').classList.add('hidden');
+  const pbz=document.getElementById('print-btn-zone');
+  if(pbz)pbz.style.display='none';
   document.getElementById('cards-grid').innerHTML='';
   document.getElementById('errs').innerHTML='';
   document.getElementById('chips').innerHTML='';
