@@ -147,12 +147,14 @@ button{cursor:pointer;font-family:inherit}
 .err-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:13px 18px;margin-bottom:10px;font-size:14px;color:#B91C1C}
 
 /* Table */
-.tbl-wrap{overflow-x:auto;border-radius:14px;border:1px solid #E5E7EB;margin-bottom:52px;background:#fff;box-shadow:0 2px 12px rgba(17,24,39,.06)}
+.tbl-wrap{overflow-x:auto;border-radius:14px;border:1px solid #E5E7EB;margin-bottom:8px;background:#fff;box-shadow:0 2px 12px rgba(17,24,39,.06)}
+.tbl-scroll-hint{display:none;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:500;color:#9CA3AF;margin-bottom:44px;padding:6px 0}
+.tbl-scroll-hint svg{flex-shrink:0}
 .spec-tbl{width:100%;border-collapse:collapse}
 .spec-tbl thead tr{background:#111827}
 .spec-tbl th{padding:20px 22px;text-align:left;border-bottom:2px solid #D97706;vertical-align:bottom}
 .th-s{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);width:160px;min-width:140px}
-.th-c{min-width:185px}
+.th-c{min-width:155px}
 .th-brand{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FCD34D;margin-bottom:4px}
 .th-model{font-size:19px;font-weight:700;color:#F9FAFB;line-height:1.12}
 .th-year{font-size:11px;color:rgba(255,255,255,.3);margin-top:3px}
@@ -903,7 +905,7 @@ function renderTable(){
   const done=st.items.filter(i=>i.data);
   if(!done.length||!zone)return;
   const keys=[...new Set(done.flatMap(i=>Object.keys(i.data.specs||{})))];
-  const minW=Math.max(540,165+st.items.length*190);
+  const minW=Math.max(540,165+st.items.length*160);
   const canRemove=st.items.filter(i=>i.data).length>1;
   const cols=st.items.map(it=>{
     if(it.status==='loading')return`<th class="th-c"><div class="load-v">Loading ${h(it.name)}…</div></th>`;
@@ -929,7 +931,14 @@ function renderTable(){
     if(!it.data?.notableFeatures?.length)return`<td><span class="empty-v">—</span></td>`;
     return`<td><ul class="feat-ul">${it.data.notableFeatures.map(f=>`<li>${h(f)}</li>`).join('')}</ul></td>`;
   }).join('');
-  zone.innerHTML=`<div class="tbl-wrap"><table class="spec-tbl" style="min-width:${minW}px"><thead><tr><th class="th-s">Specification</th>${cols}</tr></thead><tbody><tr class="row-dim"><td class="td-l">Dimensions</td>${dimRow}</tr>${specRows}<tr class="row-feat"><td class="td-l">Notable Features</td>${featRow}</tr></tbody></table></div>`;
+  const scrollHint=st.items.length>=5
+    ?`<div class="tbl-scroll-hint" style="display:flex">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Scroll left or right to see all columns
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>`
+    :`<div class="tbl-scroll-hint"></div>`;
+  zone.innerHTML=`<div class="tbl-wrap"><table class="spec-tbl" style="min-width:${minW}px"><thead><tr><th class="th-s">Specification</th>${cols}</tr></thead><tbody><tr class="row-dim"><td class="td-l">Dimensions</td>${dimRow}</tr>${specRows}<tr class="row-feat"><td class="td-l">Notable Features</td>${featRow}</tr></tbody></table></div>${scrollHint}`;
 }
 
 // ── Cards ──
