@@ -29,6 +29,33 @@ const MODEL        = 'claude-sonnet-4-20250514';
 const KNOWN_CORRECTIONS = {
   // 'Wharfedale EVO 5.1': 'Enclosure type is Bookshelf/Standmount — NOT a floorstander.',
   // 'Sumiko Black Pearl':  'Official manufacturer website is sumikophonocartridges.com',
+
+  'Parasound 2125 v.2': 'VERIFIED SPECS from official Parasound Model 2125 v.2 Owner\'s Guide: ' +
+    'Type: Two-Channel Power Amplifier, Class A/B, THX-certified. ' +
+    'Power Output (all channels driven, RMS 20Hz-20kHz): 150W x2 @ 8Ω; 225W x2 @ 4Ω; 225W x2 @ 2Ω (load switch set to 2-3Ω). ' +
+    'Bridged Mono: 400W x1 @ 8Ω; 400W x1 @ 4Ω (load switch set to 2-3Ω). ' +
+    'Current Capacity: 35 amps peak per channel. ' +
+    'Frequency Response: 20Hz – 50kHz, +0/-3dB at 1 watt. ' +
+    'Dynamic Headroom: 1.3 dB. ' +
+    'THD: 0.25% at full rated output; 0.015% at average listening levels. ' +
+    'IM Distortion: 0.05%. Transient IM Distortion: Not measurable. ' +
+    'S/N Ratio: 114 dB at rated output (IHF A-weighted); 106 dB unweighted; 93 dB at 2.828V (IHF A-weighted); 84 dB at 2.828V unweighted. ' +
+    'Input Impedance: 33kΩ. ' +
+    'Input Sensitivity: 1V in for 28.28V out (THX standard). ' +
+    'Total Gain: 28 dB. ' +
+    'Inter-Channel Crosstalk: 85 dB @ 1kHz; 73 dB @ 10kHz; 67 dB @ 20kHz. ' +
+    'Damping Factor: Over 150 at 20Hz. ' +
+    '12V Trigger: DC 9–12V, 15mA draw. ' +
+    'Audio Turn-On Sensitivity: Quieter = 1mV; Louder = 6mV. ' +
+    'High Pass Filter: Flat / 20Hz / 40Hz at 18 dB/octave. ' +
+    'Speaker Load Switch: 2-3Ω or 4-8Ω. ' +
+    'AC Power: 110-120V / 220-240V, 50-60Hz. Standby: 0.5W; Idle: 32W; Full output: 550W. ' +
+    'Dimensions: 437mm W x 406mm D x 107mm H (17.25" x 16" x 4.25" with feet; 3.5" / 88.2mm panel only). ' +
+    'Net Weight: 27 lbs (12.3 kg). ' +
+    'Rack space: 2U (two rack spaces). Rack mount kit: RMK22 (sold separately). ' +
+    'Inputs: L and R RCA; Loop Out RCA jacks. ' +
+    'Turn-On Options: Manual (front panel button), Audio (auto at 1mV or 6mV), 12V trigger. ' +
+    'Manufacturer website: https://www.parasound.com',
 };
 
 const CORS = {
@@ -165,11 +192,29 @@ function extractJSON(text) {
   }
 }
 
+/**
+ * Normalise a component name for fuzzy matching.
+ * Strips punctuation, collapses whitespace, lowercases.
+ * Examples that all normalise to the same string:
+ *   "Parasound 2125 v.2"  → "parasound 2125 v2"
+ *   "Parasound 2125 V2"   → "parasound 2125 v2"
+ *   "parasound  2125 v 2" → "parasound 2125 v2"
+ *   "Parasound 2125"      → "parasound 2125"  (won't match — intentional)
+ */
+function normalise(str) {
+  return str
+    .toLowerCase()
+    .replace(/[.\-_,()]/g, '')   // strip common punctuation
+    .replace(/\s+/g, ' ')        // collapse multiple spaces
+    .trim();
+}
+
 /* ─── Prompt 1: Full component specification ─────────────────── */
 function buildSpecPrompt(name, category) {
-  // Check for known corrections (case-insensitive)
+  // Fuzzy lookup — normalise both the input name and each key before comparing
+  const normalisedName = normalise(name);
   const correctionKey = Object.keys(KNOWN_CORRECTIONS).find(
-    k => k.toLowerCase() === name.toLowerCase()
+    k => normalise(k) === normalisedName
   );
   const correctionBlock = correctionKey
     ? 'VERIFIED CORRECTION — treat this as authoritative fact, overriding any conflicting data:\n' +
