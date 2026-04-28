@@ -406,6 +406,26 @@ button{cursor:pointer;font-family:inherit}
     color:#9CA3AF;
   }
 }
+
+/* ── Editorial content sections ── */
+.editorial-sec{background:#fff;border-top:1px solid #E5E7EB;padding:72px 0}
+.editorial-sec+.editorial-sec{border-top:1px solid #E5E7EB;padding-top:64px}
+.editorial-eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#D97706;margin-bottom:8px}
+.editorial-h2{font-size:clamp(24px,3vw,32px);font-weight:800;color:#111827;letter-spacing:-.02em;margin-bottom:10px;line-height:1.1}
+.editorial-sub{font-size:16px;color:#6B7280;line-height:1.7;max-width:560px;margin-bottom:40px}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.guide-card{background:#F8F7F5;border:1px solid #E5E7EB;border-radius:14px;padding:18px 16px}
+.guide-card-name{font-size:15px;font-weight:700;color:#111827;margin-bottom:8px}
+.guide-focus-lbl{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:8px}
+.guide-specs{list-style:none;display:flex;flex-direction:column;gap:6px}
+.guide-specs li{font-size:14px;color:#374151;display:flex;align-items:flex-start;gap:7px;line-height:1.5}
+.guide-dot{width:5px;height:5px;border-radius:50%;background:#D97706;flex-shrink:0;margin-top:6px}
+.gloss-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 3rem}
+.gloss-group{padding:20px 0;border-top:1px solid #E5E7EB}
+.gloss-group-name{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D97706;margin-bottom:14px}
+.gloss-term{margin-bottom:14px}
+.gloss-term dt{font-size:15px;font-weight:700;color:#111827;margin-bottom:3px}
+.gloss-term dd{font-size:14px;color:#6B7280;line-height:1.65}
 </style>
 </head>
 <body>
@@ -691,6 +711,163 @@ button{cursor:pointer;font-family:inherit}
 </form>
 
 </main>
+
+<!-- ══ EDITORIAL: WHAT TO FOCUS ON ══ -->
+<section class="editorial-sec">
+  <div class="container">
+    <span class="editorial-eyebrow">Buying guide</span>
+    <h2 class="editorial-h2">What to focus on when comparing</h2>
+    <p class="editorial-sub">Not all specs matter equally. Here are the two or three numbers that actually move the needle for each component type.</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-card-name">Amplifiers</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Output power (W into 4Ω and 8Ω) — must match your speakers' sensitivity</li>
+          <li><span class="guide-dot"></span>THD+N — lower is cleaner; below 0.1% is solid</li>
+          <li><span class="guide-dot"></span>Damping factor — higher = tighter bass control</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Preamps</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Gain (dB) — must play nicely with your amp's input sensitivity</li>
+          <li><span class="guide-dot"></span>SNR (signal-to-noise ratio) — higher is quieter</li>
+          <li><span class="guide-dot"></span>Output impedance — should be 10× lower than amp input impedance</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Phono preamps</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Cartridge compatibility (MM vs MC, load impedance)</li>
+          <li><span class="guide-dot"></span>RIAA accuracy (±dB) — tighter curves = more faithful playback</li>
+          <li><span class="guide-dot"></span>SNR — phono signals are tiny; noise floor matters a lot</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Turntables</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Wow &amp; flutter (%) — lower means steadier pitch; under 0.1% is good</li>
+          <li><span class="guide-dot"></span>Drive type (belt vs direct) — affects vibration isolation</li>
+          <li><span class="guide-dot"></span>Included tonearm quality and cartridge upgrade path</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Tonearms</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Effective mass (g) — must be matched to cartridge compliance</li>
+          <li><span class="guide-dot"></span>Bearing quality (friction, play) — less is better</li>
+          <li><span class="guide-dot"></span>Headshell offset and overhang geometry</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Cartridges</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Output voltage (mV) — determines MM vs MC phono stage need</li>
+          <li><span class="guide-dot"></span>Tracking force range (g) — must suit your tonearm</li>
+          <li><span class="guide-dot"></span>Stylus profile (spherical, elliptical, line contact)</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">DACs</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Bit depth and sample rate support (native DSD, MQA, PCM)</li>
+          <li><span class="guide-dot"></span>THD+N and dynamic range (dB) — higher is better</li>
+          <li><span class="guide-dot"></span>Output stage topology (op-amp vs discrete vs transformer)</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Streamers</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Supported protocols (Roon Ready, AirPlay 2, UPnP, Spotify Connect)</li>
+          <li><span class="guide-dot"></span>Clock quality and jitter — affects DAC performance</li>
+          <li><span class="guide-dot"></span>App ecosystem and long-term software support</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Speakers</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Sensitivity (dB/W/m) — paired with your amp's output power</li>
+          <li><span class="guide-dot"></span>Nominal impedance (Ω) and minimum dip — can your amp drive it?</li>
+          <li><span class="guide-dot"></span>Frequency response and crossover topology</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <div class="guide-card-name">Headphones</div>
+        <div class="guide-focus-lbl">Focus on</div>
+        <ul class="guide-specs">
+          <li><span class="guide-dot"></span>Impedance (Ω) — high impedance needs a dedicated amp</li>
+          <li><span class="guide-dot"></span>Sensitivity (dB/mW) — how loud from a given source</li>
+          <li><span class="guide-dot"></span>Driver type (dynamic, planar magnetic, electrostatic)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EDITORIAL: SPEC GLOSSARY ══ -->
+<section class="editorial-sec">
+  <div class="container">
+    <span class="editorial-eyebrow">Reference</span>
+    <h2 class="editorial-h2">Spec glossary</h2>
+    <p class="editorial-sub">Plain-English definitions for the terms you'll see in every comparison table.</p>
+    <div class="gloss-cols">
+      <div>
+        <div class="gloss-group">
+          <div class="gloss-group-name">Amplification</div>
+          <dl>
+            <div class="gloss-term"><dt>THD+N</dt><dd>Total harmonic distortion plus noise — the percentage of unwanted signal added by the component. Lower is cleaner; under 0.1% is audibly transparent for most listeners.</dd></div>
+            <div class="gloss-term"><dt>SNR</dt><dd>Signal-to-noise ratio in dB. Measures how far the music sits above the noise floor. Above 90 dB is solid; above 100 dB is excellent.</dd></div>
+            <div class="gloss-term"><dt>Damping factor</dt><dd>How well an amplifier controls the movement of a speaker cone after a transient. Higher values (100+) generally mean tighter, more controlled bass.</dd></div>
+            <div class="gloss-term"><dt>Gain</dt><dd>How much an amplifier or preamp multiplies the input signal, measured in dB. Too much gain in a chain causes clipping; too little leaves you short of volume.</dd></div>
+            <div class="gloss-term"><dt>Input impedance</dt><dd>The load a component presents to whatever is driving it. Higher input impedance is generally easier to drive and causes less signal loss.</dd></div>
+            <div class="gloss-term"><dt>Output impedance</dt><dd>The impedance a component presents at its output. Lower is better — aim for at least a 1:10 ratio against the input it is driving.</dd></div>
+          </dl>
+        </div>
+        <div class="gloss-group">
+          <div class="gloss-group-name">Digital audio</div>
+          <dl>
+            <div class="gloss-term"><dt>Bit depth</dt><dd>Determines the dynamic range of a digital recording. 16-bit gives ~96 dB; 24-bit gives ~144 dB of theoretical headroom.</dd></div>
+            <div class="gloss-term"><dt>Sample rate</dt><dd>How many audio snapshots are taken per second (Hz or kHz). 44.1 kHz is CD standard; 192 kHz is hi-res. Higher is not always audibly better.</dd></div>
+            <div class="gloss-term"><dt>Jitter</dt><dd>Timing errors in the digital clock. Audible as a kind of smearing or harshness. Lower jitter (measured in picoseconds) means cleaner conversion.</dd></div>
+            <div class="gloss-term"><dt>DSD</dt><dd>Direct stream digital — a 1-bit, very high sample-rate format used in SACDs. Some DACs support native DSD decoding; others convert to PCM first.</dd></div>
+            <div class="gloss-term"><dt>MQA</dt><dd>A proprietary hi-res encoding format used by Tidal. Requires an MQA-capable DAC for full unfolding. Controversial among audiophiles.</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div>
+        <div class="gloss-group">
+          <div class="gloss-group-name">Speakers &amp; headphones</div>
+          <dl>
+            <div class="gloss-term"><dt>Sensitivity</dt><dd>How loud a speaker or headphone plays from a given power input, measured in dB/W/m (speakers) or dB/mW (headphones). Higher sensitivity means easier to drive.</dd></div>
+            <div class="gloss-term"><dt>Nominal impedance</dt><dd>The rated resistance of a speaker in ohms. Most home speakers are 4–8 Ω. Lower impedance demands more current from the amplifier.</dd></div>
+            <div class="gloss-term"><dt>Frequency response</dt><dd>The range of frequencies a component can reproduce, typically shown as Hz–kHz with a ±dB tolerance. Flatter is more accurate; wider is not always better.</dd></div>
+            <div class="gloss-term"><dt>Crossover</dt><dd>A network (passive or active) that splits frequencies between drivers (tweeter, mid, woofer). Higher-order crossovers (2nd, 3rd) roll off more steeply.</dd></div>
+            <div class="gloss-term"><dt>Driver type</dt><dd>Dynamic drivers use a moving coil; planars use a thin membrane; electrostatics use a charged panel. Each has distinct sonic and power-handling characteristics.</dd></div>
+          </dl>
+        </div>
+        <div class="gloss-group">
+          <div class="gloss-group-name">Vinyl &amp; analogue</div>
+          <dl>
+            <div class="gloss-term"><dt>Wow &amp; flutter</dt><dd>Slow (wow) and fast (flutter) speed variations in a turntable, measured as a percentage. Lower is better; under 0.1% is generally inaudible.</dd></div>
+            <div class="gloss-term"><dt>RIAA curve</dt><dd>A standardised equalisation applied during vinyl recording and reversed during playback. Phono stages that deviate from this curve will colour the sound.</dd></div>
+            <div class="gloss-term"><dt>Cartridge compliance</dt><dd>How easily the stylus can move laterally, measured in CU (10⁻⁶ cm/dyne). Must be matched with tonearm effective mass to avoid resonance problems.</dd></div>
+            <div class="gloss-term"><dt>Stylus profile</dt><dd>The shape of the diamond tip. Spherical is durable but less detailed; elliptical traces better; line-contact and Shibata profiles retrieve the most information.</dd></div>
+            <div class="gloss-term"><dt>Tracking force</dt><dd>The downward pressure of the stylus on the groove, measured in grams. Too light causes mistracking; too heavy accelerates record and stylus wear.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══ FOOTER ══ -->
 <footer id="ftr">
