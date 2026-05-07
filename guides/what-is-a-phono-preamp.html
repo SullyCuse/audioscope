@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Is a Phono Preamp and Why Does Vinyl Need One? | AudioScope</title>
+  <meta name="description" content="Why every turntable setup needs a phono stage, what RIAA equalization actually does, and how to choose between MM and MC — explained clearly for any level of experience." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/what-is-a-phono-preamp.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #D97706; --amber-light: #F59E0B;
+      --bg: #111111; --surface: #1a1a1a; --surface2: #222222;
+      --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { width: 28px; height: 28px; background: var(--amber); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .nav-logo svg { width: 16px; height: 16px; fill: #000; }
+    .nav-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .nav-title span { color: var(--amber); }
+    .nav-cta { background: var(--amber); color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+    .nav-cta:hover { background: var(--amber-light); }
+    .breadcrumb { max-width: 780px; margin: 24px auto 0; padding: 0 24px; font-size: 13px; color: var(--text-muted); }
+    .breadcrumb a { color: var(--amber); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+    article { max-width: 780px; margin: 32px auto 80px; padding: 0 24px; }
+    .article-meta { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .article-category { display: inline-block; background: rgba(217,119,6,0.15); color: var(--amber); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 16px; color: #fff; }
+    .article-lede { font-size: 18px; color: var(--text-dim); line-height: 1.6; }
+    h2 { font-size: 22px; font-weight: 700; color: #fff; margin: 40px 0 14px; padding-left: 14px; border-left: 3px solid var(--amber); letter-spacing: -0.3px; }
+    h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 28px 0 10px; }
+    p { margin-bottom: 16px; color: var(--text-dim); }
+    strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 20px 20px; color: var(--text-dim); }
+    li { margin-bottom: 8px; }
+    .callout { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 8px; padding: 18px 20px; margin: 28px 0; }
+    .callout-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber); margin-bottom: 8px; }
+    .callout p { margin: 0; font-size: 15px; }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .compare-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    .compare-card h4 { font-size: 15px; font-weight: 700; color: var(--amber); margin-bottom: 12px; }
+    .compare-card ul { margin: 0 0 0 16px; }
+    .compare-card li { font-size: 14px; margin-bottom: 6px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .spec-table th { background: var(--surface2); color: var(--amber); font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .spec-table td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+    .spec-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .cta-box { background: linear-gradient(135deg, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0.04) 100%); border: 1px solid rgba(217,119,6,0.3); border-radius: 12px; padding: 28px 32px; margin: 48px 0 24px; text-align: center; }
+    .cta-box h3 { margin: 0 0 10px; font-size: 20px; color: #fff; }
+    .cta-box p { margin: 0 0 20px; font-size: 15px; }
+    .cta-btn { display: inline-block; background: var(--amber); color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .cta-btn:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .related { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 16px; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .related-links { display: flex; flex-direction: column; gap: 10px; }
+    .related-links a { color: var(--amber); text-decoration: none; font-size: 15px; font-weight: 500; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.15s; }
+    .related-links a:hover { border-color: var(--amber); }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--amber); text-decoration: none; }
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; } article { padding: 0 16px; } h1 { font-size: 24px; }
+      .cta-box { padding: 20px; } .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <span class="nav-title">Audio<span>Scope</span></span>
+  </a>
+  <a href="/" class="nav-cta">Compare Components →</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/guides/">Guides</a><span>›</span>What Is a Phono Preamp?
+</div>
+
+<article>
+  <div class="article-meta">
+    <div class="article-category">Turntables &amp; Vinyl</div>
+    <h1>What Is a Phono Preamp — and Why Does Vinyl Need One?</h1>
+    <p class="article-lede">A phono preamp — also called a phono stage — does two things no other component in your system can do: it amplifies the extraordinarily weak signal from a cartridge, and it corrects the frequency curve applied during vinyl mastering. Without it, vinyl sounds thin, quiet, and wrong.</p>
+  </div>
+
+  <h2>Why Vinyl Requires Specialised Amplification</h2>
+  <p>A turntable cartridge generates one of the weakest audio signals of any source component. A moving-magnet cartridge produces roughly 2–5 millivolts of output. A moving-coil cartridge produces even less — often between 0.2 and 0.5 millivolts. By comparison, a CD player or streaming device outputs around 2 volts. The gap is enormous: a turntable produces a signal roughly 1,000 times weaker than a digital source.</p>
+  <p>If you connect a turntable directly to a standard line-level input — the same input you'd use for a CD player or streaming box — the result is quiet, weak audio with almost no bass. This is not a fault with the turntable or the amplifier; it is simply a physics problem that every vinyl playback system must solve.</p>
+  <p>The phono preamp solves it in two steps: first by amplifying the cartridge signal up to line level, and second by applying a specific frequency correction called RIAA equalization.</p>
+
+  <h2>RIAA Equalization: The Hidden Key to Vinyl Sound</h2>
+  <p>When a vinyl record is cut, the audio signal is deliberately processed through a frequency curve defined by the Recording Industry Association of America (RIAA) standard, adopted universally in 1954. This curve does two things during mastering:</p>
+  <ul>
+    <li><strong>Reduces bass frequencies substantially.</strong> Low frequencies require wide groove excursions. By cutting the bass level before mastering, the groove remains narrower, allowing more music to fit on the record without adjacent grooves colliding.</li>
+    <li><strong>Boosts treble frequencies substantially.</strong> High frequencies, if recorded at full level, would be drowned in surface noise. Boosting them during mastering improves the signal-to-noise ratio in the treble region.</li>
+  </ul>
+  <p>During playback, the phono preamp applies the inverse RIAA curve — boosting bass back up, rolling off the treble — to restore the original frequency balance. <strong>Without this correction, vinyl sounds thin, bright, and bass-shy</strong>: not because those frequencies were not recorded, but because they were intentionally reduced during the mastering process and must be restored during playback.</p>
+
+  <div class="callout">
+    <div class="callout-label">In Numbers</div>
+    <p>The RIAA curve applies a boost of approximately 20 dB at 20 Hz and a cut of approximately 20 dB at 20 kHz during playback, relative to 1 kHz. This is a 40 dB swing across the audible spectrum — a dramatic correction that must be applied accurately for the record to sound as the mastering engineer intended.</p>
+  </div>
+
+  <h2>MM vs. MC: Understanding Cartridge Types</h2>
+  <p>The type of cartridge you have determines what kind of phono stage you need. The two main technologies differ in how they generate an electrical signal from the stylus movement.</p>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>Moving Magnet (MM)</h4>
+      <ul>
+        <li>Small magnet attached to cantilever</li>
+        <li>Output: 2–5 mV (higher)</li>
+        <li>Standard gain: 35–45 dB</li>
+        <li>Replaceable stylus</li>
+        <li>Works with any MM phono stage</li>
+        <li>Most affordable entry point</li>
+        <li>User can swap stylus shapes</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4>Moving Coil (MC)</h4>
+      <ul>
+        <li>Tiny coils attached to cantilever</li>
+        <li>Output: 0.2–0.5 mV (much lower)</li>
+        <li>Standard gain: 55–70 dB</li>
+        <li>Non-replaceable stylus (retipping)</li>
+        <li>Requires MC-capable phono stage</li>
+        <li>Generally higher resolution potential</li>
+        <li>Lower moving mass → better transients</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The practical consequence is simple: a phono stage designed for MM cartridges will not amplify an MC cartridge sufficiently. The MC signal will be quiet, and the noise floor (which matters enormously when amplifying tiny signals) will be audible. A phono stage with MC capability applies additional gain and uses a lower-noise input stage designed for the lower output level.</p>
+
+  <h2>Phono Stage Specifications That Matter</h2>
+
+  <table class="spec-table">
+    <thead>
+      <tr><th>Specification</th><th>What It Means</th><th>What to Look For</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Gain</strong></td>
+        <td>How much the phono stage amplifies the cartridge signal, in decibels.</td>
+        <td>MM: 40–46 dB. MC (high output): 50–56 dB. MC (low output): 60–68 dB. Match gain to your cartridge's output level.</td>
+      </tr>
+      <tr>
+        <td><strong>Input Impedance</strong></td>
+        <td>The electrical load the phono stage presents to the cartridge. Incorrect loading affects frequency response and damping.</td>
+        <td>MM cartridges: 47kΩ is the universal standard. MC cartridges: loading varies by cartridge — typically 10–500Ω. Variable loading is a significant advantage in phono stages intended for MC use.</td>
+      </tr>
+      <tr>
+        <td><strong>Input Capacitance</strong></td>
+        <td>Affects the resonant frequency of the cartridge-tonearm system, influencing high-frequency response.</td>
+        <td>For MM cartridges: aim for total capacitance (phono stage + tonearm cable) matching the cartridge specification, typically 150–300 pF. MC cartridges are largely insensitive to capacitance.</td>
+      </tr>
+      <tr>
+        <td><strong>Signal-to-Noise Ratio</strong></td>
+        <td>The ratio between the audio signal and the noise floor. More critical in phono stages than in most other components, because the signal is so small and the amplification so large.</td>
+        <td>Above 75 dB (A-weighted, MM) is good. Above 60 dB for MC is acceptable. Below these figures, you may hear hiss during quiet passages or between tracks.</td>
+      </tr>
+      <tr>
+        <td><strong>RIAA Accuracy</strong></td>
+        <td>How precisely the phono stage implements the RIAA correction curve. Errors cause tonal coloration.</td>
+        <td>Better phono stages specify ±0.5 dB or better across the audio band. Errors larger than ±2 dB will produce audible tonal shifts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Built-In vs. External Phono Stage</h2>
+  <p>Many turntables — particularly entry-level and mid-range models — include a built-in phono stage, allowing connection directly to any line-level input. Many integrated amplifiers and AV receivers also include a phono input with a built-in stage. Whether to use a built-in or add an external phono stage is one of the most common and practical questions in vinyl setup.</p>
+
+  <h3>When the built-in stage is adequate</h3>
+  <p>For casual listening, a built-in phono stage in a Rega Planar 1, Pro-Ject Debut, or similar entry-level turntable is not a liability. These stages are designed to work with the bundled cartridge and are voiced to provide a pleasant, if not maximally detailed, result. If the music sounds good to you and you are not running a serious audiophile system, there is no pressing reason to add an external unit.</p>
+
+  <h3>When an external phono stage is worthwhile</h3>
+  <ul>
+    <li>You have upgraded to a better cartridge and the built-in stage is the weak link in the chain.</li>
+    <li>You are using an MC cartridge and your turntable or amplifier does not provide MC-capable amplification.</li>
+    <li>You want adjustable loading for optimal cartridge matching.</li>
+    <li>You can hear noise, hum, or tonal imbalance from the existing stage that a better unit would resolve.</li>
+    <li>Your amplifier has no phono input and you want to avoid a turntable with a built-in stage (which fixes you to MM-only operation).</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-label">The Upgrade Path</div>
+    <p>In a vinyl-based system, the cartridge and phono stage are closely linked and should be considered together. A mid-range cartridge into an excellent phono stage will often outperform a high-end cartridge into a mediocre stage. Budget proportionally: a rough rule of thumb is to spend at least as much on the phono stage as on the cartridge.</p>
+  </div>
+
+  <h2>Tube vs. Solid-State Phono Stages</h2>
+  <p>Phono stages are available in both solid-state (transistor) and tube (valve) topologies. Tube phono stages are particularly appealing to vinyl enthusiasts because the medium itself is already considered a "warm" source — and some listeners feel that tube amplification complements the characteristics of vinyl playback more naturally than solid-state. However, tube phono stages typically exhibit slightly higher noise floors, which matters more in MC applications, and require periodic tube replacement.</p>
+  <p>Solid-state phono stages can achieve lower noise floors (critical for MC use), run without tube maintenance, and are available at every price point from $50 to well over $5,000. The quality of implementation matters far more than the topology — an excellently designed solid-state stage will outperform a poorly executed tube design, and vice versa.</p>
+
+  <div class="cta-box">
+    <h3>Compare Phono Preamps Side by Side</h3>
+    <p>Use AudioScope to run a detailed AI-powered specification comparison for phono stages you're considering — covering gain, loading options, RIAA accuracy, topology, and MM/MC compatibility.</p>
+    <a href="/" class="cta-btn">Compare Phono Preamps →</a>
+  </div>
+
+  <div class="related">
+    <h3>Related Guides</h3>
+    <div class="related-links">
+      <a href="/guides/turntable-setup-guide.html">Turntable Setup: Cartridge Alignment, Tracking Force, and VTA →</a>
+      <a href="/guides/matching-amplifier-to-speakers.html">How to Match an Amplifier to Your Speakers →</a>
+      <a href="/guides/what-is-a-dac.html">What Is a DAC and Do You Actually Need One? →</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <p>&copy; 2025 <a href="/">AudioScope</a> · AI-powered hi-fi component comparison · <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+</footer>
+
+</body>
+</html>
