@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turntable Setup: Cartridge Alignment, Tracking Force, and VTA | AudioScope</title>
+  <meta name="description" content="A practical guide to setting up a turntable correctly — covering cartridge alignment, tracking force, anti-skate, VTA, and the adjustments that make the biggest difference to sound quality." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/turntable-setup-guide.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #D97706; --amber-light: #F59E0B;
+      --bg: #111111; --surface: #1a1a1a; --surface2: #222222;
+      --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { width: 28px; height: 28px; background: var(--amber); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .nav-logo svg { width: 16px; height: 16px; fill: #000; }
+    .nav-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .nav-title span { color: var(--amber); }
+    .nav-cta { background: var(--amber); color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+    .nav-cta:hover { background: var(--amber-light); }
+    .breadcrumb { max-width: 780px; margin: 24px auto 0; padding: 0 24px; font-size: 13px; color: var(--text-muted); }
+    .breadcrumb a { color: var(--amber); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+    article { max-width: 780px; margin: 32px auto 80px; padding: 0 24px; }
+    .article-meta { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .article-category { display: inline-block; background: rgba(217,119,6,0.15); color: var(--amber); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 16px; color: #fff; }
+    .article-lede { font-size: 18px; color: var(--text-dim); line-height: 1.6; }
+    h2 { font-size: 22px; font-weight: 700; color: #fff; margin: 40px 0 14px; padding-left: 14px; border-left: 3px solid var(--amber); letter-spacing: -0.3px; }
+    h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 28px 0 10px; }
+    p { margin-bottom: 16px; color: var(--text-dim); }
+    strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 20px 20px; color: var(--text-dim); }
+    li { margin-bottom: 8px; }
+    .callout { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 8px; padding: 18px 20px; margin: 28px 0; }
+    .callout-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber); margin-bottom: 8px; }
+    .callout p { margin: 0; font-size: 15px; }
+    .callout-warning { border-left-color: #ef4444; }
+    .callout-warning .callout-label { color: #ef4444; }
+    .step-list { counter-reset: steps; list-style: none; margin: 0 0 24px; padding: 0; }
+    .step-list li { counter-increment: steps; padding: 16px 16px 16px 56px; position: relative; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; background: var(--surface); color: var(--text-dim); }
+    .step-list li::before { content: counter(steps); position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: var(--amber); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 28px; text-align: center; }
+    .step-list li strong { display: block; color: var(--text); margin-bottom: 4px; font-size: 15px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .spec-table th { background: var(--surface2); color: var(--amber); font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .spec-table td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+    .spec-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .cta-box { background: linear-gradient(135deg, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0.04) 100%); border: 1px solid rgba(217,119,6,0.3); border-radius: 12px; padding: 28px 32px; margin: 48px 0 24px; text-align: center; }
+    .cta-box h3 { margin: 0 0 10px; font-size: 20px; color: #fff; }
+    .cta-box p { margin: 0 0 20px; font-size: 15px; }
+    .cta-btn { display: inline-block; background: var(--amber); color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .cta-btn:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .related { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 16px; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .related-links { display: flex; flex-direction: column; gap: 10px; }
+    .related-links a { color: var(--amber); text-decoration: none; font-size: 15px; font-weight: 500; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.15s; }
+    .related-links a:hover { border-color: var(--amber); }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--amber); text-decoration: none; }
+    @media (max-width: 600px) { nav { padding: 0 16px; } article { padding: 0 16px; } h1 { font-size: 24px; } .cta-box { padding: 20px; } .step-list li { padding-left: 48px; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <span class="nav-title">Audio<span>Scope</span></span>
+  </a>
+  <a href="/" class="nav-cta">Compare Components →</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/guides/">Guides</a><span>›</span>Turntable Setup Guide
+</div>
+
+<article>
+  <div class="article-meta">
+    <div class="article-category">Turntables &amp; Vinyl</div>
+    <h1>Turntable Setup: Cartridge Alignment, Tracking Force, and VTA</h1>
+    <p class="article-lede">A well-set-up mid-range turntable will consistently outperform a more expensive one set up carelessly. These adjustments are not optional fine-tuning — they directly determine how accurately the stylus traces the groove, how long your records last, and whether the sound is musical or fatiguing.</p>
+  </div>
+
+  <h2>Why Setup Matters More Than You Think</h2>
+  <p>Vinyl playback is a mechanical process. A diamond stylus, typically just 0.3 millimetres wide, must trace a groove that encodes frequencies up to 20 kHz while applying a downforce of 1–2 grams and travelling in an arc across the record surface. The geometric tolerances involved are extraordinarily small. Even small errors in cartridge alignment, tracking force, or tonearm geometry introduce measurable and audible distortion — particularly in the high frequencies and in the inner grooves where errors accumulate.</p>
+  <p>The good news is that every adjustment described in this guide can be made without specialist tools, though a few inexpensive accessories make some tasks significantly easier.</p>
+
+  <h2>Step 1: Cartridge Alignment</h2>
+  <p>Cartridge alignment — positioning the cartridge body in the headshell so that the stylus traces the groove at the correct angle — is the single most impactful adjustment you can make. Misaligned cartridges introduce <strong>tracking distortion</strong>: a form of harmonic distortion that is particularly audible on sibilants (the "s" and "sh" sounds in vocals) and on the inner tracks of a record.</p>
+  <p>Because a tonearm pivots rather than tracking in a perfectly straight line, there are two points on the record surface where the stylus is geometrically aligned with the groove: these are called <strong>null points</strong>. Different alignment standards (Baerwald, Loefgren B, Stevenson) place these null points at different positions across the record, producing different distortion profiles.</p>
+
+  <h3>Choosing an alignment standard</h3>
+  <ul>
+    <li><strong>Baerwald (IEC):</strong> The most widely used standard. Distributes distortion evenly across the playing surface. A safe default for most listeners.</li>
+    <li><strong>Loefgren B:</strong> Minimises average distortion across the whole record. Very slightly higher distortion in the outer grooves, noticeably lower in the inner grooves where distortion is most problematic. Often preferred by listeners who notice inner-groove breakup.</li>
+    <li><strong>Stevenson:</strong> Places one null point at the innermost groove. Popular in Japan. Produces higher distortion in mid-record positions but handles the inner grooves with the least error of any standard.</li>
+  </ul>
+
+  <h3>How to align the cartridge</h3>
+  <p>You need an alignment protractor. Free ones can be printed from sites such as Vinyl Engine or Analogue Seduction; the Mint LP custom protractor and the Dr Feickert Analogue tools offer higher precision if you wish to invest. The process, regardless of which tool you use, is:</p>
+  <ol class="step-list">
+    <li><strong>Position the tonearm at the null point marked on the protractor.</strong> The protractor sits on the platter and is aligned to the spindle.</li>
+    <li><strong>Align the cartridge body so the stylus tip sits exactly on the null point.</strong> The cartridge body (or a line extending from it) should be parallel to the grid lines on the protractor.</li>
+    <li><strong>Check overhang.</strong> Overhang is the distance the stylus extends beyond the spindle centre. Adjust cartridge position in the headshell slots until overhang matches your tonearm's specification.</li>
+    <li><strong>Repeat at the second null point</strong> and make small corrections until alignment is correct at both positions.</li>
+    <li><strong>Torque the cartridge screws evenly</strong> and recheck — the act of tightening can shift position slightly.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-label">Practical Tip</div>
+    <p>A USB microscope (available for under £30/$35) makes cartridge alignment dramatically easier by letting you see the stylus position relative to the protractor grid without straining over the platter. The investment pays back quickly in confidence and accuracy.</p>
+  </div>
+
+  <h2>Step 2: Setting Tracking Force</h2>
+  <p>Tracking force — also called vertical tracking force (VTF) — is the downward pressure the stylus applies to the record groove, measured in grams. Every cartridge has a recommended tracking force range specified by the manufacturer, typically something like 1.8–2.2g with a recommended value of 2.0g.</p>
+
+  <h3>The myth of lighter tracking</h3>
+  <p>A persistent audiophile misconception holds that lower tracking force is always better for records. This is demonstrably false. A stylus tracking below its recommended force will <strong>mistrack</strong> — skipping momentarily within the groove on loud transients. Mistracking causes far more record and stylus wear than tracking at the recommended force, because the stylus bounces rather than riding cleanly. It also sounds worse: distorted, grainy, and unable to track high-level passages.</p>
+  <p>Set tracking force to the <strong>manufacturer's recommended value</strong>, or very slightly above the middle of the specified range. Use a digital stylus gauge rather than relying on the tonearm's counterweight scale, which is often inaccurate.</p>
+
+  <table class="spec-table">
+    <thead><tr><th>Stylus Profile</th><th>Typical VTF Range</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Spherical (conical)</td><td>1.5–3.0g</td><td>Less sensitive to VTF errors. More tolerant of slightly worn records.</td></tr>
+      <tr><td>Elliptical</td><td>1.5–2.5g</td><td>The most common profile. Good balance of tracking ability and groove contact.</td></tr>
+      <tr><td>Fine-line / Shibata</td><td>1.0–2.0g</td><td>Must be set accurately. Lower contact area means precise VTF is more critical.</td></tr>
+      <tr><td>Line-contact</td><td>1.0–2.5g</td><td>Excellent groove tracing. Requires accurate VTF for best performance.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Step 3: Anti-Skate</h2>
+  <p>As the tonearm pivots inward across the record, a force called skating force pulls the tonearm toward the record centre. Left uncorrected, this causes uneven stylus contact, channel imbalance, and increased wear on the inner groove wall. Anti-skate applies a counteracting outward force to compensate.</p>
+  <p>The standard starting point is to set anti-skate to the same numerical value as your tracking force. So if you are tracking at 2.0g, set anti-skate to 2.0. This is not a precise relationship — skating force varies with groove modulation and stylus profile — but it is a reliable starting point for most cartridges and tonearms.</p>
+
+  <h2>Step 4: Vertical Tracking Angle (VTA) and Tonearm Height</h2>
+  <p>The vertical tracking angle describes the angle at which the stylus contacts the groove wall as seen from the side. Records are cut with a stylus at a specific rake angle (typically between 20° and 23°); matching this with your playback stylus reduces distortion and improves frequency linearity.</p>
+  <p>In practice, VTA is adjusted by raising or lowering the tonearm at the pivot end until the tonearm is roughly level (parallel to the record surface) when playing. This approximates the correct VTA for most cartridges. Some listeners and reviewers advocate fine-tuning VTA by ear — raising the rear of the arm to increase treble detail and air, lowering it to add warmth and bass weight — though these are subtle adjustments best made after the other parameters are correctly established.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Do This First</div>
+    <p>Always set tracking force and anti-skate before adjusting VTA. VTA changes when tonearm height changes, so any VTA adjustments made before tracking force is finalised will need to be repeated. Follow the sequence: alignment → tracking force → anti-skate → VTA.</p>
+  </div>
+
+  <h2>Step 5: Azimuth</h2>
+  <p>Azimuth describes the left-right tilt of the cartridge as seen from the front. Ideally, the cartridge body (and therefore the cantilever) should be perfectly perpendicular to the record surface. Even small azimuth errors cause channel crosstalk — the left channel bleeds into the right and vice versa — which degrades stereo imaging noticeably.</p>
+  <p>Many tonearms do not offer azimuth adjustment; in these cases, shimming the cartridge with thin material in the headshell is the only option. For tonearms with azimuth adjustment, set it visually first and refine by ear or with a crosstalk test record.</p>
+
+  <h2>Common Signs of Poor Setup</h2>
+  <ul>
+    <li><strong>Sibilance distortion on vocals</strong> — usually a cartridge alignment problem, particularly misalignment at the inner null point.</li>
+    <li><strong>Distortion that worsens toward the label</strong> — inner-groove distortion; can be alignment, VTA, or insufficient tracking force.</li>
+    <li><strong>One channel louder than the other</strong> — check azimuth; also check the phono stage input.</li>
+    <li><strong>Skating (tonearm moves aggressively inward when set down)</strong> — anti-skate is insufficient or the record surface is abnormal.</li>
+    <li><strong>Thin or bright sound, lack of bass weight</strong> — tracking force may be too light, or VTA too high at the rear.</li>
+    <li><strong>Stylus skips on loud passages</strong> — tracking force is too low for the cartridge's rating; increase to mid-range of specification.</li>
+  </ul>
+
+  <div class="cta-box">
+    <h3>Compare Turntables and Cartridges</h3>
+    <p>Use AudioScope to compare turntable specifications side by side — including tonearm type, bearing quality, motor isolation, and cartridge compatibility — so you can choose a combination that works well together before you buy.</p>
+    <a href="/" class="cta-btn">Compare Turntables →</a>
+  </div>
+
+  <div class="related">
+    <h3>Related Guides</h3>
+    <div class="related-links">
+      <a href="/guides/what-is-a-phono-preamp.html">What Is a Phono Preamp — and Why Does Vinyl Need One? →</a>
+      <a href="/guides/what-is-a-dac.html">What Is a DAC and Do You Actually Need One? →</a>
+      <a href="/guides/matching-amplifier-to-speakers.html">How to Match an Amplifier to Your Speakers →</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <p>&copy; 2025 <a href="/">AudioScope</a> · AI-powered hi-fi component comparison · <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+</footer>
+
+</body>
+</html>

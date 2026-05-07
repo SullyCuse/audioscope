@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Match an Amplifier to Your Speakers | AudioScope</title>
+  <meta name="description" content="Understand power, impedance, and sensitivity so you can confidently match any amplifier to any pair of speakers — without overpowering or underpowering them." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/matching-amplifier-to-speakers.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #D97706; --amber-light: #F59E0B;
+      --bg: #111111; --surface: #1a1a1a; --surface2: #222222;
+      --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { width: 28px; height: 28px; background: var(--amber); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .nav-logo svg { width: 16px; height: 16px; fill: #000; }
+    .nav-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .nav-title span { color: var(--amber); }
+    .nav-cta { background: var(--amber); color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+    .nav-cta:hover { background: var(--amber-light); }
+    .breadcrumb { max-width: 780px; margin: 24px auto 0; padding: 0 24px; font-size: 13px; color: var(--text-muted); }
+    .breadcrumb a { color: var(--amber); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+    article { max-width: 780px; margin: 32px auto 80px; padding: 0 24px; }
+    .article-meta { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .article-category { display: inline-block; background: rgba(217,119,6,0.15); color: var(--amber); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 16px; color: #fff; }
+    .article-lede { font-size: 18px; color: var(--text-dim); line-height: 1.6; }
+    h2 { font-size: 22px; font-weight: 700; color: #fff; margin: 40px 0 14px; padding-left: 14px; border-left: 3px solid var(--amber); letter-spacing: -0.3px; }
+    h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 28px 0 10px; }
+    p { margin-bottom: 16px; color: var(--text-dim); }
+    strong { color: var(--text); font-weight: 600; }
+    ul, ol { margin: 0 0 20px 20px; color: var(--text-dim); }
+    li { margin-bottom: 8px; }
+    .callout { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 8px; padding: 18px 20px; margin: 28px 0; }
+    .callout-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--amber); margin-bottom: 8px; }
+    .callout p { margin: 0; font-size: 15px; }
+    .callout-warning { border-left-color: #ef4444; }
+    .callout-warning .callout-label { color: #ef4444; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .spec-table th { background: var(--surface2); color: var(--amber); font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .spec-table td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+    .spec-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .formula-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 15px; color: var(--amber); text-align: center; }
+    .cta-box { background: linear-gradient(135deg, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0.04) 100%); border: 1px solid rgba(217,119,6,0.3); border-radius: 12px; padding: 28px 32px; margin: 48px 0 24px; text-align: center; }
+    .cta-box h3 { margin: 0 0 10px; font-size: 20px; color: #fff; }
+    .cta-box p { margin: 0 0 20px; font-size: 15px; }
+    .cta-btn { display: inline-block; background: var(--amber); color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .cta-btn:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .related { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 16px; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .related-links { display: flex; flex-direction: column; gap: 10px; }
+    .related-links a { color: var(--amber); text-decoration: none; font-size: 15px; font-weight: 500; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.15s; }
+    .related-links a:hover { border-color: var(--amber); }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--amber); text-decoration: none; }
+    @media (max-width: 600px) { nav { padding: 0 16px; } article { padding: 0 16px; } h1 { font-size: 24px; } .cta-box { padding: 20px; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <span class="nav-title">Audio<span>Scope</span></span>
+  </a>
+  <a href="/" class="nav-cta">Compare Components →</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/guides/">Guides</a><span>›</span>Matching Amplifier to Speakers
+</div>
+
+<article>
+  <div class="article-meta">
+    <div class="article-category">Amplifiers &amp; Speakers</div>
+    <h1>How to Match an Amplifier to Your Speakers</h1>
+    <p class="article-lede">Power, impedance, and sensitivity are the three numbers that determine whether an amplifier and a pair of speakers will work well together. Understanding what they mean — and what they don't — makes the difference between a system that sings and one that struggles.</p>
+  </div>
+
+  <h2>Why Matching Matters</h2>
+  <p>A mismatched amplifier and speaker pairing is one of the most common and preventable causes of poor audio quality and equipment damage. Too little power leads to clipping — a form of distortion that is actually more damaging to speakers than clean high power. Too much power with a careless hand on the volume can push drivers beyond their limits. And an impedance mismatch can stress an amplifier's output stage, causing it to run hot, reduce output quality, or fail prematurely.</p>
+  <p>The good news is that matching is not difficult once you understand what three key specifications mean: <strong>power output</strong>, <strong>speaker sensitivity</strong>, and <strong>impedance</strong>.</p>
+
+  <h2>Speaker Sensitivity: The Most Overlooked Spec</h2>
+  <p>Sensitivity tells you how loud a speaker will play given a fixed amount of power. It is measured in decibels of sound pressure level (dB SPL) at one metre, driven by one watt of power (or equivalently, 2.83 volts into 8 ohms). A typical specification might read: <strong>88 dB / 1W / 1m</strong>.</p>
+  <p>This number has a dramatic effect on how much amplifier power you actually need. Because the decibel scale is logarithmic, every 3 dB of additional sensitivity roughly halves the power required to reach the same volume. Consider:</p>
+
+  <table class="spec-table">
+    <thead>
+      <tr><th>Sensitivity Rating</th><th>Character</th><th>Power Needed for 90 dB at 3m</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>84–86 dB</td><td>Low sensitivity — needs significant power</td><td>~160–250W</td></tr>
+      <tr><td>87–89 dB</td><td>Average — works well with most amplifiers</td><td>~60–100W</td></tr>
+      <tr><td>90–92 dB</td><td>Above average — easy to drive</td><td>~30–50W</td></tr>
+      <tr><td>93–96 dB</td><td>High sensitivity — thrives with low-power amps</td><td>~10–20W</td></tr>
+      <tr><td>97 dB+</td><td>Very high — ideal for single-ended tube amplifiers</td><td>~4–8W</td></tr>
+    </tbody>
+  </table>
+
+  <p>This is why a 10-watt single-ended triode tube amplifier can fill a room with a pair of high-sensitivity horn speakers, while the same amp would sound thin and compressed driving a pair of 84 dB bookshelf speakers.</p>
+
+  <h2>Impedance: Matching Electrical Load</h2>
+  <p>Speaker impedance — measured in ohms (Ω) — is a measure of the electrical resistance the speaker presents to the amplifier's output. Most home speakers are rated at 4, 6, or 8 ohms. The critical fact to understand is that <strong>lower impedance draws more current from the amplifier</strong>.</p>
+  <p>Most amplifiers are designed and rated for 8-ohm loads. Many will also drive 4-ohm loads safely, but will run warmer and may clip sooner at high volumes. A small number of budget amplifiers are specified for 8 ohms only and should not be used with 4-ohm speakers.</p>
+  <p>Importantly, impedance is not a fixed number — it varies with frequency. A speaker rated at "6 ohms nominal" might dip to 3.5 ohms at certain frequencies, placing much greater demands on the amplifier at that moment. This is why the <strong>minimum impedance</strong> figure is more revealing than the nominal rating, and why amplifier output stage design matters far more than peak wattage in determining real-world driving ability.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Common Mistake</div>
+    <p>Never connect a pair of 4-ohm speakers to an amplifier specified for 8 ohms minimum. At high volumes, the amplifier may overheat, enter protection mode, or sustain damage to its output transistors. Always check the minimum impedance specification in the amplifier's manual before connecting new speakers.</p>
+  </div>
+
+  <h2>How Much Power Do You Actually Need?</h2>
+  <p>Room size and listening habits determine power requirements more than most people realise. Here is a practical way to estimate the power you need:</p>
+
+  <div class="formula-box">
+    Required Power = 10^((Target SPL − Sensitivity − 10·log10(distance²)) / 10)
+  </div>
+
+  <p>That formula is useful for engineers. For everyone else, here is the simplified reality:</p>
+  <ul>
+    <li><strong>Small room (under 15m²), moderate listening levels:</strong> 25–50W into 8 ohms with average-sensitivity speakers is ample.</li>
+    <li><strong>Medium room (15–30m²), normal to loud listening:</strong> 50–100W covers almost all scenarios with most speakers.</li>
+    <li><strong>Large room or low-sensitivity speakers (below 87 dB):</strong> 100–200W provides the headroom to avoid clipping during dynamic peaks.</li>
+    <li><strong>High-sensitivity speakers (92 dB+):</strong> Even 15–30W of clean, high-quality power will be sufficient for most rooms.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-label">The Headroom Principle</div>
+    <p>An amplifier producing distortion at its clipping point is more damaging to speakers than a more powerful amplifier running at 30% of its capability. The safest approach is to choose an amplifier with comfortably more power than your calculated minimum — not to protect the speakers from loudness, but to ensure there is always clean headroom available during transients.</p>
+  </div>
+
+  <h2>Amplifier Class: A, AB, and D Explained</h2>
+  <p>The operating class of an amplifier describes how its output transistors conduct during the audio waveform cycle. This affects efficiency, heat generation, and — to a degree that remains genuinely contested among engineers and audiophiles — the character of the sound.</p>
+
+  <h3>Class A</h3>
+  <p>Output transistors conduct for the full 360° of the waveform cycle, even during silence. This eliminates a form of distortion called crossover distortion, which occurs at the point where amplifiers switch between positive and negative half-cycles. The trade-off is very low efficiency (typically 15–30%) — Class A amplifiers run hot and use significant power at idle. They are generally associated with smooth, linear sound and are favoured in headphone amplifiers and lower-power speaker amplifiers.</p>
+
+  <h3>Class AB</h3>
+  <p>The dominant topology in home audio. Transistors are biased to conduct slightly past the zero-crossing point, minimising crossover distortion while achieving much better efficiency (50–70%) than Class A. The vast majority of integrated amplifiers and receivers use Class AB output stages. Done well, Class AB is sonically excellent and far more practical than Class A for higher power levels.</p>
+
+  <h3>Class D</h3>
+  <p>Often misleadingly called "digital" amplifiers, Class D designs use pulse-width modulation to switch output transistors on and off rapidly, then filter the output. Efficiency exceeds 90%, meaning Class D amplifiers run cool and can deliver very high power in compact enclosures. Modern Class D designs have closed the measured performance gap with Class AB almost entirely. Some listeners still perceive tonal differences, though controlled listening tests have produced mixed results.</p>
+
+  <h2>Integrated vs. Separates: Which Approach Is Right?</h2>
+  <p>An <strong>integrated amplifier</strong> combines a preamplifier (volume control, source selection) and a power amplifier in one chassis. This is the right choice for most listeners — it simplifies the system, reduces cabling, and typically offers better value than an equivalent-quality separates setup.</p>
+  <p><strong>Separates</strong> — a dedicated preamplifier driving a dedicated power amplifier — make sense when you have specific requirements that a single integrated unit cannot meet: very high power output, a specific tube preamp with solid-state power stage, or a multi-channel home cinema setup requiring a powerful multichannel power amplifier.</p>
+
+  <div class="cta-box">
+    <h3>Compare Amplifiers Side by Side</h3>
+    <p>Use AudioScope to run a detailed AI-powered comparison of amplifiers you're considering — covering power specifications, impedance compatibility, class of operation, and input options.</p>
+    <a href="/" class="cta-btn">Start Comparing Amplifiers →</a>
+  </div>
+
+  <div class="related">
+    <h3>Related Guides</h3>
+    <div class="related-links">
+      <a href="/guides/what-is-a-dac.html">What Is a DAC and Do You Actually Need One? →</a>
+      <a href="/guides/what-is-a-phono-preamp.html">What Is a Phono Preamp — and Why Does Vinyl Need One? →</a>
+      <a href="/guides/turntable-setup-guide.html">Turntable Setup: Cartridge Alignment, Tracking Force, and VTA →</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <p>&copy; 2025 <a href="/">AudioScope</a> · AI-powered hi-fi component comparison · <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+</footer>
+
+</body>
+</html>
