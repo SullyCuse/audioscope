@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AudioScope – Hi-Fi Component Comparison</title>
+<title>AudioScope Hi-Fi – Hi-Fi Component Comparison</title>
 <meta name="description" content="Compare hi-fi audio components side by side. AI-retrieved specs, dimensions, expert summaries, and review links for amplifiers, speakers, turntables, DACs, and headphones.">
 <meta name="robots" content="index, follow">
 <meta name="google-adsense-account" content="ca-pub-8677522350792212">
@@ -446,7 +446,7 @@ button{cursor:pointer;font-family:inherit}
           </svg>
         </div>
         <div>
-          <div class="logo-name">AUDIO<span>SCOPE</span></div>
+          <div class="logo-name">AUDIO<span>SCOPE HI-FI</span></div>
           <div class="logo-tag">Hi-Fi Component Intelligence</div>
         </div>
       </a>
@@ -905,9 +905,9 @@ button{cursor:pointer;font-family:inherit}
 
       <!-- ABOUT -->
       <div>
-        <span class="eyebrow" style="display:block;margin-bottom:12px">About AudioScope</span>
+        <span class="eyebrow" style="display:block;margin-bottom:12px">About AudioScope Hi-Fi</span>
         <h2 style="font-size:clamp(22px,3vw,28px);font-weight:800;color:#111827;margin:0 0 16px;letter-spacing:-.02em;line-height:1.25">Built for audiophiles who want real information, not guesswork</h2>
-        <p style="color:#6B7280;font-size:15px;line-height:1.75;margin-bottom:14px">AudioScope is an independent hi-fi comparison tool that uses AI to surface detailed technical specifications for audio components side by side. It covers ten categories — amplifiers, preamps, phono stages, turntables, tonearms, cartridges, DACs, streamers, speakers, and headphones.</p>
+        <p style="color:#6B7280;font-size:15px;line-height:1.75;margin-bottom:14px">AudioScope Hi-Fi is an independent hi-fi comparison tool that uses AI to surface detailed technical specifications for audio components side by side. It covers ten categories — amplifiers, preamps, phono stages, turntables, tonearms, cartridges, DACs, streamers, speakers, and headphones.</p>
         <p style="color:#6B7280;font-size:15px;line-height:1.75;margin-bottom:14px">We built it because comparing audio equipment across manufacturer websites and scattered forum posts is genuinely tedious. AudioScope brings specifications together in a structured, consistent format so you can evaluate trade-offs quickly — without wading through marketing copy.</p>
         <p style="color:#6B7280;font-size:15px;line-height:1.75">Found a mistake? Every component card has a "Report Inaccuracy" option. We take accuracy seriously — this site is maintained by audiophiles who use this equipment.</p>
       </div>
@@ -962,7 +962,7 @@ button{cursor:pointer;font-family:inherit}
               <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
             </svg>
           </div>
-          <div class="ftr-wm">AUDIO<span>SCOPE</span></div>
+          <div class="ftr-wm">AUDIO<span>SCOPE HI-FI</span></div>
         </div>
         <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
       </div>
@@ -988,7 +988,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
     </div>
     <div class="ftr-bottom">
-      <span class="ftr-copy">© <span id="yr"></span> AudioScope · Powered by Anthropic Claude</span>
+      <span class="ftr-copy">© AudioScope Hi-Fi · Powered by Anthropic Claude</span>
       <span class="ftr-attr">Photos: Unsplash Free Commercial License · All trademarks belong to their respective owners</span>
     </div>
   </div>
@@ -1013,7 +1013,7 @@ const CATS=[
 let st={cat:null,catLbl:'',items:[],running:false,uid:1};
 
 // ── Init ──
-document.getElementById('yr').textContent=new Date().getFullYear();
+const yrEl=document.getElementById('yr');if(yrEl)yrEl.textContent=new Date().getFullYear();
 buildGrid();
 bindEvents();
 
