@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi-Fi Guides — Buying Advice and Explainers | AudioScope Hi-Fi</title>
+  <meta name="description" content="Practical, in-depth guides to hi-fi audio equipment: understanding DACs, matching amplifiers to speakers, setting up a turntable, and choosing a phono preamp." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #D97706; --amber-light: #F59E0B;
+      --bg: #111111; --surface: #1a1a1a; --surface2: #222222;
+      --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo-box { width: 46px; height: 46px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-box svg { width: 26px; height: 26px; }
+    .nav-name { font-size: 22px; font-weight: 800; letter-spacing: .05em; color: #fff; line-height: 1; }
+    .nav-name span { color: #FCD34D; }
+    .nav-tag { font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 3px; }
+    .nav-cta { background: #D97706; color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+    .nav-cta:hover { background: #F59E0B; }
+
+    .page-header {
+      max-width: 860px; margin: 56px auto 48px; padding: 0 24px; text-align: center;
+    }
+    .page-header h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -0.5px; color: #fff; margin-bottom: 14px; }
+    .page-header p { font-size: 18px; color: var(--text-dim); max-width: 560px; margin: 0 auto; }
+
+    .guides-grid {
+      max-width: 860px; margin: 0 auto 80px; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;
+    }
+
+    .guide-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 28px; text-decoration: none; transition: border-color 0.15s, transform 0.15s;
+      display: flex; flex-direction: column;
+    }
+    .guide-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+    .guide-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--amber); margin-bottom: 12px; }
+    .guide-card h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.35; letter-spacing: -0.2px; }
+    .guide-card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; flex: 1; margin-bottom: 20px; }
+    .guide-link { font-size: 13px; font-weight: 600; color: var(--amber); }
+
+    .cta-strip {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 40px 24px; text-align: center; margin-bottom: 0;
+    }
+    .cta-strip h3 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .cta-strip p { color: var(--text-dim); margin-bottom: 20px; font-size: 15px; }
+    .cta-btn { display: inline-block; background: var(--amber); color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; }
+    .cta-btn:hover { background: var(--amber-light); }
+
+    footer { padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--amber); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .guides-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand">
+    <div class="nav-logo-box">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
+        <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".72"/>
+        <rect x="17" y="5"  width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="24" y="1"  width="6" height="44" rx="3"   fill="#fff"/>
+        <rect x="31" y="7"  width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".65"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-name">AUDIO<span>SCOPE HI-FI</span></div>
+      <div class="nav-tag">Hi-Fi Component Intelligence</div>
+    </div>
+  </a>
+  <a href="../" class="nav-cta">Compare Components →</a>
+</nav>
+
+<div class="page-header">
+  <h1>Hi-Fi Guides</h1>
+  <p>Clear, practical explainers to help you understand your equipment, make better buying decisions, and get more from your system.</p>
+</div>
+
+<div class="guides-grid">
+  <a href="../guides/what-is-a-dac.html" class="guide-card">
+    <div class="guide-tag">DACs &amp; Digital Audio</div>
+    <h2>What Is a DAC and Do You Actually Need One?</h2>
+    <p>Every digital device has a DAC built in. This guide explains what it does, when an external unit makes a real difference, and what specifications actually matter when choosing one.</p>
+    <span class="guide-link">Read guide →</span>
+  </a>
+
+  <a href="../guides/matching-amplifier-to-speakers.html" class="guide-card">
+    <div class="guide-tag">Amplifiers &amp; Speakers</div>
+    <h2>How to Match an Amplifier to Your Speakers</h2>
+    <p>Power, impedance, and sensitivity determine whether an amplifier and speakers work well together. Understand these three numbers and you'll never mismatch a system again.</p>
+    <span class="guide-link">Read guide →</span>
+  </a>
+
+  <a href="../guides/turntable-setup-guide.html" class="guide-card">
+    <div class="guide-tag">Turntables &amp; Vinyl</div>
+    <h2>Turntable Setup: Cartridge Alignment, Tracking Force, and VTA</h2>
+    <p>A correctly set-up mid-range turntable beats an expensive one set up carelessly. This guide covers the adjustments that make the biggest difference to sound and record longevity.</p>
+    <span class="guide-link">Read guide →</span>
+  </a>
+
+  <a href="../guides/what-is-a-phono-preamp.html" class="guide-card">
+    <div class="guide-tag">Turntables &amp; Vinyl</div>
+    <h2>What Is a Phono Preamp — and Why Does Vinyl Need One?</h2>
+    <p>Without a phono stage, vinyl sounds thin, quiet, and tonally wrong. This guide explains RIAA equalization, the difference between MM and MC, and how to choose the right phono stage.</p>
+    <span class="guide-link">Read guide →</span>
+  </a>
+</div>
+
+<div class="cta-strip">
+  <h3>Ready to Compare Equipment?</h3>
+  <p>Use AudioScope Hi-Fi's AI-powered comparison tool to evaluate any hi-fi components side by side.</p>
+  <a href="../" class="cta-btn">Start Comparing →</a>
+</div>
+
+<footer>
+  <p>&copy; 2025 <a href="../">AudioScope Hi-Fi</a> · AI-powered hi-fi component comparison · <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+</footer>
+
+</body>
+</html>
