@@ -18,14 +18,15 @@
       --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
     }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
-    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 100; }
-    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo { width: 28px; height: 28px; background: var(--amber); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-    .nav-logo svg { width: 16px; height: 16px; fill: #000; }
-    .nav-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
-    .nav-title span { color: var(--amber); }
-    .nav-cta { background: var(--amber); color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
-    .nav-cta:hover { background: var(--amber-light); }
+    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo-box { width: 46px; height: 46px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-box svg { width: 26px; height: 26px; }
+    .nav-name { font-size: 22px; font-weight: 800; letter-spacing: .05em; color: #fff; line-height: 1; }
+    .nav-name span { color: #FCD34D; }
+    .nav-tag { font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 3px; }
+    .nav-cta { background: #D97706; color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+    .nav-cta:hover { background: #F59E0B; }
     .breadcrumb { max-width: 780px; margin: 24px auto 0; padding: 0 24px; font-size: 13px; color: var(--text-muted); }
     .breadcrumb a { color: var(--amber); text-decoration: none; }
     .breadcrumb a:hover { text-decoration: underline; }
