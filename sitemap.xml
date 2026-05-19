@@ -15,6 +15,22 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- ABOUT -->
+  <url>
+    <loc>https://audioscopehifi.com/about.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- PRIVACY POLICY -->
+  <url>
+    <loc>https://audioscopehifi.com/privacy-policy.html</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- GUIDES INDEX -->
   <url>
     <loc>https://audioscopehifi.com/guides/</loc>
