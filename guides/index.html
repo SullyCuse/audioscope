@@ -16,69 +16,81 @@
   <meta name="twitter:description" content="Practical, in-depth guides to hi-fi audio equipment: understanding DACs, matching amplifiers to speakers, setting up a turntable, and choosing a phono preamp.">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="L+5Opoq25+5+CAYwyGcXMg" async></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --amber: #D97706; --amber-light: #F59E0B;
-      --bg: #111111; --surface: #1a1a1a; --surface2: #222222;
-      --border: #2e2e2e; --text: #e8e8e8; --text-muted: #888; --text-dim: #aaa;
-    }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
-    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F8F7F5; color: #111827; line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    a { color: #B45309; text-decoration: none; }
+    a:hover { opacity: .75; }
+    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
     .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
     .nav-logo-box { width: 46px; height: 46px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .nav-logo-box svg { width: 26px; height: 26px; }
     .nav-name { font-size: 22px; font-weight: 800; letter-spacing: .05em; color: #fff; line-height: 1; }
     .nav-name span { color: #FCD34D; }
     .nav-tag { font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 3px; }
-    .nav-cta { background: #D97706; color: #000; font-weight: 600; font-size: 13px; padding: 7px 16px; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
-    .nav-cta:hover { background: #F59E0B; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.5); padding: 6px 13px; border-radius: 6px; border: 1px solid transparent; transition: all .18s; text-decoration: none; }
+    .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.15); opacity: 1; }
+    .nav-cta { background: #D97706 !important; color: #000 !important; font-weight: 600; font-size: 13px; border-color: transparent !important; }
+    .nav-cta:hover { background: #F59E0B !important; opacity: 1; }
 
-    .page-header {
-      max-width: 860px; margin: 56px auto 48px; padding: 0 24px; text-align: center;
-    }
-    .page-header h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -0.5px; color: #fff; margin-bottom: 14px; }
-    .page-header p { font-size: 18px; color: var(--text-dim); max-width: 560px; margin: 0 auto; }
+    .page-header { max-width: 860px; margin: 56px auto 48px; padding: 0 32px; text-align: center; }
+    .page-header .eyebrow { display: block; font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #D97706; margin-bottom: 12px; }
+    .page-header h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 800; letter-spacing: -0.5px; color: #111827; margin-bottom: 14px; }
+    .page-header p { font-size: 18px; color: #6B7280; max-width: 560px; margin: 0 auto; }
 
-    .guides-grid {
-      max-width: 860px; margin: 0 auto 80px; padding: 0 24px;
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;
-    }
+    .guides-grid { max-width: 860px; margin: 0 auto 80px; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+    .guide-card { background: #fff; border: 1.5px solid #E5E7EB; border-radius: 14px; padding: 28px; text-decoration: none; transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; }
+    .guide-card:hover { border-color: #D97706; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(17,24,39,.08); opacity: 1; }
+    .guide-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #D97706; margin-bottom: 12px; }
+    .guide-card h2 { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 10px; line-height: 1.35; letter-spacing: -0.2px; }
+    .guide-card p { font-size: 14px; color: #6B7280; line-height: 1.65; flex: 1; margin-bottom: 20px; }
+    .guide-link { font-size: 13px; font-weight: 600; color: #D97706; }
 
-    .guide-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-      padding: 28px; text-decoration: none; transition: border-color 0.15s, transform 0.15s;
-      display: flex; flex-direction: column;
-    }
-    .guide-card:hover { border-color: var(--amber); transform: translateY(-2px); }
-    .guide-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--amber); margin-bottom: 12px; }
-    .guide-card h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.35; letter-spacing: -0.2px; }
-    .guide-card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; flex: 1; margin-bottom: 20px; }
-    .guide-link { font-size: 13px; font-weight: 600; color: var(--amber); }
+    .cta-strip { background: #111827; padding: 48px 32px; text-align: center; }
+    .cta-strip h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .cta-strip p { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: 15px; }
+    .cta-btn { display: inline-block; background: #D97706; color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
+    .cta-btn:hover { background: #F59E0B; opacity: 1; }
 
-    .cta-strip {
-      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 40px 24px; text-align: center; margin-bottom: 0;
-    }
-    .cta-strip h3 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .cta-strip p { color: var(--text-dim); margin-bottom: 20px; font-size: 15px; }
-    .cta-btn { display: inline-block; background: var(--amber); color: #000; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; }
-    .cta-btn:hover { background: var(--amber-light); }
+    footer { background: #111827; border-top: 1px solid rgba(255,255,255,.07); padding: 48px 0 32px; }
+    .ftr-inner { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+    .ftr-top { display: flex; gap: 48px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.07); flex-wrap: wrap; }
+    .ftr-brand { flex: 0 0 240px; }
+    .ftr-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .ftr-box { width: 32px; height: 32px; background: #D97706; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .ftr-wm { font-size: 15px; font-weight: 800; letter-spacing: .05em; color: #fff; }
+    .ftr-wm span { color: #FCD34D; }
+    .ftr-disc { font-size: 12px; color: rgba(255,255,255,.28); line-height: 1.75; }
+    .ftr-cols { display: flex; gap: 48px; flex: 1; flex-wrap: wrap; }
+    .ftr-col-lbl { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: 14px; display: block; }
+    .ftr-links { display: flex; flex-direction: column; gap: 9px; }
+    .ftr-links a { font-size: 13px; color: rgba(255,255,255,.45); text-decoration: none; transition: color .18s; }
+    .ftr-links a:hover { color: #FCD34D; opacity: 1; }
+    .ftr-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; flex-wrap: wrap; gap: 6px; }
+    .ftr-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+    .ftr-attr { font-size: 11px; color: rgba(255,255,255,.14); }
 
-    footer { padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
-    footer a { color: var(--amber); text-decoration: none; }
-
-    @media (max-width: 600px) {
-      .guides-grid { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
       nav { padding: 0 16px; }
+      .guides-grid { grid-template-columns: 1fr; padding: 0 16px; }
+      .page-header { padding: 0 16px; margin-top: 40px; }
+      .cta-strip { padding: 40px 16px; }
+      footer { padding: 40px 0 24px; }
+      .ftr-inner { padding: 0 16px; }
+      .ftr-top { flex-direction: column; gap: 28px; }
+      .ftr-brand { flex: none; }
+      .ftr-cols { gap: 28px; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="../" class="nav-brand">
+  <a href="/" class="nav-brand">
     <div class="nav-logo-box">
       <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
@@ -94,37 +106,42 @@
       <div class="nav-tag">Hi-Fi Component Intelligence</div>
     </div>
   </a>
-  <a href="../" class="nav-cta">Compare Components →</a>
+  <div class="nav-links">
+    <a href="/guides/">Guides</a>
+    <a href="/about.html">About</a>
+    <a href="/" class="nav-cta">Compare →</a>
+  </div>
 </nav>
 
 <div class="page-header">
+  <span class="eyebrow">Knowledge Base</span>
   <h1>Hi-Fi Guides</h1>
   <p>Clear, practical explainers to help you understand your equipment, make better buying decisions, and get more from your system.</p>
 </div>
 
 <div class="guides-grid">
-  <a href="../guides/what-is-a-dac.html" class="guide-card">
+  <a href="/guides/what-is-a-dac.html" class="guide-card">
     <div class="guide-tag">DACs &amp; Digital Audio</div>
     <h2>What Is a DAC and Do You Actually Need One?</h2>
     <p>Every digital device has a DAC built in. This guide explains what it does, when an external unit makes a real difference, and what specifications actually matter when choosing one.</p>
     <span class="guide-link">Read guide →</span>
   </a>
 
-  <a href="../guides/matching-amplifier-to-speakers.html" class="guide-card">
+  <a href="/guides/matching-amplifier-to-speakers.html" class="guide-card">
     <div class="guide-tag">Amplifiers &amp; Speakers</div>
     <h2>How to Match an Amplifier to Your Speakers</h2>
     <p>Power, impedance, and sensitivity determine whether an amplifier and speakers work well together. Understand these three numbers and you'll never mismatch a system again.</p>
     <span class="guide-link">Read guide →</span>
   </a>
 
-  <a href="../guides/turntable-setup-guide.html" class="guide-card">
+  <a href="/guides/turntable-setup-guide.html" class="guide-card">
     <div class="guide-tag">Turntables &amp; Vinyl</div>
     <h2>Turntable Setup: Cartridge Alignment, Tracking Force, and VTA</h2>
     <p>A correctly set-up mid-range turntable beats an expensive one set up carelessly. This guide covers the adjustments that make the biggest difference to sound and record longevity.</p>
     <span class="guide-link">Read guide →</span>
   </a>
 
-  <a href="../guides/what-is-a-phono-preamp.html" class="guide-card">
+  <a href="/guides/what-is-a-phono-preamp.html" class="guide-card">
     <div class="guide-tag">Turntables &amp; Vinyl</div>
     <h2>What Is a Phono Preamp — and Why Does Vinyl Need One?</h2>
     <p>Without a phono stage, vinyl sounds thin, quiet, and tonally wrong. This guide explains RIAA equalization, the difference between MM and MC, and how to choose the right phono stage.</p>
@@ -135,11 +152,55 @@
 <div class="cta-strip">
   <h3>Ready to Compare Equipment?</h3>
   <p>Use AudioScope Hi-Fi's AI-powered comparison tool to evaluate any hi-fi components side by side.</p>
-  <a href="../" class="cta-btn">Start Comparing →</a>
+  <a href="/" class="cta-btn">Start Comparing →</a>
 </div>
 
 <footer>
-  <p>&copy; 2025 <a href="../">AudioScope Hi-Fi</a> · AI-powered hi-fi component comparison · <a href="mailto:contact@audioscopehifi.com">contact@audioscopehifi.com</a></p>
+  <div class="ftr-inner">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="ftr-box">
+            <svg width="16" height="16" viewBox="0 0 44 44" fill="none">
+              <rect x="3" y="20" width="5" height="6" rx="2.5" fill="#fff" opacity=".55"/>
+              <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".75"/>
+              <rect x="17" y="5" width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="24" y="1" width="6" height="44" rx="3" fill="#fff"/>
+              <rect x="31" y="7" width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
+            </svg>
+          </div>
+          <div class="ftr-wm">AUDIO<span>SCOPE HI-FI</span></div>
+        </div>
+        <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
+      </div>
+      <div class="ftr-cols">
+        <div>
+          <span class="ftr-col-lbl">Navigation</span>
+          <div class="ftr-links">
+            <a href="/">Home</a>
+            <a href="/guides/">Guides</a>
+            <a href="/about.html">About</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="mailto:contact@audioscopehifi.com">Contact</a>
+          </div>
+        </div>
+        <div>
+          <span class="ftr-col-lbl">Guides</span>
+          <div class="ftr-links">
+            <a href="/guides/matching-amplifier-to-speakers.html">Amplifiers &amp; Speakers</a>
+            <a href="/guides/turntable-setup-guide.html">Turntable Setup</a>
+            <a href="/guides/what-is-a-dac.html">DACs &amp; Digital Audio</a>
+            <a href="/guides/what-is-a-phono-preamp.html">Phono Preamps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span class="ftr-copy">© 2025 AudioScope Hi-Fi · Powered by Anthropic Claude</span>
+      <span class="ftr-attr">All trademarks belong to their respective owners</span>
+    </div>
+  </div>
 </footer>
 
 </body>
