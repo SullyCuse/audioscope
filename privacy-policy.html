@@ -39,8 +39,10 @@ a:hover{opacity:.75}
 .logo-name span{color:#FCD34D}
 .logo-tag{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:3px}
 .nav{display:flex;align-items:center;gap:4px}
-.nav a{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:6px 13px;border-radius:6px;text-decoration:none;transition:color .18s}
-.nav a:hover{color:#FCD34D;opacity:1}
+.nav a{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:6px 13px;border-radius:6px;border:1px solid transparent;transition:all .18s;text-decoration:none}
+.nav a:hover{color:#fff;border-color:rgba(255,255,255,.15);opacity:1}
+.nav-cta{background:#D97706!important;color:#000!important;font-weight:600;border-color:transparent!important}
+.nav-cta:hover{background:#F59E0B!important;border-color:transparent!important;opacity:1}
 
 /* ── Page hero — split layout ── */
 .page-hero{display:flex;min-height:300px;background:#111827;overflow:hidden}
@@ -113,8 +115,9 @@ a:hover{opacity:.75}
         </div>
       </a>
       <nav class="nav">
-        <a href="index.html">Home</a>
+        <a href="guides/index.html">Guides</a>
         <a href="about.html">About</a>
+        <a href="index.html" class="nav-cta">Compare →</a>
       </nav>
     </div>
   </div>
