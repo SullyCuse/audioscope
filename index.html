@@ -416,6 +416,16 @@ button{cursor:pointer;font-family:inherit}
   }
 }
 
+/* ── Intro section ── */
+.intro-sec{background:#fff;border-bottom:1px solid #E5E7EB;padding:56px 0}
+.intro-lede{font-size:17px;color:#374151;line-height:1.85;margin-bottom:16px}
+.intro-body{font-size:15px;color:#6B7280;line-height:1.8;margin-bottom:14px}
+.intro-cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.intro-cats{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:7px 24px;margin-top:16px}
+.intro-cats li{font-size:14px;color:#374151;display:flex;align-items:center;gap:8px;line-height:1.5}
+.intro-cats li::before{content:'›';color:#D97706;font-weight:700;flex-shrink:0}
+@media(max-width:840px){.intro-cols{grid-template-columns:1fr;gap:28px}}
+
 /* ── Editorial content sections ── */
 .editorial-sec{background:#fff;border-top:1px solid #E5E7EB;padding:72px 0}
 .editorial-sec+.editorial-sec{border-top:1px solid #E5E7EB;padding-top:64px}
@@ -533,6 +543,39 @@ button{cursor:pointer;font-family:inherit}
       </div>
     </div>
   </div>
+
+  <!-- ══ WHAT IS AUDIOSCOPE ══ -->
+  <section class="intro-sec">
+    <div class="container">
+      <div class="intro-cols">
+        <div>
+          <span class="eyebrow" style="margin-bottom:12px">About this tool</span>
+          <h2 style="font-size:clamp(24px,3vw,32px);font-weight:800;color:#111827;letter-spacing:-.02em;margin:0 0 20px;line-height:1.1">A free, independent hi-fi comparison tool</h2>
+          <p class="intro-lede">AudioScope Hi-Fi lets you compare any audio components side by side — regardless of brand — in a consistent, structured format. Enter the models you are researching, select the category, and get a full specification table with editorial summaries, key strengths, and direct links to published reviews and YouTube demonstrations.</p>
+          <p class="intro-body">The tool covers ten component categories across the full hi-fi chain: sources, amplification, and transducers. It is designed for buyers in the mid-fi range — typically $400 to $4,000 per component — where specifications have a measurable relationship to audible performance and every upgrade decision involves real trade-offs. If you have ever spent an afternoon switching between manufacturer spec pages trying to reconcile different formats and missing values, AudioScope was built to fix that.</p>
+          <p class="intro-body">AudioScope is independent and unaffiliated with any manufacturer or retailer. It does not earn referral commissions. All comparisons draw from the same knowledge base, so a Rega sits next to a Pro-Ject sits next to a Music Hall in the same table, with the same fields — no vendor bias.</p>
+        </div>
+        <div>
+          <span class="eyebrow" style="margin-bottom:14px">Supported categories</span>
+          <p class="intro-body">Choose from ten component types spanning the entire signal chain:</p>
+          <ul class="intro-cats">
+            <li>Integrated Amplifiers</li>
+            <li>Preamplifiers</li>
+            <li>Phono Preamplifiers</li>
+            <li>Turntables</li>
+            <li>Tonearms</li>
+            <li>Phono Cartridges</li>
+            <li>DACs</li>
+            <li>Network Streamers</li>
+            <li>Loudspeakers</li>
+            <li>Headphones</li>
+          </ul>
+          <p class="intro-body" style="margin-top:20px">Specifications retrieved include output power, frequency response, THD+N, signal-to-noise ratio, sensitivity, impedance, physical dimensions in metric and imperial, driver topology, and category-specific measurements. Each component also receives an editorial summary drawn from published reviews and manufacturer documentation.</p>
+          <p class="intro-body"><strong style="color:#374151">How it works:</strong> Comparisons are powered by Anthropic's Claude AI, trained on manufacturer datasheets and widely-read audio publications including Stereophile, What Hi-Fi?, and Audio Science Review. Specifications for established, well-reviewed products are generally reliable; newer or boutique components may have gaps. Always verify critical figures with the manufacturer before purchasing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Categories -->
   <div class="cat-sec">
