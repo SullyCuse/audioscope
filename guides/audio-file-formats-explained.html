@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio File Formats Explained: FLAC, MP3, and What Hi-Res Really Means | AudioScope Hi-Fi</title>
+  <meta name="description" content="Lossless vs lossy, bit depth and sample rate, MP3 vs FLAC vs hi-res, and what streaming quality tiers actually deliver — explained without the marketing." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/audio-file-formats-explained" />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://audioscopehifi.com/guides/audio-file-formats-explained">
+  <meta property="og:title" content="Audio File Formats Explained: FLAC, MP3, and What Hi-Res Really Means | AudioScope Hi-Fi">
+  <meta property="og:description" content="Lossless vs lossy, bit depth and sample rate, MP3 vs FLAC vs hi-res, and what streaming quality tiers actually deliver — explained without the marketing.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Audio File Formats Explained: FLAC, MP3, and What Hi-Res Really Means | AudioScope Hi-Fi">
+  <meta name="twitter:description" content="Lossless vs lossy, bit depth and sample rate, MP3 vs FLAC vs hi-res, and what streaming quality tiers actually deliver — explained without the marketing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="L+5Opoq25+5+CAYwyGcXMg" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F8F7F5; color: #111827; line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    a { color: #B45309; text-decoration: none; }
+    a:hover { opacity: .75; }
+    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo-box { width: 46px; height: 46px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-box svg { width: 26px; height: 26px; }
+    .nav-name { font-size: 22px; font-weight: 800; letter-spacing: .05em; color: #fff; line-height: 1; }
+    .nav-name span { color: #FCD34D; }
+    .nav-tag { font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.5); padding: 6px 13px; border-radius: 6px; border: 1px solid transparent; transition: all .18s; text-decoration: none; }
+    .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.15); opacity: 1; }
+    .nav-cta { background: #D97706 !important; color: #000 !important; font-weight: 600; font-size: 13px; border-color: transparent !important; }
+    .nav-cta:hover { background: #F59E0B !important; opacity: 1; }
+    .breadcrumb { max-width: 800px; margin: 24px auto 0; padding: 0 32px; font-size: 13px; color: #9CA3AF; }
+    .breadcrumb a { color: #D97706; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+    article { max-width: 800px; margin: 32px auto 80px; padding: 0 32px; }
+    .article-meta { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E5E7EB; }
+    .article-category { display: inline-block; background: rgba(217,119,6,0.1); color: #B45309; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 16px; color: #111827; }
+    .article-lede { font-size: 18px; color: #6B7280; line-height: 1.7; }
+    .article-byline { font-size: 13px; color: #9CA3AF; margin: -8px 0 16px; }
+    h2 { font-size: 22px; font-weight: 700; color: #111827; margin: 40px 0 14px; padding-left: 14px; border-left: 3px solid #D97706; letter-spacing: -0.3px; }
+    h3 { font-size: 17px; font-weight: 600; color: #374151; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; color: #6B7280; }
+    strong { color: #111827; font-weight: 600; }
+    ul, ol { margin: 0 0 20px 20px; color: #6B7280; }
+    li { margin-bottom: 8px; }
+    .callout { background: #FFFBEB; border: 1px solid #FDE68A; border-left: 3px solid #D97706; border-radius: 8px; padding: 18px 20px; margin: 28px 0; }
+    .callout-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #B45309; margin-bottom: 8px; }
+    .callout p { margin: 0; font-size: 15px; color: #78350F; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .spec-table th { background: #111827; color: #FCD34D; font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid #E5E7EB; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .spec-table td { padding: 10px 14px; border: 1px solid #E5E7EB; color: #374151; vertical-align: top; }
+    .spec-table tr:nth-child(even) td { background: #F9FAFB; }
+    .cta-box { background: #fff; border: 1.5px solid #E5E7EB; border-radius: 12px; padding: 28px 32px; margin: 48px 0 24px; text-align: center; box-shadow: 0 2px 12px rgba(17,24,39,.06); }
+    .cta-box h3 { margin: 0 0 10px; font-size: 20px; color: #111827; font-weight: 800; }
+    .cta-box p { margin: 0 0 20px; font-size: 15px; color: #6B7280; }
+    .cta-btn { display: inline-block; background: #111827; color: #fff; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .cta-btn:hover { background: #1F2937; transform: translateY(-1px); opacity: 1; }
+    .related { margin-top: 56px; padding-top: 32px; border-top: 1px solid #E5E7EB; }
+    .related h3 { font-size: 16px; color: #9CA3AF; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .related-links { display: flex; flex-direction: column; gap: 10px; }
+    .related-links a { color: #B45309; text-decoration: none; font-size: 15px; font-weight: 500; padding: 10px 14px; background: #fff; border: 1.5px solid #E5E7EB; border-radius: 8px; transition: border-color 0.15s; }
+    .related-links a:hover { border-color: #D97706; opacity: 1; }
+    footer { background: #111827; padding: 48px 0 32px; }
+    .ftr-inner { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+    .ftr-top { display: flex; gap: 48px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.07); flex-wrap: wrap; }
+    .ftr-brand { flex: 0 0 240px; }
+    .ftr-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .ftr-box { width: 32px; height: 32px; background: #D97706; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .ftr-wm { font-size: 15px; font-weight: 800; letter-spacing: .05em; color: #fff; }
+    .ftr-wm span { color: #FCD34D; }
+    .ftr-disc { font-size: 12px; color: rgba(255,255,255,.28); line-height: 1.75; }
+    .ftr-cols { display: flex; gap: 48px; flex: 1; flex-wrap: wrap; }
+    .ftr-col-lbl { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: 14px; display: block; }
+    .ftr-links { display: flex; flex-direction: column; gap: 9px; }
+    .ftr-links a { font-size: 13px; color: rgba(255,255,255,.45); text-decoration: none; transition: color .18s; }
+    .ftr-links a:hover { color: #FCD34D; opacity: 1; }
+    .ftr-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; flex-wrap: wrap; gap: 6px; }
+    .ftr-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+    .ftr-attr { font-size: 11px; color: rgba(255,255,255,.14); }
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; }
+      article { padding: 0 16px; }
+      .breadcrumb { padding: 0 16px; }
+      h1 { font-size: 24px; }
+      .cta-box { padding: 20px; }
+      footer { padding: 40px 0 24px; }
+      .ftr-inner { padding: 0 16px; }
+      .ftr-top { flex-direction: column; gap: 28px; }
+      .ftr-brand { flex: none; }
+      .ftr-cols { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo-box">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
+        <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".72"/>
+        <rect x="17" y="5"  width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="24" y="1"  width="6" height="44" rx="3"   fill="#fff"/>
+        <rect x="31" y="7"  width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".65"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-name">AUDIO<span>SCOPE HI-FI</span></div>
+      <div class="nav-tag">Hi-Fi Component Intelligence</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="/guides/">Guides</a>
+    <a href="/about.html">About</a>
+    <a href="/" class="nav-cta">Compare →</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/guides/">Guides</a><span>›</span>Audio File Formats Explained
+</div>
+
+<article>
+  <div class="article-meta">
+    <div class="article-category">DACs &amp; Digital Audio</div>
+    <h1>Audio File Formats Explained: FLAC, MP3, and What Hi-Res Really Means</h1>
+    <p class="article-byline">By Kevin · AudioScope Hi-Fi · <time datetime="2026-06-01">Published June 2026</time></p>
+    <p class="article-lede">FLAC, MP3, ALAC, WAV, MQA, hi-res — the terminology around digital music is a thicket of acronyms and marketing. Strip it back to a few principles and choosing the right format, and the right streaming tier, becomes straightforward.</p>
+  </div>
+
+  <h2>Lossy vs Lossless: The One Distinction That Matters Most</h2>
+  <p>Every digital audio format falls into one of two camps:</p>
+  <ul>
+    <li><strong>Lossless</strong> formats reproduce the original recording bit-for-bit. FLAC, ALAC, and WAV are all lossless. FLAC and ALAC compress the file to save space (like a ZIP file) without discarding any audio data; WAV is uncompressed.</li>
+    <li><strong>Lossy</strong> formats permanently discard some audio information to shrink the file dramatically. MP3, AAC, and Ogg Vorbis are lossy. The discarded data is chosen by a psychoacoustic model that targets what the ear is least likely to notice.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-label">Key Concept</div>
+    <p>"Lossless" means identical to the source — FLAC and ALAC sound the same as the original WAV; they simply take up less space. The only practical differences between lossless formats are file size and software compatibility, not sound quality.</p>
+  </div>
+
+  <h2>Bit Rate: How Lossy Formats Are Graded</h2>
+  <p>Lossy quality is set by bit rate — how many kilobits per second (kbps) are used to describe the audio. More bits means less is thrown away.</p>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>Bit Rate</th>
+        <th>Verdict</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>128 kbps MP3</strong></td>
+        <td>Audibly compromised</td>
+        <td>Smeared cymbals and thin highs; fine for podcasts, not music.</td>
+      </tr>
+      <tr>
+        <td><strong>256 kbps AAC</strong></td>
+        <td>Very good</td>
+        <td>The standard for many download stores; transparent for most listeners.</td>
+      </tr>
+      <tr>
+        <td><strong>320 kbps MP3</strong></td>
+        <td>Excellent</td>
+        <td>Difficult to distinguish from lossless on most systems and material.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Bit Depth and Sample Rate: What "Hi-Res" Means</h2>
+  <p>Lossless and hi-res files are described by two numbers — bit depth and sample rate — covered in more depth in our DAC guide:</p>
+  <ul>
+    <li><strong>Bit depth</strong> (16-bit, 24-bit) sets the dynamic range. CD quality is 16-bit; 24-bit adds headroom that is useful in production but offers no audible benefit at playback for finished music.</li>
+    <li><strong>Sample rate</strong> (44.1 kHz, 96 kHz, 192 kHz) sets the highest frequency that can be captured. CD's 44.1 kHz already covers the full range of human hearing.</li>
+  </ul>
+  <p><strong>"Hi-res"</strong> generally means anything above CD quality — typically 24-bit at 96 kHz or higher. CD quality itself (16-bit/44.1 kHz) is already lossless and already exceeds what most systems and rooms can reveal.</p>
+
+  <div class="callout">
+    <div class="callout-label">Common Mistake</div>
+    <p>Assuming a hi-res file always sounds better than CD quality. The biggest factor in how a track sounds is the recording and the mastering, not the format. A great master at 16-bit/44.1 kHz will beat a mediocre master at 24-bit/192 kHz every time.</p>
+  </div>
+
+  <h2>What Streaming Tiers Actually Deliver</h2>
+  <p>Streaming services use these formats under the hood. The labels vary, but the substance comes down to lossy versus lossless versus hi-res:</p>
+  <ul>
+    <li><strong>Standard / "High" tiers</strong> are usually lossy AAC or Ogg around 256–320 kbps — excellent for casual and on-the-go listening.</li>
+    <li><strong>"Lossless" / "CD quality" tiers</strong> deliver 16-bit/44.1 kHz FLAC or ALAC — the sensible target for a hi-fi system.</li>
+    <li><strong>"Hi-Res" tiers</strong> offer 24-bit files at higher sample rates — a genuine bonus on a resolving system, though the audible gain over CD-quality lossless is subtle to debatable.</li>
+  </ul>
+  <p>To hear lossless or hi-res over a streaming service, the whole chain has to support it: the subscription tier, the app's output settings, and your DAC. A lossless subscription played through a phone's lossy Bluetooth codec is not delivering lossless to your ears.</p>
+
+  <h2>A Note on MQA and Proprietary Formats</h2>
+  <p>You may encounter proprietary "hi-res" delivery formats such as MQA, which use a folding technique to pack high-resolution audio into a smaller, lossy-compatible stream that a compatible decoder unfolds. These are convenient for streaming but remain debated, and the industry has been moving toward standard FLAC-based lossless and hi-res delivery. For a future-proof library, standard lossless formats are the safe choice.</p>
+
+  <h2>Practical Recommendations</h2>
+  <ul>
+    <li><strong>For your own library:</strong> rip and store in FLAC (or ALAC if you live in the Apple ecosystem). It is lossless, compressed, and widely supported.</li>
+    <li><strong>For portable/casual use:</strong> 256 kbps AAC or 320 kbps MP3 is transparent and saves enormous space.</li>
+    <li><strong>For streaming on a hi-fi:</strong> choose a lossless (CD-quality) tier; treat hi-res as a nice-to-have, not a necessity.</li>
+    <li><strong>Don't chase numbers:</strong> prioritise good masters and a well-set-up system over ever-higher sample rates.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-label">The Honest Answer</div>
+    <p>CD-quality lossless is the sweet spot for serious listening: provably identical to the source and supported everywhere. Lossy at 256–320 kbps is genuinely fine for most listening. Hi-res is a worthwhile bonus on a resolving system but rarely the difference people imagine — the master matters far more than the format.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Compare DACs and Streamers Side by Side</h3>
+    <p>Use AudioScope to generate a detailed AI-powered specification comparison for any DACs or streamers you're considering — including supported formats and sample rates.</p>
+    <a href="/" class="cta-btn">Start Comparing →</a>
+  </div>
+
+  <div class="related">
+    <h3>Related Guides</h3>
+    <div class="related-links">
+      <a href="/guides/what-is-a-dac.html">What Is a DAC and Do You Actually Need One? →</a>
+      <a href="/guides/what-is-a-network-streamer.html">What Is a Network Streamer — and Do You Actually Need One? →</a>
+      <a href="/guides/do-you-need-a-headphone-amp.html">Do You Need a Headphone Amplifier? →</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="ftr-inner">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="ftr-box">
+            <svg width="16" height="16" viewBox="0 0 44 44" fill="none">
+              <rect x="3" y="20" width="5" height="6" rx="2.5" fill="#fff" opacity=".55"/>
+              <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".75"/>
+              <rect x="17" y="5" width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="24" y="1" width="6" height="44" rx="3" fill="#fff"/>
+              <rect x="31" y="7" width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
+            </svg>
+          </div>
+          <div class="ftr-wm">AUDIO<span>SCOPE HI-FI</span></div>
+        </div>
+        <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
+      </div>
+      <div class="ftr-cols">
+        <div>
+          <span class="ftr-col-lbl">Navigation</span>
+          <div class="ftr-links">
+            <a href="/">Home</a>
+            <a href="/guides/">Guides</a>
+            <a href="/about.html">About</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="mailto:contact@audioscopehifi.com">Contact</a>
+          </div>
+        </div>
+        <div>
+          <span class="ftr-col-lbl">Guides</span>
+          <div class="ftr-links">
+            <a href="/guides/matching-amplifier-to-speakers.html">Amplifiers &amp; Speakers</a>
+            <a href="/guides/turntable-setup-guide.html">Turntable Setup</a>
+            <a href="/guides/what-is-a-dac.html">DACs &amp; Digital Audio</a>
+            <a href="/guides/what-is-a-phono-preamp.html">Phono Preamps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span class="ftr-copy">© 2025 AudioScope Hi-Fi · Powered by Anthropic Claude</span>
+      <span class="ftr-attr">All trademarks belong to their respective owners</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
