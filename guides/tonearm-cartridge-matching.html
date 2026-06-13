@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tonearm and Cartridge Matching: Effective Mass and Compliance Explained | AudioScope Hi-Fi</title>
+  <meta name="description" content="How to match a cartridge to a tonearm using effective mass and compliance — the resonance calculation that keeps your vinyl playback clean, and how to get it right." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://audioscopehifi.com/guides/tonearm-cartridge-matching" />
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://audioscopehifi.com/guides/tonearm-cartridge-matching">
+  <meta property="og:title" content="Tonearm and Cartridge Matching: Effective Mass and Compliance Explained | AudioScope Hi-Fi">
+  <meta property="og:description" content="How to match a cartridge to a tonearm using effective mass and compliance — the resonance calculation that keeps your vinyl playback clean, and how to get it right.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tonearm and Cartridge Matching: Effective Mass and Compliance Explained | AudioScope Hi-Fi">
+  <meta name="twitter:description" content="How to match a cartridge to a tonearm using effective mass and compliance — the resonance calculation that keeps your vinyl playback clean, and how to get it right.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="L+5Opoq25+5+CAYwyGcXMg" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F8F7F5; color: #111827; line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    a { color: #B45309; text-decoration: none; }
+    a:hover { opacity: .75; }
+    nav { background: rgba(17,24,39,.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo-box { width: 46px; height: 46px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-box svg { width: 26px; height: 26px; }
+    .nav-name { font-size: 22px; font-weight: 800; letter-spacing: .05em; color: #fff; line-height: 1; }
+    .nav-name span { color: #FCD34D; }
+    .nav-tag { font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.5); padding: 6px 13px; border-radius: 6px; border: 1px solid transparent; transition: all .18s; text-decoration: none; }
+    .nav-links a:hover { color: #fff; border-color: rgba(255,255,255,.15); opacity: 1; }
+    .nav-cta { background: #D97706 !important; color: #000 !important; font-weight: 600; font-size: 13px; border-color: transparent !important; }
+    .nav-cta:hover { background: #F59E0B !important; opacity: 1; }
+    .breadcrumb { max-width: 800px; margin: 24px auto 0; padding: 0 32px; font-size: 13px; color: #9CA3AF; }
+    .breadcrumb a { color: #D97706; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+    article { max-width: 800px; margin: 32px auto 80px; padding: 0 32px; }
+    .article-meta { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E5E7EB; }
+    .article-category { display: inline-block; background: rgba(217,119,6,0.1); color: #B45309; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+    h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 16px; color: #111827; }
+    .article-lede { font-size: 18px; color: #6B7280; line-height: 1.7; }
+    .article-byline { font-size: 13px; color: #9CA3AF; margin: -8px 0 16px; }
+    h2 { font-size: 22px; font-weight: 700; color: #111827; margin: 40px 0 14px; padding-left: 14px; border-left: 3px solid #D97706; letter-spacing: -0.3px; }
+    h3 { font-size: 17px; font-weight: 600; color: #374151; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; color: #6B7280; }
+    strong { color: #111827; font-weight: 600; }
+    ul, ol { margin: 0 0 20px 20px; color: #6B7280; }
+    li { margin-bottom: 8px; }
+    .callout { background: #FFFBEB; border: 1px solid #FDE68A; border-left: 3px solid #D97706; border-radius: 8px; padding: 18px 20px; margin: 28px 0; }
+    .callout-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #B45309; margin-bottom: 8px; }
+    .callout p { margin: 0; font-size: 15px; color: #78350F; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .spec-table th { background: #111827; color: #FCD34D; font-weight: 600; padding: 10px 14px; text-align: left; border: 1px solid #E5E7EB; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .spec-table td { padding: 10px 14px; border: 1px solid #E5E7EB; color: #374151; vertical-align: top; }
+    .spec-table tr:nth-child(even) td { background: #F9FAFB; }
+    .cta-box { background: #fff; border: 1.5px solid #E5E7EB; border-radius: 12px; padding: 28px 32px; margin: 48px 0 24px; text-align: center; box-shadow: 0 2px 12px rgba(17,24,39,.06); }
+    .cta-box h3 { margin: 0 0 10px; font-size: 20px; color: #111827; font-weight: 800; }
+    .cta-box p { margin: 0 0 20px; font-size: 15px; color: #6B7280; }
+    .cta-btn { display: inline-block; background: #111827; color: #fff; font-weight: 700; font-size: 15px; padding: 12px 28px; border-radius: 8px; text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .cta-btn:hover { background: #1F2937; transform: translateY(-1px); opacity: 1; }
+    .related { margin-top: 56px; padding-top: 32px; border-top: 1px solid #E5E7EB; }
+    .related h3 { font-size: 16px; color: #9CA3AF; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .related-links { display: flex; flex-direction: column; gap: 10px; }
+    .related-links a { color: #B45309; text-decoration: none; font-size: 15px; font-weight: 500; padding: 10px 14px; background: #fff; border: 1.5px solid #E5E7EB; border-radius: 8px; transition: border-color 0.15s; }
+    .related-links a:hover { border-color: #D97706; opacity: 1; }
+    footer { background: #111827; padding: 48px 0 32px; }
+    .ftr-inner { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+    .ftr-top { display: flex; gap: 48px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.07); flex-wrap: wrap; }
+    .ftr-brand { flex: 0 0 240px; }
+    .ftr-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .ftr-box { width: 32px; height: 32px; background: #D97706; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .ftr-wm { font-size: 15px; font-weight: 800; letter-spacing: .05em; color: #fff; }
+    .ftr-wm span { color: #FCD34D; }
+    .ftr-disc { font-size: 12px; color: rgba(255,255,255,.28); line-height: 1.75; }
+    .ftr-cols { display: flex; gap: 48px; flex: 1; flex-wrap: wrap; }
+    .ftr-col-lbl { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: 14px; display: block; }
+    .ftr-links { display: flex; flex-direction: column; gap: 9px; }
+    .ftr-links a { font-size: 13px; color: rgba(255,255,255,.45); text-decoration: none; transition: color .18s; }
+    .ftr-links a:hover { color: #FCD34D; opacity: 1; }
+    .ftr-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; flex-wrap: wrap; gap: 6px; }
+    .ftr-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+    .ftr-attr { font-size: 11px; color: rgba(255,255,255,.14); }
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; }
+      article { padding: 0 16px; }
+      .breadcrumb { padding: 0 16px; }
+      h1 { font-size: 24px; }
+      .cta-box { padding: 20px; }
+      footer { padding: 40px 0 24px; }
+      .ftr-inner { padding: 0 16px; }
+      .ftr-top { flex-direction: column; gap: 28px; }
+      .ftr-brand { flex: none; }
+      .ftr-cols { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="nav-logo-box">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3"  y="20" width="5" height="6"  rx="2.5" fill="#fff" opacity=".5"/>
+        <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".72"/>
+        <rect x="17" y="5"  width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="24" y="1"  width="6" height="44" rx="3"   fill="#fff"/>
+        <rect x="31" y="7"  width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+        <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".65"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-name">AUDIO<span>SCOPE HI-FI</span></div>
+      <div class="nav-tag">Hi-Fi Component Intelligence</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="/guides/">Guides</a>
+    <a href="/about.html">About</a>
+    <a href="/" class="nav-cta">Compare →</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/guides/">Guides</a><span>›</span>Tonearm &amp; Cartridge Matching
+</div>
+
+<article>
+  <div class="article-meta">
+    <div class="article-category">Turntables &amp; Vinyl</div>
+    <h1>Tonearm and Cartridge Matching: Effective Mass and Compliance Explained</h1>
+    <p class="article-byline">By Kevin · AudioScope Hi-Fi · <time datetime="2026-06-01">Published June 2026</time></p>
+    <p class="article-lede">A cartridge and a tonearm form a spring-and-mass system with its own resonant frequency. Land that resonance in the right window and your records sound clean and stable; miss it and you get muddy bass, mistracking, or woolly, unfocused sound — no matter how good the parts are.</p>
+  </div>
+
+  <h2>Why Matching Matters</h2>
+  <p>The cartridge's stylus is suspended on a tiny, compliant rubber-damped support and is bolted to the mass of the tonearm. Like any mass on a spring, this combination resonates at a particular frequency. You want that resonance to fall in a narrow band — roughly <strong>8–12 Hz</strong> — that sits below the audible music but above the disturbances caused by warped records and footfalls.</p>
+  <p>Get it wrong in one direction and warps and footsteps excite the resonance, causing the arm to bounce and the bass to bloom. Get it wrong in the other and the resonance creeps up into the low bass, muddying the sound and stressing the stylus.</p>
+
+  <div class="callout">
+    <div class="callout-label">Key Concept</div>
+    <p>The target is a tonearm/cartridge resonant frequency of about <strong>8–12 Hz</strong>. Above ~7 Hz keeps it clear of warp and footfall energy (typically 2–7 Hz); below ~14 Hz keeps it out of the audible bass. The two ingredients you control are the cartridge's <em>compliance</em> and the tonearm's <em>effective mass</em>.</p>
+  </div>
+
+  <h2>The Two Numbers</h2>
+  <h3>Compliance (the cartridge)</h3>
+  <p>Compliance describes how springy the stylus suspension is — how easily it moves. It is usually quoted in units of ×10⁻⁶ cm/dyne (often written as "cu"). A high-compliance cartridge has a soft, easily moved suspension; a low-compliance cartridge is stiffer.</p>
+  <p>Watch for one trap: compliance is sometimes quoted as a dynamic figure at 10 Hz (the value you want for this calculation) and sometimes as a static figure that is larger. Many cartridges, especially from some Japanese makers, list a 100 Hz figure that is lower than the 10 Hz value. When in doubt, the dynamic (10 Hz) compliance is the number to use.</p>
+
+  <h3>Effective Mass (the tonearm)</h3>
+  <p>Effective mass is the inertia of the tonearm as "seen" by the stylus — not simply the arm's weight, but how its mass is distributed along its length. It is quoted in grams and published by the tonearm manufacturer.</p>
+  <p>Crucially, the <strong>cartridge weight</strong> (plus any mounting hardware) adds to the effective mass of the system. A heavy cartridge on a high-mass arm pushes the combined mass up; a light cartridge on a low-mass arm keeps it down.</p>
+
+  <h2>The Calculation</h2>
+  <p>The resonant frequency in hertz is:</p>
+  <p style="text-align:center;font-size:16px;color:#374151"><strong>F = 1000 / (2π × √(M × C))</strong></p>
+  <p>Where <strong>M</strong> is the total effective mass in grams (tonearm effective mass + cartridge weight + fasteners) and <strong>C</strong> is the dynamic compliance in cu (×10⁻⁶ cm/dyne). Aim for F between 8 and 12 Hz. You do not have to do the algebra by hand — many online calculators take the three inputs — but understanding the relationship tells you which way to adjust.</p>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>Cartridge Compliance</th>
+        <th>Best Tonearm</th>
+        <th>Why</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>High (≈ 25+ cu)</strong></td>
+        <td>Low effective mass (≈ 4–9 g)</td>
+        <td>A springy suspension needs little mass to stay in the 8–12 Hz window.</td>
+      </tr>
+      <tr>
+        <td><strong>Medium (≈ 12–25 cu)</strong></td>
+        <td>Medium effective mass (≈ 9–16 g)</td>
+        <td>The most common and forgiving pairing; most modern combos land here.</td>
+      </tr>
+      <tr>
+        <td><strong>Low (≈ under 12 cu)</strong></td>
+        <td>High effective mass (≈ 16–25+ g)</td>
+        <td>A stiff suspension needs more mass to bring resonance down to target. Many low-compliance MCs fit here.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">Common Mistake</div>
+    <p>Fitting a high-compliance moving magnet to a heavy, high-mass arm (or a stiff low-compliance moving coil to a light arm). Both mismatches push resonance outside the safe window — the classic symptom is excessive bass and audible mistracking on warped or dynamic records.</p>
+  </div>
+
+  <h2>Adjusting Within a Fixed Setup</h2>
+  <p>If your turntable came with a non-removable arm of fixed effective mass, you still have some room to tune the match by changing the moving mass at the headshell:</p>
+  <ul>
+    <li><strong>Headshell weight:</strong> on arms with a detachable headshell, a heavier or lighter headshell shifts effective mass meaningfully.</li>
+    <li><strong>Cartridge weight:</strong> choosing a heavier or lighter cartridge nudges total mass in the direction you need.</li>
+    <li><strong>Mounting hardware:</strong> aluminium vs steel bolts and washers make a small difference and can be a fine-tuning tool.</li>
+  </ul>
+  <p>These adjustments are usually enough to bring a borderline pairing into the acceptable range.</p>
+
+  <h2>How This Fits the Bigger Picture</h2>
+  <p>Matching is the step you take <em>before</em> setting tracking force, anti-skate, alignment, and VTA — those are covered in our turntable setup guide. And the compliance and output of your cartridge also interact with your phono stage. A well-matched arm and cartridge make every later adjustment more effective; a mismatch sets a ceiling no amount of careful alignment can overcome.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Honest Answer</div>
+    <p>You do not need to obsess over hitting exactly 10 Hz — anywhere from 8 to 12 Hz is comfortable, and 7–14 Hz is usually fine in practice. The point is to avoid gross mismatches. Check the cartridge's dynamic compliance and the arm's effective mass before you buy, run the numbers once, and you will sidestep the most common cause of disappointing vinyl sound.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Compare Cartridges and Tonearms Side by Side</h3>
+    <p>Use AudioScope to generate a detailed AI-powered specification comparison for any cartridges or tonearms you're considering — including compliance, weight, and effective mass.</p>
+    <a href="/" class="cta-btn">Start Comparing →</a>
+  </div>
+
+  <div class="related">
+    <h3>Related Guides</h3>
+    <div class="related-links">
+      <a href="/guides/turntable-setup-guide.html">Turntable Setup: Cartridge Alignment, Tracking Force, and VTA →</a>
+      <a href="/guides/mm-vs-mc-cartridges.html">MM vs MC Cartridges: What's the Difference? →</a>
+      <a href="/guides/what-is-a-phono-preamp.html">What Is a Phono Preamp — and Why Does Vinyl Need One? →</a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="ftr-inner">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <div class="ftr-logo">
+          <div class="ftr-box">
+            <svg width="16" height="16" viewBox="0 0 44 44" fill="none">
+              <rect x="3" y="20" width="5" height="6" rx="2.5" fill="#fff" opacity=".55"/>
+              <rect x="10" y="13" width="5" height="20" rx="2.5" fill="#fff" opacity=".75"/>
+              <rect x="17" y="5" width="5" height="36" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="24" y="1" width="6" height="44" rx="3" fill="#fff"/>
+              <rect x="31" y="7" width="5" height="32" rx="2.5" fill="#fff" opacity=".92"/>
+              <rect x="38" y="14" width="5" height="18" rx="2.5" fill="#fff" opacity=".68"/>
+            </svg>
+          </div>
+          <div class="ftr-wm">AUDIO<span>SCOPE HI-FI</span></div>
+        </div>
+        <p class="ftr-disc">AI-generated specifications for reference only. Always verify with the manufacturer before purchase. AudioScope is independent and unaffiliated with any audio brand.</p>
+      </div>
+      <div class="ftr-cols">
+        <div>
+          <span class="ftr-col-lbl">Navigation</span>
+          <div class="ftr-links">
+            <a href="/">Home</a>
+            <a href="/guides/">Guides</a>
+            <a href="/about.html">About</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="mailto:contact@audioscopehifi.com">Contact</a>
+          </div>
+        </div>
+        <div>
+          <span class="ftr-col-lbl">Guides</span>
+          <div class="ftr-links">
+            <a href="/guides/matching-amplifier-to-speakers.html">Amplifiers &amp; Speakers</a>
+            <a href="/guides/turntable-setup-guide.html">Turntable Setup</a>
+            <a href="/guides/what-is-a-dac.html">DACs &amp; Digital Audio</a>
+            <a href="/guides/what-is-a-phono-preamp.html">Phono Preamps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span class="ftr-copy">© 2025 AudioScope Hi-Fi · Powered by Anthropic Claude</span>
+      <span class="ftr-attr">All trademarks belong to their respective owners</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
