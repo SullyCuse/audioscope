@@ -188,11 +188,14 @@ const KNOWN_CORRECTIONS = {
 
   'Wharfedale EVO 5.1': 'VERIFIED SPECS from official Wharfedale EVO 5 Series User Manual: ' +
     'Enclosure Type: Standmount/Bookshelf — NOT a floorstander. ' +
-    'Bass Driver: Woven Kevlar Cone. ' +
+    'Bass Driver: 5" (130mm) Woven Kevlar Cone. ' +
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'Midrange Driver: None (2-way design). ' +
     'AV Shield: No. ' +
     'Sensitivity: 87 dB. ' +
+    'Peak SPL: 98 dB. ' +
+    'Frequency Response: 56Hz–24kHz. ' +
+    'Minimum Frequency: 46Hz. ' +
     'Crossover Frequency: 2.7kHz. ' +
     'Enclosure Volume: 11.5 litres. ' +
     'Width: 220mm. ' +
@@ -202,7 +205,8 @@ const KNOWN_CORRECTIONS = {
 
   'Wharfedale EVO 5.2': 'VERIFIED SPECS from official Wharfedale EVO 5 Series User Manual: ' +
     'Enclosure Type: Standmount/Bookshelf — NOT a floorstander. ' +
-    'Bass Driver: Woven Kevlar Cone. ' +
+    'Bass Driver: 6" (165mm) Woven Kevlar Cone. ' +
+    'Midrange Driver: 2" (50mm) soft dome (3-way design). ' +
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 88 dB. ' +
@@ -218,7 +222,8 @@ const KNOWN_CORRECTIONS = {
 
   'Wharfedale EVO 5.3': 'VERIFIED SPECS from official Wharfedale EVO 5 Series User Manual: ' +
     'Enclosure Type: Floorstander. ' +
-    'Bass Drivers: 2 x Woven Kevlar Cone. ' +
+    'Bass Drivers: 2 x 5" (130mm) Woven Kevlar Cone. ' +
+    'Midrange Driver: 2" (50mm) soft dome (3-way design). ' +
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 88 dB. ' +
@@ -234,9 +239,11 @@ const KNOWN_CORRECTIONS = {
 
   'Wharfedale EVO 5.4': 'VERIFIED SPECS from official Wharfedale EVO 5 Series User Manual: ' +
     'Enclosure Type: Floorstander. ' +
-    'Bass Drivers: 2 x Woven Kevlar Cone. ' +
+    'Bass Drivers: 2 x 6" (165mm) Woven Kevlar Cone. ' +
+    'Midrange Driver: 2" (50mm) soft dome (3-way design). ' +
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
+    'Sensitivity: 90 dB. ' +
     'Peak SPL: 108 dB. ' +
     'Frequency Response: 42Hz–24kHz. ' +
     'Minimum Frequency: 36Hz. ' +
@@ -247,15 +254,16 @@ const KNOWN_CORRECTIONS = {
     'Manufacturer website: https://www.wharfedale.co.uk',
 
   'Wharfedale EVO 5.C': 'VERIFIED SPECS from official Wharfedale EVO 5 Series User Manual: ' +
-    'Enclosure Type: Centre Channel speaker. ' +
-    'Bass Drivers: 2 x Woven Kevlar Cone. ' +
+    'Enclosure Type: Centre Channel speaker (2-way design). ' +
+    'Bass Drivers: 2 x 5" (130mm) Woven Kevlar Cone. ' +
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
+    'Sensitivity: 89 dB. ' +
     'Peak SPL: 103 dB. ' +
     'Frequency Response: 56Hz–24kHz. ' +
     'Crossover Frequency: 2.3kHz. ' +
     'Enclosure Volume: 14 litres. ' +
-    'Width: 188mm. Height: 520mm. ' +
+    'Width: 520mm. Height: 188mm. ' +
     'Net Weight: 12.4 kg. ' +
     'Standard Accessories: Rubber feet. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
