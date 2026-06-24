@@ -198,7 +198,7 @@ const KNOWN_CORRECTIONS = {
     'Minimum Frequency: 46Hz. ' +
     'Crossover Frequency: 2.7kHz. ' +
     'Enclosure Volume: 11.5 litres. ' +
-    'Width: 220mm. ' +
+    'Dimensions (H x W x D): 340 x 220 x 325 mm. ' +
     'Net Weight: 8.0 kg per speaker. ' +
     'Standard Accessories: Rubber feet. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
@@ -215,7 +215,7 @@ const KNOWN_CORRECTIONS = {
     'Minimum Frequency: 38Hz. ' +
     'Crossover Frequencies: 800Hz and 4.3kHz. ' +
     'Enclosure Volume: 27.2 litres. ' +
-    'Width: 260mm. ' +
+    'Dimensions (H x W x D): 498 x 260 x 391 mm. ' +
     'Net Weight: 15.0 kg per speaker. ' +
     'Standard Accessories: Rubber feet. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
@@ -232,7 +232,7 @@ const KNOWN_CORRECTIONS = {
     'Minimum Frequency: 40Hz. ' +
     'Crossover Frequencies: 825Hz and 4kHz. ' +
     'Enclosure Volume: 35.4 litres. ' +
-    'Width: 266mm. ' +
+    'Dimensions (H x W x D): 932 x 266 x 325 mm. ' +
     'Net Weight: 21.5 kg per speaker. ' +
     'Standard Accessories: Spike seats. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
@@ -248,7 +248,7 @@ const KNOWN_CORRECTIONS = {
     'Frequency Response: 42Hz–24kHz. ' +
     'Minimum Frequency: 36Hz. ' +
     'Crossover Frequencies: 1.1kHz and 4kHz. ' +
-    'Height: 1028mm. Width: 302mm. ' +
+    'Dimensions (H x W x D): 1028 x 302 x 391 mm. ' +
     'Net Weight: 31.2 kg per speaker. ' +
     'Standard Accessories: Spike seats. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
@@ -263,7 +263,7 @@ const KNOWN_CORRECTIONS = {
     'Frequency Response: 56Hz–24kHz. ' +
     'Crossover Frequency: 2.3kHz. ' +
     'Enclosure Volume: 14 litres. ' +
-    'Width: 520mm. Height: 188mm. ' +
+    'Dimensions (H x W x D): 188 x 520 x 305 mm. ' +
     'Net Weight: 12.4 kg. ' +
     'Standard Accessories: Rubber feet. ' +
     'Manufacturer website: https://www.wharfedale.co.uk',
