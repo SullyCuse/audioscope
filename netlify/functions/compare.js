@@ -193,6 +193,8 @@ const KNOWN_CORRECTIONS = {
     'Midrange Driver: None (2-way design). ' +
     'AV Shield: No. ' +
     'Sensitivity: 87 dB. ' +
+    'Nominal Impedance: 4 Ω (4 ohm compatible) — NOT 6 or 8 ohm. ' +
+    'Minimum Impedance: 3.4 Ω. ' +
     'Peak SPL: 98 dB. ' +
     'Frequency Response: 56Hz–24kHz. ' +
     'Minimum Frequency: 46Hz. ' +
@@ -210,6 +212,8 @@ const KNOWN_CORRECTIONS = {
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 88 dB. ' +
+    'Nominal Impedance: 4 Ω (4 ohm compatible) — NOT 6 or 8 ohm. ' +
+    'Minimum Impedance: 3.2 Ω. ' +
     'Peak SPL: 105 dB. ' +
     'Frequency Response: 44Hz–24kHz. ' +
     'Minimum Frequency: 38Hz. ' +
@@ -227,6 +231,8 @@ const KNOWN_CORRECTIONS = {
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 88 dB. ' +
+    'Nominal Impedance: 4 Ω (4 ohm compatible) — NOT 6 or 8 ohm. ' +
+    'Minimum Impedance: 3.5 Ω. ' +
     'Peak SPL: 106 dB. ' +
     'Frequency Response: 46Hz–24kHz. ' +
     'Minimum Frequency: 40Hz. ' +
@@ -244,6 +250,8 @@ const KNOWN_CORRECTIONS = {
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 90 dB. ' +
+    'Nominal Impedance: 4 Ω (4 ohm compatible) — NOT 6 or 8 ohm. ' +
+    'Minimum Impedance: 4.3 Ω. ' +
     'Peak SPL: 108 dB. ' +
     'Frequency Response: 42Hz–24kHz. ' +
     'Minimum Frequency: 36Hz. ' +
@@ -259,6 +267,8 @@ const KNOWN_CORRECTIONS = {
     'Tweeter: 35 x 70mm AMT (Air Motion Transformer). ' +
     'AV Shield: No. ' +
     'Sensitivity: 89 dB. ' +
+    'Nominal Impedance: 4 Ω (4 ohm compatible) — NOT 6 or 8 ohm. ' +
+    'Minimum Impedance: 4.1 Ω. ' +
     'Peak SPL: 103 dB. ' +
     'Frequency Response: 56Hz–24kHz. ' +
     'Crossover Frequency: 2.3kHz. ' +
