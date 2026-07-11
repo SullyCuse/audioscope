@@ -1,0 +1,38 @@
+# ═══════════════════════════════════════════════════════════════
+# AudioScope → AudioChainHiFi — domain retirement 301s
+# Site consolidated into audiochainhifi.com (2026-07). Every old URL
+# 301s to its closest ACCC equivalent. Forced (!) so the retired local
+# files don't shadow the redirect. First match wins — keep /* last.
+# ═══════════════════════════════════════════════════════════════
+
+# ── Main pages ─────────────────────────────────────────────────
+# Homepage WAS the compare tool → /compare
+/                                             https://audiochainhifi.com/compare                             301!
+/about                                        https://audiochainhifi.com/about                               301!
+/about.html                                   https://audiochainhifi.com/about                               301!
+/privacy-policy                               https://audiochainhifi.com/privacy                             301!
+/privacy-policy.html                          https://audiochainhifi.com/privacy                             301!
+
+# ── Guides → closest ACCC guide ────────────────────────────────
+/guides                                       https://audiochainhifi.com/guides/                             301!
+/guides/                                      https://audiochainhifi.com/guides/                             301!
+/guides/what-is-a-dac                         https://audiochainhifi.com/guides/dacs                         301!
+/guides/matching-amplifier-to-speakers        https://audiochainhifi.com/guides/amplifier-speaker-matching   301!
+/guides/turntable-setup-guide                 https://audiochainhifi.com/guides/turntables                   301!
+/guides/what-is-a-phono-preamp                https://audiochainhifi.com/guides/phono-stages                 301!
+/guides/mm-vs-mc-cartridges                   https://audiochainhifi.com/guides/cartridges                   301!
+/guides/integrated-vs-separates               https://audiochainhifi.com/guides/integrated-vs-separates      301!
+/guides/what-is-a-network-streamer            https://audiochainhifi.com/guides/streamers                    301!
+/guides/open-back-vs-closed-back-headphones   https://audiochainhifi.com/guides/headphones                   301!
+/guides/bookshelf-vs-floorstanding-speakers   https://audiochainhifi.com/guides/speakers                     301!
+/guides/speaker-placement-and-room-acoustics  https://audiochainhifi.com/guides/room-acoustics               301!
+/guides/tube-vs-solid-state-amplifiers        https://audiochainhifi.com/guides/tubes                        301!
+/guides/do-audio-cables-matter                https://audiochainhifi.com/guides/cables                       301!
+/guides/audio-file-formats-explained          https://audiochainhifi.com/guides/digital-formats              301!
+/guides/do-you-need-a-headphone-amp           https://audiochainhifi.com/guides/headphones                   301!
+/guides/tonearm-cartridge-matching            https://audiochainhifi.com/guides/cartridge-setup              301!
+# No ACCC equivalent yet (batch-2 guide candidate) → hub for now
+/guides/balanced-vs-unbalanced-connections    https://audiochainhifi.com/guides/                             301!
+
+# ── Catch-all ──────────────────────────────────────────────────
+/*                                            https://audiochainhifi.com/                                    301!
