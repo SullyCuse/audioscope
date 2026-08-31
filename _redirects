@@ -5,6 +5,13 @@
 # files don't shadow the redirect. First match wins — keep /* last.
 # ═══════════════════════════════════════════════════════════════
 
+# ── Search Console verification (must NOT redirect) ────────────
+# The forced /* catch-all below would 301 this file, which breaks GSC
+# re-verification and blocks the Change of Address tool. A 200 rewrite to
+# itself, placed before the catch-all, serves the file instead (first match
+# wins). Keep this until the property is DNS-verified or fully retired.
+/wzz6qgjy2wtjpyvkbjdgepb1jarhk7ej.txt         /wzz6qgjy2wtjpyvkbjdgepb1jarhk7ej.txt                          200
+
 # ── Main pages ─────────────────────────────────────────────────
 # Homepage WAS the compare tool → /compare
 /                                             https://audiochainhifi.com/compare                             301!
