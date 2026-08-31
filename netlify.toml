@@ -5,10 +5,6 @@
 [build]
   # No build step needed — pure HTML/CSS/JS
   publish   = "."
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "20"
 
 # ── Security Headers (AdSense-compatible — no strict CSP) ──────
 [[headers]]
@@ -29,8 +25,3 @@
   for = "/sitemap.xml"
   [headers.values]
     Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/ads.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
