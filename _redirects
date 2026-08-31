@@ -12,6 +12,15 @@
 # wins). Keep this until the property is DNS-verified or fully retired.
 /wzz6qgjy2wtjpyvkbjdgepb1jarhk7ej.txt         /wzz6qgjy2wtjpyvkbjdgepb1jarhk7ej.txt                          200
 
+# ── robots.txt (must NOT redirect) ─────────────────────────────
+# The forced /* catch-all was 301ing /robots.txt to the ACCC homepage —
+# an HTML page, not a robots.txt. Google follows robots.txt redirects but
+# treats a non-robots.txt destination as an unfetchable robots.txt, and then
+# backs off crawling the whole host. That blocks the 301s below from ever
+# being seen, and fails Search Console's Change of Address check with
+# "Couldn't fetch the page". Serve the real file instead.
+/robots.txt                                   /robots.txt                                                    200
+
 # ── Main pages ─────────────────────────────────────────────────
 # Homepage WAS the compare tool → /compare
 /                                             https://audiochainhifi.com/compare                             301!
