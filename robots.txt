@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
 Disallow: /about-faq-snippet.html
-
-Sitemap: https://audioscopehifi.com/sitemap.xml
